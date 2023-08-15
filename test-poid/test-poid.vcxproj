@@ -108,7 +108,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="testRational.cpp" />
+    <ClCompile Include="test-dimension.cpp" />
+    <ClCompile Include="test-rational.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

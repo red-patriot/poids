@@ -16,6 +16,12 @@ namespace poid::util {
 
     friend bool operator==(const Rational&, const Rational&) = default;
 
+    static Rational negate(const Rational& rhs);
+    static Rational add(const Rational& lhs, const Rational& rhs);
+    static Rational subtract(const Rational& lhs, const Rational& rhs);
+    static Rational multiply(const Rational& lhs, const Rational& rhs);
+    static Rational divide(const Rational& lhs, const Rational& rhs);
+
    private:
     static constexpr std::intmax_t sign(std::intmax_t a);
     static constexpr std::intmax_t absConstexpr(std::intmax_t a);
@@ -38,5 +44,25 @@ namespace poid::util {
   }
   constexpr std::intmax_t Rational::absConstexpr(std::intmax_t a) {
     return a < 0 ? -a : a;
+  }
+
+  Rational Rational::negate(const Rational& rhs) {
+    return Rational(-rhs.numerator_, rhs.denominator_);
+  }
+  Rational Rational::add(const Rational& lhs, const Rational& rhs) {
+    return Rational(lhs.numerator_ * rhs.denominator_ + rhs.numerator_ * lhs.denominator_,
+                    lhs.denominator_ * rhs.denominator_);
+  }
+  Rational Rational::subtract(const Rational& lhs, const Rational& rhs) {
+    return Rational(lhs.numerator_ * rhs.denominator_ - rhs.numerator_ * lhs.denominator_,
+                    lhs.denominator_ * rhs.denominator_);
+  }
+  Rational Rational::multiply(const Rational& lhs, const Rational& rhs) {
+    return Rational(lhs.numerator_ * rhs.numerator_,
+                    lhs.denominator_ * rhs.denominator_);
+  }
+  Rational Rational::divide(const Rational& lhs, const Rational& rhs) {
+    return Rational(lhs.numerator_ * rhs.denominator_,
+                    lhs.denominator_ * rhs.numerator_);
   }
 }  // namespace poid::util

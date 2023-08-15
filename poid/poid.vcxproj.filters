@@ -9,5 +9,8 @@
     <ClCompile Include="rational.ixx">
       <Filter>util</Filter>
     </ClCompile>
+    <ClCompile Include="Dimension.ixx">
+      <Filter>util</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

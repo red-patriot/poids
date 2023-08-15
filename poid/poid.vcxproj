@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Dimension.ixx" />
     <ClCompile Include="rational.ixx" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

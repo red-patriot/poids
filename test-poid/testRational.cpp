@@ -4,8 +4,8 @@ import <tuple>;
 
 import poid.util.rational;
 
-using std::tuple;
 using poid::util::Rational;
+using std::tuple;
 
 class TestRationalConstruct : public ::testing::TestWithParam<tuple<Rational,
                                                                     int, int>> {
@@ -37,38 +37,46 @@ TEST(TestRational, ZeroDemoninator) {
   EXPECT_ANY_THROW(Rational(1, 0));
 }
 
-//TEST(TestRational, Addition) {
-//  Rational a(3, 2), b(4, 9);
-//  Rational expected(35, 18);
-//
-//  Rational actual = a + b;
-//
-//  EXPECT_EQ(expected, actual);
-//}
-//
-//TEST(TestRational, Subtraction) {
-//  Rational a(13, 5), b(3, 6);
-//  Rational expected(21, 10);
-//
-//  Rational actual = a - b;
-//
-//  EXPECT_EQ(expected, actual);
-//}
-//
-//TEST(TestRational, Multiplication) {
-//  Rational a(1, 2), b(3, 5);
-//  Rational expected(3, 10);
-//
-//  Rational actual = a * b;
-//
-//  EXPECT_EQ(expected, actual);
-//}
-//
-//TEST(TestRational, Division) {
-//  Rational a(6, 7), b(4, 3);
-//  Rational expected(9, 14);
-//
-//  Rational actual = a / b;
-//
-//  EXPECT_EQ(expected, actual);
-//}
+TEST(TestRational, Addition) {
+  Rational a(3, 2), b(4, 9);
+  Rational expected(35, 18);
+
+  Rational actual = Rational::add(a, b);
+
+  EXPECT_EQ(expected, actual);
+}
+
+TEST(TestRational, Subtraction) {
+  Rational a(13, 5), b(3, 6);
+  Rational expected(21, 10);
+
+  Rational actual = Rational::subtract(a, b);
+
+  EXPECT_EQ(expected, actual);
+}
+
+TEST(TestRational, Multiplication) {
+  Rational a(1, 2), b(3, 5);
+  Rational expected(3, 10);
+
+  Rational actual = Rational::multiply(a, b);
+
+  EXPECT_EQ(expected, actual);
+}
+
+TEST(TestRational, Division) {
+  Rational a(6, 7), b(4, 3);
+  Rational expected(9, 14);
+
+  Rational actual = Rational::divide(a, b);
+
+  EXPECT_EQ(expected, actual);
+}
+
+TEST(TestRational, Negate) {
+  Rational a(5, 3);
+  Rational expected(-5, 3);
+
+  Rational actual = Rational::negate(a);
+  EXPECT_EQ(expected, actual);
+}

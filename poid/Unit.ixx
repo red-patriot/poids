@@ -10,6 +10,8 @@ namespace poid {
 
     constexpr double base() const noexcept { return base_; }
 
+    inline constexpr auto operator<=>(const Unit<Dim>& rhs) const& noexcept = default;
+
    private:
     double base_;
   };

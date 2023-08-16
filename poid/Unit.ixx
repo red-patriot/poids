@@ -6,6 +6,8 @@ namespace poid {
   export template <Dimension Dim>
   class Unit {
    public:
+    static constexpr Dimension dimension = Dim;
+
     explicit constexpr Unit(double base = 0.0);
 
     constexpr double base() const noexcept { return base_; }

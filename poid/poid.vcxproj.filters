@@ -12,5 +12,6 @@
     <ClCompile Include="Dimension.ixx">
       <Filter>util</Filter>
     </ClCompile>
+    <ClCompile Include="Unit.ixx" />
   </ItemGroup>
 </Project>

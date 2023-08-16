@@ -1,6 +1,6 @@
 import "gtest/gtest.h";
 
-import poid.util.dimension;
+import poid.dimension;
 import poid.util.rational;
 
 using poid::Dimension;

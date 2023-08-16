@@ -1,4 +1,4 @@
-export module poid.util.dimension;
+export module poid.dimension;
 
 import poid.util.rational;
 

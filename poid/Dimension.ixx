@@ -25,6 +25,10 @@ namespace poid {
 
     friend consteval Dimension operator+(const Dimension& lhs, const Dimension& rhs) noexcept;
     friend consteval Dimension operator-(const Dimension& lhs, const Dimension& rhs) noexcept;
+    friend constexpr bool operator==(const Dimension& lhs, const Dimension& rhs) noexcept = default;
+
+    static consteval Dimension add(const Dimension& lhs, const Dimension& rhs) noexcept;
+    static consteval Dimension subtract(const Dimension& lhs, const Dimension& rhs) noexcept;
 
    private:
     constexpr Dimension(util::Rational timeD = util::Rational(0),
@@ -35,6 +39,14 @@ namespace poid {
                         util::Rational amountD = util::Rational(0),
                         util::Rational luminosityD = util::Rational(0));
   };
+
+  consteval Dimension Dimension::add(const Dimension& lhs, const Dimension& rhs) noexcept {
+    return lhs + rhs;
+  }
+
+  consteval Dimension Dimension::subtract(const Dimension& lhs, const Dimension& rhs) noexcept {
+    return lhs - rhs;
+  }
 
   constexpr Dimension::Dimension(util::Rational timeD,
                                  util::Rational massD,

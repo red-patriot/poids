@@ -61,3 +61,55 @@ TEST(TestUnit, GreaterComparisons) {
 //
 //  testComparison(a, b, {false, true, false, false, false, false});
 //}
+
+TEST(TestUnit, ArithmeticNegation) {
+  poid::Unit<poid::LuminosityD(1) + poid::MassD(-1)> a{12};
+  poid::Unit<poid::LuminosityD(1) + poid::MassD(-1)> expected{-12};
+
+  auto actual = -a;
+
+  EXPECT_EQ(expected.dimension, actual.dimension);
+  EXPECT_NEAR(expected.base(), actual.base(), 1e-10);
+}
+
+TEST(TestUnit, ArithmeticAddition) {
+  poid::Unit<poid::LengthD(3)> a{-6.7}, b{3};
+  poid::Unit<poid::LengthD(3)> expected{-3.7};
+
+  auto actual = a + b;
+
+  EXPECT_EQ(expected.dimension, actual.dimension);
+  EXPECT_NEAR(expected.base(), actual.base(), 1e-10);
+}
+
+TEST(TestUnit, ArithmeticSubtraction) {
+  poid::Unit<poid::CurrentD({-2, 3})> a{18}, b{6.8};
+  poid::Unit<poid::CurrentD({-2, 3})> expected{11.2};
+
+  auto actual = a - b;
+
+  EXPECT_EQ(expected.dimension, actual.dimension);
+  EXPECT_NEAR(expected.base(), actual.base(), 1e-10);
+}
+
+TEST(TestUnit, ArithmeticMultiplication) {
+  poid::Unit<poid::LengthD(1)> a(3);
+  poid::Unit<poid::TimeD(-1)> b{2.2};
+  poid::Unit<poid::LengthD(1) + poid::TimeD(-1)> expected{6.6};
+
+  auto actual = a * b;
+
+  EXPECT_EQ(expected.dimension, actual.dimension);
+  EXPECT_NEAR(expected.base(), actual.base(), 1e-10);
+}
+
+TEST(TestUnit, ArithmeticDivision) {
+  poid::Unit<poid::LengthD(1)> a(14);
+  poid::Unit<poid::TimeD(1)> b{2};
+  poid::Unit<poid::LengthD(1) - poid::TimeD(1)> expected{7};
+
+  auto actual = a / b;
+
+  EXPECT_EQ(expected.dimension, actual.dimension);
+  EXPECT_NEAR(expected.base(), actual.base(), 1e-10);
+}

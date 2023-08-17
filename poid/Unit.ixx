@@ -42,8 +42,28 @@ namespace poid {
     return Unit<DimL + DimR>(lhs.base() * rhs.base());
   }
 
+  export template <Dimension Dim>
+  constexpr Unit<Dim> operator*(Unit<Dim> lhs, double rhs) {
+    return Unit<Dim>(lhs.base() * rhs);
+  }
+
+  export template <Dimension Dim>
+  constexpr Unit<Dim> operator*(double lhs, Unit<Dim> rhs) {
+    return rhs * lhs;
+  }
+
   export template <Dimension DimL, Dimension DimR>
   constexpr auto operator/(Unit<DimL> lhs, Unit<DimR> rhs) {
     return Unit<DimL - DimR>(lhs.base() / rhs.base());
+  }
+
+  export template <Dimension Dim>
+  constexpr Unit<Dim> operator/(Unit<Dim> lhs, double rhs) {
+    return Unit<Dim>(lhs.base() / rhs);
+  }
+
+  export template <Dimension Dim>
+  constexpr auto operator/(double lhs, Unit<Dim> rhs) {
+    return Unit<TimeD(0) - Dim>(lhs / rhs.base());
   }
 }  // namespace poid

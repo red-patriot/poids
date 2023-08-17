@@ -113,3 +113,48 @@ TEST(TestUnit, ArithmeticDivision) {
   EXPECT_EQ(expected.dimension, actual.dimension);
   EXPECT_NEAR(expected.base(), actual.base(), 1e-10);
 }
+
+TEST(TestUnit, ArithmeticDoublePostMultiplication) { 
+  poid::Unit<poid::AmountD(4)> a{3};
+  double b{2.6};
+  poid::Unit<poid::AmountD(4)> expected{7.8};
+
+  auto actual = a * b;
+
+  EXPECT_EQ(expected.dimension, actual.dimension);
+  EXPECT_NEAR(expected.base(), actual.base(), 1e-10);
+}
+
+TEST(TestUnit, ArithmeticDoublePreMultiplication) {
+  poid::Unit<poid::AmountD(4)> a{3};
+  double b{2.6};
+  poid::Unit<poid::AmountD(4)> expected{7.8};
+
+  auto actual = b * a;
+
+  EXPECT_EQ(expected.dimension, actual.dimension);
+  EXPECT_NEAR(expected.base(), actual.base(), 1e-10);
+}
+
+
+TEST(TestUnit, ArithmeticDoublePreDivision) {
+  poid::Unit<poid::TemperatureD(4)> a{5.8};
+  double b{1.43};
+  poid::Unit<poid::TemperatureD(4)> expected{4.0559440559};
+
+  auto actual = a / b;
+
+  EXPECT_EQ(expected.dimension, actual.dimension);
+  EXPECT_NEAR(expected.base(), actual.base(), 1e-10);
+}
+
+TEST(TestUnit, ArithmeticDoublePostDivision) {
+  poid::Unit<poid::TemperatureD(4)> a{5.8};
+  double b{1.43};
+  poid::Unit<poid::TemperatureD(-4)> expected{0.2465517241};
+
+  auto actual = b / a;
+
+  EXPECT_EQ(expected.dimension, actual.dimension);
+  EXPECT_NEAR(expected.base(), actual.base(), 1e-10);
+}

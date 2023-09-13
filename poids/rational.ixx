@@ -1,9 +1,9 @@
-export module poid.util.rational;
+export module poids.util.rational;
 
 import <numeric>;
 import <stdexcept>;
 
-namespace poid::util {
+namespace poids::util {
   export class Rational {
    public:
     constexpr Rational(std::intmax_t num);
@@ -35,7 +35,7 @@ namespace poid::util {
       numerator_(sign(denom) * num / std::gcd(num, denom)),
       denominator_(absConstexpr(denom) / std::gcd(num, denom)) {
     if (denom == 0) {
-      throw std::exception("denominator of poid.Rational cannot be zero");
+      throw std::exception("denominator of poids.Rational cannot be zero");
     }
   }
 
@@ -65,4 +65,4 @@ namespace poid::util {
     return Rational(lhs.numerator_ * rhs.denominator_,
                     lhs.denominator_ * rhs.numerator_);
   }
-}  // namespace poid::util
+}  // namespace poids::util

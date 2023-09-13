@@ -1,8 +1,8 @@
-export module poid.unit;
+export module poids.unit;
 
-export import poid.dimension;
+export import poids.dimension;
 
-namespace poid {
+namespace poids {
   export template <Dimension Dim>
   class Unit {
    public:
@@ -66,4 +66,4 @@ namespace poid {
   constexpr auto operator/(double lhs, Unit<Dim> rhs) {
     return Unit<TimeD(0) - Dim>(lhs / rhs.base());
   }
-}  // namespace poid
+}  // namespace poids

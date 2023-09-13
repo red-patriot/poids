@@ -3,28 +3,28 @@ import "gtest/gtest.h";
 import <array>;
 import <type_traits>;
 
-import poid.unit;
+import poids.unit;
 
 TEST(TestUnit, DefaultConstructible) {
-  EXPECT_TRUE(std::is_default_constructible_v<poid::Unit<poid::TimeD(1)>>);
+  EXPECT_TRUE(std::is_default_constructible_v<poids::Unit<poids::TimeD(1)>>);
 }
 
 TEST(TestUnit, SimpleInstantiate) {
   double expected = 3.2;
-  poid::Unit<poid::LengthD(4)> value{expected};
+  poids::Unit<poids::LengthD(4)> value{expected};
 
   EXPECT_DOUBLE_EQ(expected, value.base());
 }
 
 TEST(TestUnit, CompoundInstantiate) {
   double expected = -2.4;
-  poid::Unit<poid::AmountD(3) - poid::LuminosityD(1) + poid::TemperatureD(3)> value{expected};
+  poids::Unit<poids::AmountD(3) - poids::LuminosityD(1) + poids::TemperatureD(3)> value{expected};
 
   EXPECT_DOUBLE_EQ(expected, value.base());
 }
 
-template <poid::Dimension Left, poid::Dimension Right>
-inline void testComparison(const poid::Unit<Left>& lhs, const poid::Unit<Right>& rhs,
+template <poids::Dimension Left, poids::Dimension Right>
+inline void testComparison(const poids::Unit<Left>& lhs, const poids::Unit<Right>& rhs,
                            const std::array<bool, 6>& comparisons) {
   EXPECT_EQ(comparisons[0], lhs == rhs);
   EXPECT_EQ(comparisons[1], lhs != rhs);
@@ -37,34 +37,34 @@ inline void testComparison(const poid::Unit<Left>& lhs, const poid::Unit<Right>&
 }
 
 TEST(TestUnit, EqualComparisons) {
-  poid::Unit<poid::AmountD({2, 3})> a{-5}, b{-5};
+  poids::Unit<poids::AmountD({2, 3})> a{-5}, b{-5};
 
   testComparison(a, b, {true, false, false, false, true, true});
 }
 
 TEST(TestUnit, TestLessComparisons) {
-  poid::Unit<poid::AmountD({2, 3})> a{4.5}, b{5.0};
+  poids::Unit<poids::AmountD({2, 3})> a{4.5}, b{5.0};
 
   testComparison(a, b, {false, true, false, true, false, true});
 }
 
 TEST(TestUnit, GreaterComparisons) {
-  poid::Unit<poid::AmountD({2, 3})> a{170.54}, b{-65.754};
+  poids::Unit<poids::AmountD({2, 3})> a{170.54}, b{-65.754};
 
   testComparison(a, b, {false, true, true, false, true, false});
 }
 
 // TODO: Figure out how to make this test work
 // TEST(TestUnit, DifferentTypesComparisons) {
-//  poid::Unit<poid::TimeD(1)> a{5.67};
-//  poid::Unit<poid::LengthD(3)> b{5.67};
+//  poids::Unit<poids::TimeD(1)> a{5.67};
+//  poids::Unit<poids::LengthD(3)> b{5.67};
 //
 //  testComparison(a, b, {false, true, false, false, false, false});
 //}
 
 TEST(TestUnit, ArithmeticNegation) {
-  poid::Unit<poid::LuminosityD(1) + poid::MassD(-1)> a{12};
-  poid::Unit<poid::LuminosityD(1) + poid::MassD(-1)> expected{-12};
+  poids::Unit<poids::LuminosityD(1) + poids::MassD(-1)> a{12};
+  poids::Unit<poids::LuminosityD(1) + poids::MassD(-1)> expected{-12};
 
   auto actual = -a;
 
@@ -73,8 +73,8 @@ TEST(TestUnit, ArithmeticNegation) {
 }
 
 TEST(TestUnit, ArithmeticAddition) {
-  poid::Unit<poid::LengthD(3)> a{-6.7}, b{3};
-  poid::Unit<poid::LengthD(3)> expected{-3.7};
+  poids::Unit<poids::LengthD(3)> a{-6.7}, b{3};
+  poids::Unit<poids::LengthD(3)> expected{-3.7};
 
   auto actual = a + b;
 
@@ -83,8 +83,8 @@ TEST(TestUnit, ArithmeticAddition) {
 }
 
 TEST(TestUnit, ArithmeticSubtraction) {
-  poid::Unit<poid::CurrentD({-2, 3})> a{18}, b{6.8};
-  poid::Unit<poid::CurrentD({-2, 3})> expected{11.2};
+  poids::Unit<poids::CurrentD({-2, 3})> a{18}, b{6.8};
+  poids::Unit<poids::CurrentD({-2, 3})> expected{11.2};
 
   auto actual = a - b;
 
@@ -93,9 +93,9 @@ TEST(TestUnit, ArithmeticSubtraction) {
 }
 
 TEST(TestUnit, ArithmeticMultiplication) {
-  poid::Unit<poid::LengthD(1)> a(3);
-  poid::Unit<poid::TimeD(-1)> b{2.2};
-  poid::Unit<poid::LengthD(1) + poid::TimeD(-1)> expected{6.6};
+  poids::Unit<poids::LengthD(1)> a(3);
+  poids::Unit<poids::TimeD(-1)> b{2.2};
+  poids::Unit<poids::LengthD(1) + poids::TimeD(-1)> expected{6.6};
 
   auto actual = a * b;
 
@@ -104,9 +104,9 @@ TEST(TestUnit, ArithmeticMultiplication) {
 }
 
 TEST(TestUnit, ArithmeticDivision) {
-  poid::Unit<poid::LengthD(1)> a(14);
-  poid::Unit<poid::TimeD(1)> b{2};
-  poid::Unit<poid::LengthD(1) - poid::TimeD(1)> expected{7};
+  poids::Unit<poids::LengthD(1)> a(14);
+  poids::Unit<poids::TimeD(1)> b{2};
+  poids::Unit<poids::LengthD(1) - poids::TimeD(1)> expected{7};
 
   auto actual = a / b;
 
@@ -115,9 +115,9 @@ TEST(TestUnit, ArithmeticDivision) {
 }
 
 TEST(TestUnit, ArithmeticDoublePostMultiplication) { 
-  poid::Unit<poid::AmountD(4)> a{3};
+  poids::Unit<poids::AmountD(4)> a{3};
   double b{2.6};
-  poid::Unit<poid::AmountD(4)> expected{7.8};
+  poids::Unit<poids::AmountD(4)> expected{7.8};
 
   auto actual = a * b;
 
@@ -126,9 +126,9 @@ TEST(TestUnit, ArithmeticDoublePostMultiplication) {
 }
 
 TEST(TestUnit, ArithmeticDoublePreMultiplication) {
-  poid::Unit<poid::AmountD(4)> a{3};
+  poids::Unit<poids::AmountD(4)> a{3};
   double b{2.6};
-  poid::Unit<poid::AmountD(4)> expected{7.8};
+  poids::Unit<poids::AmountD(4)> expected{7.8};
 
   auto actual = b * a;
 
@@ -138,9 +138,9 @@ TEST(TestUnit, ArithmeticDoublePreMultiplication) {
 
 
 TEST(TestUnit, ArithmeticDoublePreDivision) {
-  poid::Unit<poid::TemperatureD(4)> a{5.8};
+  poids::Unit<poids::TemperatureD(4)> a{5.8};
   double b{1.43};
-  poid::Unit<poid::TemperatureD(4)> expected{4.0559440559};
+  poids::Unit<poids::TemperatureD(4)> expected{4.0559440559};
 
   auto actual = a / b;
 
@@ -149,9 +149,9 @@ TEST(TestUnit, ArithmeticDoublePreDivision) {
 }
 
 TEST(TestUnit, ArithmeticDoublePostDivision) {
-  poid::Unit<poid::TemperatureD(4)> a{5.8};
+  poids::Unit<poids::TemperatureD(4)> a{5.8};
   double b{1.43};
-  poid::Unit<poid::TemperatureD(-4)> expected{0.2465517241};
+  poids::Unit<poids::TemperatureD(-4)> expected{0.2465517241};
 
   auto actual = b / a;
 

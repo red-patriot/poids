@@ -1,8 +1,8 @@
-export module poid.dimension;
+export module poids.dimension;
 
-import poid.util.rational;
+import poids.util.rational;
 
-namespace poid {
+namespace poids {
   export class Dimension {
    public:
     const util::Rational time;
@@ -104,4 +104,4 @@ namespace poid {
                      util::Rational::subtract(lhs.amount, rhs.amount),
                      util::Rational::subtract(lhs.luminosity, rhs.luminosity));
   }
-}  // namespace poid
+}  // namespace poids

@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34003.232
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "poid", "poid\poid.vcxproj", "{04E53CA6-F6A1-42D2-BC43-7A5C9BABC29B}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "poids", "poids\poids.vcxproj", "{04E53CA6-F6A1-42D2-BC43-7A5C9BABC29B}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test-poid", "test-poid\test-poid.vcxproj", "{9A1E0D42-1096-4202-AB9F-483353F52306}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test-poids", "test-poids\test-poids.vcxproj", "{9A1E0D42-1096-4202-AB9F-483353F52306}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

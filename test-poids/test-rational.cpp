@@ -2,9 +2,9 @@ import "gtest/gtest.h";
 
 import <tuple>;
 
-import poid.util.rational;
+import poids.util.rational;
 
-using poid::util::Rational;
+using poids::util::Rational;
 using std::tuple;
 
 class TestRationalConstruct : public ::testing::TestWithParam<tuple<Rational,

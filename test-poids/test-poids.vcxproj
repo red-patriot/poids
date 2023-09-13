@@ -116,7 +116,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\poid\poid.vcxproj">
+    <ProjectReference Include="..\poids\poids.vcxproj">
       <Project>{04e53ca6-f6a1-42d2-bc43-7a5c9babc29b}</Project>
     </ProjectReference>
   </ItemGroup>

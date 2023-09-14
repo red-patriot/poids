@@ -13,5 +13,7 @@
       <Filter>util</Filter>
     </ClCompile>
     <ClCompile Include="Unit.ixx" />
+    <ClCompile Include="Metric.ixx" />
+    <ClCompile Include="UnitTypes.ixx" />
   </ItemGroup>
 </Project>

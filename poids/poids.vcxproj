@@ -19,12 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Dimension.ixx" />
-    <ClCompile Include="Metric.ixx" />
-    <ClCompile Include="Poids.ixx" />
-    <ClCompile Include="rational.ixx" />
-    <ClCompile Include="Unit.ixx" />
-    <ClCompile Include="UnitTypes.ixx" />
+    <ClCompile Include="Dimension.h" />
+    <ClCompile Include="Metric.h" />
+    <ClCompile Include="Poids.h" />
+    <ClCompile Include="rational.h" />
+    <ClCompile Include="Unit.h" />
+    <ClCompile Include="UnitTypes.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
@@ -89,10 +89,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <PublicModuleDirectories>
     </PublicModuleDirectories>
+    <PublicIncludeDirectories>$(ProjectDir)</PublicIncludeDirectories>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <PublicModuleDirectories>
     </PublicModuleDirectories>
+    <PublicIncludeDirectories>$(ProjectDir)</PublicIncludeDirectories>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

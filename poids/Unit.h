@@ -1,9 +1,10 @@
-export module poids.unit;
+#ifndef POIDS_UNITS_UNIT_H
+#define POIDS_UNITS_UNIT_H
 
-export import poids.dimension;
+#include "Dimension.h"
 
 namespace poids {
-  export template <Dimension Dim>
+  template <Dimension Dim>
   class Unit {
    public:
     static constexpr Dimension dimension = Dim;
@@ -22,48 +23,50 @@ namespace poids {
   constexpr Unit<Dim>::Unit(double base) :
       base_(base) { }
 
-  export template <Dimension Dim>
+  template <Dimension Dim>
   constexpr Unit<Dim> operator-(Unit<Dim> rhs) {
     return Unit<Dim>{-rhs.base()};
   }
 
-  export template <Dimension Dim>
+  template <Dimension Dim>
   constexpr Unit<Dim> operator+(Unit<Dim> lhs, Unit<Dim> rhs) {
     return Unit<Dim>(lhs.base() + rhs.base());
   }
 
-  export template <Dimension Dim>
+  template <Dimension Dim>
   constexpr Unit<Dim> operator-(Unit<Dim> lhs, Unit<Dim> rhs) {
     return Unit<Dim>(lhs.base() - rhs.base());
   }
 
-  export template <Dimension DimL, Dimension DimR>
+  template <Dimension DimL, Dimension DimR>
   constexpr auto operator*(Unit<DimL> lhs, Unit<DimR> rhs) {
     return Unit<DimL + DimR>(lhs.base() * rhs.base());
   }
 
-  export template <Dimension Dim>
+  template <Dimension Dim>
   constexpr Unit<Dim> operator*(Unit<Dim> lhs, double rhs) {
     return Unit<Dim>(lhs.base() * rhs);
   }
 
-  export template <Dimension Dim>
+  template <Dimension Dim>
   constexpr Unit<Dim> operator*(double lhs, Unit<Dim> rhs) {
     return rhs * lhs;
   }
 
-  export template <Dimension DimL, Dimension DimR>
+  template <Dimension DimL, Dimension DimR>
   constexpr auto operator/(Unit<DimL> lhs, Unit<DimR> rhs) {
     return Unit<DimL - DimR>(lhs.base() / rhs.base());
   }
 
-  export template <Dimension Dim>
+  template <Dimension Dim>
   constexpr Unit<Dim> operator/(Unit<Dim> lhs, double rhs) {
     return Unit<Dim>(lhs.base() / rhs);
   }
 
-  export template <Dimension Dim>
+  template <Dimension Dim>
   constexpr auto operator/(double lhs, Unit<Dim> rhs) {
     return Unit<TimeD(0) - Dim>(lhs / rhs.base());
   }
 }  // namespace poids
+
+#endif  // !1

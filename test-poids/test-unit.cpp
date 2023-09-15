@@ -1,9 +1,9 @@
-import "gtest/gtest.h";
+#include "gtest/gtest.h"
 
-import <array>;
-import <type_traits>;
+#include <array>
+#include <type_traits>
 
-import poids.unit;
+#include <Unit.h>
 
 TEST(TestUnit, DefaultConstructible) {
   EXPECT_TRUE(std::is_default_constructible_v<poids::Unit<poids::TimeD(1)>>);

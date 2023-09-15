@@ -6,15 +6,15 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="rational.ixx">
+    <ClCompile Include="rational.h">
       <Filter>util</Filter>
     </ClCompile>
-    <ClCompile Include="Dimension.ixx">
+    <ClCompile Include="Dimension.h">
       <Filter>util</Filter>
     </ClCompile>
-    <ClCompile Include="Unit.ixx" />
-    <ClCompile Include="Metric.ixx" />
-    <ClCompile Include="UnitTypes.ixx" />
-    <ClCompile Include="Poids.ixx" />
+    <ClCompile Include="Unit.h" />
+    <ClCompile Include="Metric.h" />
+    <ClCompile Include="UnitTypes.h" />
+    <ClCompile Include="Poids.h" />
   </ItemGroup>
 </Project>

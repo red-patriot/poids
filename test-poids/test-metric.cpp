@@ -1,6 +1,6 @@
-import "gtest/gtest.h";
+#include "gtest/gtest.h"
 
-import poids.metric;
+#include <Metric.h>
 
 #define METRIC_LITERALS_TEST(name, expectedType, expectedValue, actualValue) \
   TEST(TestLiteralsMetric, name) {                                           \

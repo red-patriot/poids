@@ -1,8 +1,8 @@
-import "gtest/gtest.h";
+#include "gtest/gtest.h"
 
-import <tuple>;
+#include <tuple>
 
-import poids.util.rational;
+#include <rational.h>
 
 using poids::util::Rational;
 using std::tuple;

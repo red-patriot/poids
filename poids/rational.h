@@ -1,10 +1,11 @@
-export module poids.util.rational;
+#ifndef POIDS_UTIL_RATIONAL_H
+#define POIDS_UTIL_RATIONAL_H
 
-import <numeric>;
-import <stdexcept>;
+#include <numeric>
+#include <stdexcept>
 
 namespace poids::util {
-  export class Rational {
+  class Rational {
    public:
     constexpr Rational(std::intmax_t num);
     constexpr Rational(std::intmax_t num, std::intmax_t denom);
@@ -66,3 +67,5 @@ namespace poids::util {
                     lhs.denominator_ * rhs.numerator_);
   }
 }  // namespace poids::util
+
+#endif

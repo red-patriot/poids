@@ -1,7 +1,7 @@
-import "gtest/gtest.h";
+#include "gtest/gtest.h"
 
-import poids.dimension;
-import poids.util.rational;
+#include <Dimension.h>
+#include <rational.h>
 
 using poids::Dimension;
 using poids::util::Rational;

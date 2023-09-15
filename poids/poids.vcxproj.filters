@@ -15,5 +15,6 @@
     <ClCompile Include="Unit.ixx" />
     <ClCompile Include="Metric.ixx" />
     <ClCompile Include="UnitTypes.ixx" />
+    <ClCompile Include="Poids.ixx" />
   </ItemGroup>
 </Project>

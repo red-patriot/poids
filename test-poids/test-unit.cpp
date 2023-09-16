@@ -1,9 +1,12 @@
 #include "gtest/gtest.h"
 
 #include <array>
-#include <type_traits>
+#include <limits>
+#include <tuple>
 
 #include <Unit.h>
+
+using std::tuple;
 
 TEST(TestUnit, DefaultConstructible) {
   EXPECT_TRUE(std::is_default_constructible_v<poids::Unit<poids::TimeD(1)>>);
@@ -114,7 +117,7 @@ TEST(TestUnit, ArithmeticDivision) {
   EXPECT_NEAR(expected.base(), actual.base(), 1e-10);
 }
 
-TEST(TestUnit, ArithmeticDoublePostMultiplication) { 
+TEST(TestUnit, ArithmeticDoublePostMultiplication) {
   poids::Unit<poids::AmountD(4)> a{3};
   double b{2.6};
   poids::Unit<poids::AmountD(4)> expected{7.8};
@@ -135,7 +138,6 @@ TEST(TestUnit, ArithmeticDoublePreMultiplication) {
   EXPECT_EQ(expected.dimension, actual.dimension);
   EXPECT_NEAR(expected.base(), actual.base(), 1e-10);
 }
-
 
 TEST(TestUnit, ArithmeticDoublePreDivision) {
   poids::Unit<poids::TemperatureD(4)> a{5.8};
@@ -158,3 +160,27 @@ TEST(TestUnit, ArithmeticDoublePostDivision) {
   EXPECT_EQ(expected.dimension, actual.dimension);
   EXPECT_NEAR(expected.base(), actual.base(), 1e-10);
 }
+
+class TestUnitAsConversion : public ::testing::TestWithParam<tuple<double,
+                                                                   poids::Unit<poids::LengthD(1)>,
+                                                                   poids::Unit<poids::LengthD(1)>>> {
+};
+
+TEST_P(TestUnitAsConversion, test) {
+  const auto& [expected, value, as] = GetParam();
+
+  auto actual = value.as(as);
+
+  EXPECT_DOUBLE_EQ(expected, actual);
+}
+
+INSTANTIATE_TEST_CASE_P(AsConversion, TestUnitAsConversion,
+                        ::testing::Values(tuple{125.0,
+                                                poids::Unit<poids::LengthD(1)>{12.5},
+                                                poids::Unit<poids::LengthD(1)>{0.1}},
+                                          tuple{0.0,
+                                                poids::Unit<poids::LengthD(1)>{0.0},
+                                                poids::Unit<poids::LengthD(1)>{1.0}},
+                                          tuple{std::numeric_limits<double>::infinity(),
+                                                poids::Unit<poids::LengthD(1)>{12.5},
+                                                poids::Unit<poids::LengthD(1)>{0.0}}));

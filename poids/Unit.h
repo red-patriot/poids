@@ -12,6 +12,7 @@ namespace poids {
     explicit constexpr Unit(double base = 0.0);
 
     inline constexpr double base() const noexcept { return base_; }
+    inline constexpr double as(Unit a) const noexcept { return base_ / a.base_; }
 
     inline constexpr auto operator<=>(const Unit<Dim>& rhs) const& noexcept = default;
 

@@ -90,6 +90,18 @@ TEST(TestDimension, ConstructLuminosity) {
   EXPECT_EQ(poids::util::Rational({4, 7}), type.luminosity);
 }
 
+TEST(TestDimension, ConstructDimensionless) {
+  Dimension type{poids::Dimensionless()};
+
+  EXPECT_EQ(poids::util::Rational(0, 1), type.time);
+  EXPECT_EQ(poids::util::Rational(0, 1), type.mass);
+  EXPECT_EQ(poids::util::Rational(0, 1), type.length);
+  EXPECT_EQ(poids::util::Rational(0, 1), type.temperature);
+  EXPECT_EQ(poids::util::Rational(0, 1), type.current);
+  EXPECT_EQ(poids::util::Rational(0, 1), type.amount);
+  EXPECT_EQ(poids::util::Rational(0, 7), type.luminosity);
+}
+
 TEST(TestDimension, CreateCompound1) {
   poids::Dimension type{poids::TimeD({1, 2}) + poids::LengthD(1)};
 

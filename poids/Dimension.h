@@ -16,6 +16,7 @@ namespace poids {
 
     constexpr ~Dimension() = default;
 
+    friend consteval Dimension Dimensionless();
     friend consteval Dimension TimeD(const util::Rational& time);
     friend consteval Dimension MassD(const util::Rational& mass);
     friend consteval Dimension LengthD(const util::Rational& length);
@@ -63,6 +64,10 @@ namespace poids {
       current(currentD),
       amount(amountD),
       luminosity(luminosityD) { }
+
+  consteval Dimension Dimensionless() {
+    return Dimension();
+  }
 
   consteval Dimension TimeD(const util::Rational& time) {
     return Dimension(time);

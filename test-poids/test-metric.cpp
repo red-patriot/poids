@@ -56,3 +56,12 @@ METRIC_LITERALS_TEST(Pascals, poids::Pressure, 5.6e4, 5.6e4 * poids::metric::pas
 METRIC_LITERALS_TEST(KilogramPerMole, poids::MolarMass, 3.23e-4, 3.23e-4 * poids::metric::kilogram / poids::metric::mole)
 METRIC_LITERALS_TEST(PascalSecond, poids::DynamicViscosity, 28.1, 28.1 * poids::metric::pascal * poids::metric::second)
 METRIC_LITERALS_TEST(JouleSecondPerKilogram, poids::KinematicViscosity, 0.23, 0.23 * poids::metric::meter2 / poids::metric::second)
+
+// Prefix tests
+using poids::metric::meter;
+METRIC_LITERALS_TEST(PrefixNano, poids::Length, 12.45e-9, 12.45 * poids::metric::nano(meter));
+METRIC_LITERALS_TEST(PrefixMicro, poids::Length, 12.45e-6, 12.45 * poids::metric::micro(meter));
+METRIC_LITERALS_TEST(PrefixMilli, poids::Length, 12.45e-3, 12.45 * poids::metric::milli(meter));
+METRIC_LITERALS_TEST(PrefixKilo, poids::Length, 12.45e3, 12.45 * poids::metric::kilo(meter));
+METRIC_LITERALS_TEST(PrefixMega, poids::Length, 12.45e6, 12.45 * poids::metric::mega(meter));
+METRIC_LITERALS_TEST(PrefixGiga, poids::Length, 12.45e9, 12.45 * poids::metric::giga(meter));

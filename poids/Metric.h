@@ -35,6 +35,36 @@ namespace poids::metric {
 
   static const Pressure pascal{1};
 
+  template <Dimension Dim>
+  inline Unit<Dim> giga(const Unit<Dim> input) noexcept {
+    return input * 1'000'000'000;
+  }
+
+  template <Dimension Dim>
+  inline Unit<Dim> mega(const Unit<Dim> input) noexcept {
+    return input * 1'000'000;
+  }
+
+  template <Dimension Dim>
+  inline Unit<Dim> kilo(const Unit<Dim> input) noexcept {
+    return input * 1'000;
+  }
+
+  template <Dimension Dim>
+  inline Unit<Dim> milli(const Unit<Dim> input) noexcept {
+    return input * 0.001;
+  }
+
+  template <Dimension Dim>
+  inline Unit<Dim> micro(const Unit<Dim> input) noexcept {
+    return input * 0.000'001;
+  }
+
+  template <Dimension Dim>
+  inline Unit<Dim> nano(const Unit<Dim> input) noexcept {
+    return input * 0.000'000'001;
+  }
+
 }  // namespace poids::metric
 
-#endif 
+#endif

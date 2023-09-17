@@ -47,3 +47,13 @@ TEST(TestGenericDimension, ConstructWithTestingDimension) {
 
   EXPECT_EQ(expected, d1.dimension);
 }
+
+TEST(TestGenericDimension, MultiplyValuesGenerically) {
+  poids::Unit<TestingDimension(3, 4)> expected{12.0};
+  poids::Unit<TestingDimension(1, 2)> a{4.0};
+  poids::Unit<TestingDimension(2, 2)> b{3.0};
+
+  auto actual = a * b;
+
+  EXPECT_EQ(expected, actual);
+}

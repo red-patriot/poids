@@ -2,8 +2,6 @@
 #define POIDS_UNITS_UNIT_H
 
 #include "Dimension.h"
-// TODO: Remove this inclusion
-#include "metric/SIDimension.h"
 
 namespace poids {
   namespace util {

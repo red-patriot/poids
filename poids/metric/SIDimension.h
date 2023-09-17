@@ -118,7 +118,14 @@ namespace poids {
                        util::Rational::subtract(lhs.luminosity, rhs.luminosity));
     }
   }  // namespace metric
-
+  namespace util {
+    template <>
+    class UnitBase<metric::Dimensionless()> {
+     public:
+      // Enable dimensionless Units to be implicitly convertable to double
+      operator double() const { return static_cast<const Unit<metric::Dimensionless()>*>(this)->base(); }
+    };
+  }  // namespace util
 }  // namespace poids
 
 #endif  // !POIDS_METRIC_DIMENSION_H

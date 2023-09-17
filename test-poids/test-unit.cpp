@@ -6,6 +6,7 @@
 #include <type_traits>
 
 #include <Unit.h>
+#include <metric/SIDimension.h> 
 
 using std::tuple;
 
@@ -69,8 +70,8 @@ TEST(TestUnit, GreaterComparisons) {
 
 // TODO: Figure out how to make this test work
 // TEST(TestUnit, DifferentTypesComparisons) {
-//  poids::Unit<poids::TimeD(1)> a{5.67};
-//  poids::Unit<poids::LengthD(3)> b{5.67};
+//  poids::Unit<poids::metric::TimeD(1)> a{5.67};
+//  poids::Unit<poids::metric::LengthD(3)> b{5.67};
 //
 //  testComparison(a, b, {false, true, false, false, false, false});
 //}
@@ -171,15 +172,14 @@ TEST(TestUnit, ArithmeticDoublePostDivision) {
   EXPECT_NEAR(expected.base(), actual.base(), 1e-10);
 }
 
-// TODO: Make this work
-//TEST(TestUnit, UnitlessConvertsToDouble) {
-//  double expected = 5.8;
-//  poids::Unit<poids::metric::TemperatureD(0)> a{5.8};
-//
-//  double actual = a;
-//
-//  EXPECT_DOUBLE_EQ(expected, actual);
-//}
+TEST(TestUnit, UnitlessConvertsToDouble) {
+  double expected = 5.8;
+  poids::Unit<poids::metric::TemperatureD(0)> a{5.8}; 
+
+  double actual = a;
+
+  EXPECT_DOUBLE_EQ(expected, actual);
+}
 
 class TestUnitAsConversion : public ::testing::TestWithParam<tuple<double,
                                                                    poids::Unit<poids::metric::LengthD(1)>,

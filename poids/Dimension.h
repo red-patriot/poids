@@ -4,7 +4,6 @@
 #include <type_traits>
 #include <concepts>
 
-// TODO: Define generic Dimension concept here
 namespace poids {
   template <typename Dim>
   concept Dimension = requires(Dim a) {

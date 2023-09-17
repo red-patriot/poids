@@ -4,8 +4,13 @@
 #include "Dimension.h"
 
 namespace poids {
+  namespace util {
+    template <Dimension Dim>
+    class UnitBase { };
+  }  // namespace util
+
   template <Dimension Dim>
-  class Unit {
+  class Unit : public util::UnitBase<Dim> {
    public:
     static constexpr Dimension dimension = Dim;
 
@@ -14,7 +19,8 @@ namespace poids {
     inline constexpr double base() const noexcept { return base_; }
     inline constexpr double as(Unit a) const noexcept { return base_ / a.base_; }
 
-    inline constexpr auto operator<=>(const Unit<Dim>& rhs) const& noexcept = default;
+    inline constexpr auto operator==(const Unit<Dim>& rhs) const noexcept { return base_ == rhs.base_; }
+    inline constexpr auto operator<=>(const Unit<Dim>& rhs) const noexcept { return base_ <=> rhs.base_; }
 
    private:
     double base_;
@@ -68,6 +74,15 @@ namespace poids {
   constexpr auto operator/(double lhs, Unit<Dim> rhs) {
     return Unit<TimeD(0) - Dim>(lhs / rhs.base());
   }
+
+  namespace util {
+    template <>
+        class UnitBase <Dimensionless()> {
+     public:
+       // Enable dimensionless Units to be implicitly convertable to double
+      operator double() const { return static_cast<const Unit<Dimensionless()>*>(this)->base(); }
+    };
+  }  // namespace util
 }  // namespace poids
 
 #endif  // !1

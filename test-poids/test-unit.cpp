@@ -161,6 +161,15 @@ TEST(TestUnit, ArithmeticDoublePostDivision) {
   EXPECT_NEAR(expected.base(), actual.base(), 1e-10);
 }
 
+TEST(TestUnit, UnitlessConvertsToDouble) {
+  double expected = 5.8;
+  poids::Unit<poids::TemperatureD(0)> a{5.8};
+
+  double actual = a;
+
+  EXPECT_DOUBLE_EQ(expected, actual);
+}
+
 class TestUnitAsConversion : public ::testing::TestWithParam<tuple<double,
                                                                    poids::Unit<poids::LengthD(1)>,
                                                                    poids::Unit<poids::LengthD(1)>>> {

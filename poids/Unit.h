@@ -12,6 +12,7 @@ namespace poids {
   }  // namespace util
 
   template <auto Dim>
+    requires Dimension<decltype(Dim)>
   class Unit : public util::UnitBase<Dim> {
    public:
     using DimensionType = decltype(Dim);
@@ -30,6 +31,7 @@ namespace poids {
   };
 
   template <auto Dim>
+    requires Dimension<decltype(Dim)>
   constexpr Unit<Dim>::Unit(double base) :
       base_(base) { }
 

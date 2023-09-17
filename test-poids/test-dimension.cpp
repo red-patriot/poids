@@ -1,8 +1,8 @@
 #include "gtest/gtest.h"
 
 #include <Dimension.h>
-#include <SIDimension.h>
-#include <rational.h>
+#include <metric/SIDimension.h>
+#include <util/rational.h>
 
 using poids::metric::Dimension;
 using poids::util::Rational;

@@ -9,24 +9,23 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="rational.h">
-      <Filter>util</Filter>
-    </ClCompile>
-    <ClCompile Include="Dimension.h">
-      <Filter>util</Filter>
-    </ClCompile>
     <ClCompile Include="Unit.h" />
     <ClCompile Include="Poids.h" />
-    <ClCompile Include="Metric.h">
-      <Filter>metric</Filter>
-    </ClCompile>
-    <ClCompile Include="UnitTypes.h">
-      <Filter>metric</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SIDimension.h">
+    <ClInclude Include="metric\constants.h">
       <Filter>metric</Filter>
     </ClInclude>
+    <ClInclude Include="metric\SIDimension.h">
+      <Filter>metric</Filter>
+    </ClInclude>
+    <ClInclude Include="metric\UnitTypes.h">
+      <Filter>metric</Filter>
+    </ClInclude>
+    <ClInclude Include="util\rational.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="util\Dimension.h" />
+    <ClInclude Include="Metric.h" />
   </ItemGroup>
 </Project>

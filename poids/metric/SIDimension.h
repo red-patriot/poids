@@ -1,7 +1,7 @@
 #ifndef POIDS_METRIC_SI_DIMENSION_H
 #define POIDS_METRIC_SI_DIMENSION_H
 
-#include "rational.h"
+#include "util/rational.h"
 
 namespace poids {
   namespace metric {

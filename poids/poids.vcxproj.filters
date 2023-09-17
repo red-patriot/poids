@@ -25,7 +25,7 @@
     <ClInclude Include="util\rational.h">
       <Filter>util</Filter>
     </ClInclude>
-    <ClInclude Include="util\Dimension.h" />
     <ClInclude Include="Metric.h" />
+    <ClInclude Include="Dimension.h" />
   </ItemGroup>
 </Project>

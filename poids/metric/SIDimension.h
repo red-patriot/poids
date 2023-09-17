@@ -2,10 +2,10 @@
 #define POIDS_METRIC_SI_DIMENSION_H
 
 #include "util/rational.h"
+#include "Unit.h"
 
 namespace poids {
   namespace metric {
-
     class Dimension {
      public:
       const util::Rational time;
@@ -27,6 +27,7 @@ namespace poids {
       friend consteval Dimension AmountD(const util::Rational& amount);
       friend consteval Dimension LuminosityD(const util::Rational& luminosity);
 
+      friend consteval Dimension operator-(const Dimension& rhs) noexcept;
       friend consteval Dimension operator+(const Dimension& lhs, const Dimension& rhs) noexcept;
       friend consteval Dimension operator-(const Dimension& lhs, const Dimension& rhs) noexcept;
       friend constexpr bool operator==(const Dimension& lhs, const Dimension& rhs) noexcept = default;
@@ -93,6 +94,10 @@ namespace poids {
       return Dimension({0}, {0}, {0}, {0}, {0}, {0}, luminosity);
     }
 
+    consteval Dimension operator-(const Dimension& rhs) noexcept {
+      return Dimension() - rhs;
+    }
+
     consteval Dimension operator+(const Dimension& lhs, const Dimension& rhs) noexcept {
       return Dimension(util::Rational::add(lhs.time, rhs.time),
                        util::Rational::add(lhs.mass, rhs.mass),
@@ -113,6 +118,7 @@ namespace poids {
                        util::Rational::subtract(lhs.luminosity, rhs.luminosity));
     }
   }  // namespace metric
+
 }  // namespace poids
 
 #endif  // !POIDS_METRIC_DIMENSION_H

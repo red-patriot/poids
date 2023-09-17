@@ -7,14 +7,15 @@
 
 namespace poids {
   namespace util {
-    template <poids::metric::Dimension Dim>
+    template <auto Dim>
     class UnitBase { };
   }  // namespace util
 
-  template <poids::metric::Dimension Dim>
+  template <auto Dim>
   class Unit : public util::UnitBase<Dim> {
    public:
-    static constexpr poids::metric::Dimension dimension = Dim;
+    using DimensionType = decltype(Dim);
+    static constexpr auto dimension = Dim;
 
     explicit constexpr Unit(double base = 0.0);
 
@@ -28,63 +29,54 @@ namespace poids {
     double base_;
   };
 
-  template <poids::metric::Dimension Dim>
+  template <auto Dim>
   constexpr Unit<Dim>::Unit(double base) :
       base_(base) { }
 
-  template <poids::metric::Dimension Dim>
+  template <auto Dim>
   constexpr Unit<Dim> operator-(Unit<Dim> rhs) {
     return Unit<Dim>{-rhs.base()};
   }
 
-  template <poids::metric::Dimension Dim>
+  template <auto Dim>
   constexpr Unit<Dim> operator+(Unit<Dim> lhs, Unit<Dim> rhs) {
     return Unit<Dim>(lhs.base() + rhs.base());
   }
 
-  template <poids::metric::Dimension Dim>
+  template <auto Dim>
   constexpr Unit<Dim> operator-(Unit<Dim> lhs, Unit<Dim> rhs) {
     return Unit<Dim>(lhs.base() - rhs.base());
   }
 
-  template <poids::metric::Dimension DimL, poids::metric::Dimension DimR>
+  template <auto DimL, auto DimR>
   constexpr auto operator*(Unit<DimL> lhs, Unit<DimR> rhs) {
     return Unit<DimL + DimR>(lhs.base() * rhs.base());
   }
 
-  template <poids::metric::Dimension Dim>
+  template <auto Dim>
   constexpr Unit<Dim> operator*(Unit<Dim> lhs, double rhs) {
     return Unit<Dim>(lhs.base() * rhs);
   }
 
-  template <poids::metric::Dimension Dim>
+  template <auto Dim>
   constexpr Unit<Dim> operator*(double lhs, Unit<Dim> rhs) {
     return rhs * lhs;
   }
 
-  template <poids::metric::Dimension DimL, poids::metric::Dimension DimR>
+  template <auto DimL, auto DimR>
   constexpr auto operator/(Unit<DimL> lhs, Unit<DimR> rhs) {
     return Unit<DimL - DimR>(lhs.base() / rhs.base());
   }
 
-  template <poids::metric::Dimension Dim>
+  template <auto Dim>
   constexpr Unit<Dim> operator/(Unit<Dim> lhs, double rhs) {
     return Unit<Dim>(lhs.base() / rhs);
   }
 
-  template <poids::metric::Dimension Dim>
+  template <auto Dim>
   constexpr auto operator/(double lhs, Unit<Dim> rhs) {
-    return Unit<poids::metric::Dimensionless() - Dim>(lhs / rhs.base());
+    return Unit<-Dim>(lhs / rhs.base());
   }
-
-  namespace util {
-    template <>
-        class UnitBase <poids::metric::Dimensionless()> {
-     public:
-       // Enable dimensionless Units to be implicitly convertable to double
-      operator double() const { return static_cast<const Unit<poids::metric::Dimensionless()>*>(this)->base(); }
-    };
-  }  // namespace util
 }  // namespace poids
 
-#endif  // !1
+#endif

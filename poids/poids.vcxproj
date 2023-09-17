@@ -23,11 +23,11 @@
     <ClCompile Include="Unit.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Dimension.h" />
     <ClInclude Include="Metric.h" />
     <ClInclude Include="metric\constants.h" />
     <ClInclude Include="metric\SIDimension.h" />
     <ClInclude Include="metric\UnitTypes.h" />
-    <ClInclude Include="util\Dimension.h" />
     <ClInclude Include="util\rational.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

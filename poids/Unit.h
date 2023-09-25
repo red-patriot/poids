@@ -5,14 +5,16 @@
 
 namespace poids {
   namespace util {
-    template <Dimension Dim>
+    template <auto Dim>
     class UnitBase { };
   }  // namespace util
 
-  template <Dimension Dim>
+  template <auto Dim>
+    requires Dimension<decltype(Dim)>
   class Unit : public util::UnitBase<Dim> {
    public:
-    static constexpr Dimension dimension = Dim;
+    using DimensionType = decltype(Dim);
+    static constexpr auto dimension = Dim;
 
     explicit constexpr Unit(double base = 0.0);
 
@@ -26,63 +28,55 @@ namespace poids {
     double base_;
   };
 
-  template <Dimension Dim>
+  template <auto Dim>
+    requires Dimension<decltype(Dim)>
   constexpr Unit<Dim>::Unit(double base) :
       base_(base) { }
 
-  template <Dimension Dim>
+  template <auto Dim>
   constexpr Unit<Dim> operator-(Unit<Dim> rhs) {
     return Unit<Dim>{-rhs.base()};
   }
 
-  template <Dimension Dim>
+  template <auto Dim>
   constexpr Unit<Dim> operator+(Unit<Dim> lhs, Unit<Dim> rhs) {
     return Unit<Dim>(lhs.base() + rhs.base());
   }
 
-  template <Dimension Dim>
+  template <auto Dim>
   constexpr Unit<Dim> operator-(Unit<Dim> lhs, Unit<Dim> rhs) {
     return Unit<Dim>(lhs.base() - rhs.base());
   }
 
-  template <Dimension DimL, Dimension DimR>
+  template <auto DimL, auto DimR>
   constexpr auto operator*(Unit<DimL> lhs, Unit<DimR> rhs) {
     return Unit<DimL + DimR>(lhs.base() * rhs.base());
   }
 
-  template <Dimension Dim>
+  template <auto Dim>
   constexpr Unit<Dim> operator*(Unit<Dim> lhs, double rhs) {
     return Unit<Dim>(lhs.base() * rhs);
   }
 
-  template <Dimension Dim>
+  template <auto Dim>
   constexpr Unit<Dim> operator*(double lhs, Unit<Dim> rhs) {
     return rhs * lhs;
   }
 
-  template <Dimension DimL, Dimension DimR>
+  template <auto DimL, auto DimR>
   constexpr auto operator/(Unit<DimL> lhs, Unit<DimR> rhs) {
     return Unit<DimL - DimR>(lhs.base() / rhs.base());
   }
 
-  template <Dimension Dim>
+  template <auto Dim>
   constexpr Unit<Dim> operator/(Unit<Dim> lhs, double rhs) {
     return Unit<Dim>(lhs.base() / rhs);
   }
 
-  template <Dimension Dim>
+  template <auto Dim>
   constexpr auto operator/(double lhs, Unit<Dim> rhs) {
-    return Unit<TimeD(0) - Dim>(lhs / rhs.base());
+    return Unit<-Dim>(lhs / rhs.base());
   }
-
-  namespace util {
-    template <>
-        class UnitBase <Dimensionless()> {
-     public:
-       // Enable dimensionless Units to be implicitly convertable to double
-      operator double() const { return static_cast<const Unit<Dimensionless()>*>(this)->base(); }
-    };
-  }  // namespace util
 }  // namespace poids
 
-#endif  // !1
+#endif

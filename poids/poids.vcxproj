@@ -19,12 +19,16 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Dimension.h" />
-    <ClCompile Include="Metric.h" />
     <ClCompile Include="Poids.h" />
-    <ClCompile Include="rational.h" />
     <ClCompile Include="Unit.h" />
-    <ClCompile Include="UnitTypes.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Dimension.h" />
+    <ClInclude Include="Metric.h" />
+    <ClInclude Include="metric\constants.h" />
+    <ClInclude Include="metric\SIDimension.h" />
+    <ClInclude Include="metric\UnitTypes.h" />
+    <ClInclude Include="util\rational.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
@@ -106,6 +110,7 @@
       <EnableModules>true</EnableModules>
       <ScanSourceForModuleDependencies>true</ScanSourceForModuleDependencies>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <AdditionalIncludeDirectories>$(ProjectDir)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -124,6 +129,7 @@
       <EnableModules>true</EnableModules>
       <ScanSourceForModuleDependencies>true</ScanSourceForModuleDependencies>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <AdditionalIncludeDirectories>$(ProjectDir)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -142,6 +148,7 @@
       <EnableModules>true</EnableModules>
       <ScanSourceForModuleDependencies>true</ScanSourceForModuleDependencies>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <AdditionalIncludeDirectories>$(ProjectDir)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -160,6 +167,7 @@
       <EnableModules>true</EnableModules>
       <ScanSourceForModuleDependencies>true</ScanSourceForModuleDependencies>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <AdditionalIncludeDirectories>$(ProjectDir)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

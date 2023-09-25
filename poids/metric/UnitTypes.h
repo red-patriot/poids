@@ -3,7 +3,7 @@
 
 #include "Unit.h"
 
-namespace poids {
+namespace poids::metric {
   using Time = Unit<TimeD(1)>;
   using Mass = Unit<MassD(1)>;
   using Length = Unit<LengthD(1)>;

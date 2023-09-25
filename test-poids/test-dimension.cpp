@@ -1,13 +1,14 @@
 #include "gtest/gtest.h"
 
 #include <Dimension.h>
-#include <rational.h>
+#include <metric/SIDimension.h>
+#include <util/rational.h>
 
-using poids::Dimension;
+using poids::metric::Dimension;
 using poids::util::Rational;
 
 TEST(TestDimension, ConstructTime) {
-  Dimension type = poids::TimeD(Rational(1));
+  Dimension type = poids::metric::TimeD(Rational(1));
 
   EXPECT_EQ(poids::util::Rational(1, 1), type.time);
   EXPECT_EQ(poids::util::Rational(0, 1), type.mass);
@@ -19,7 +20,7 @@ TEST(TestDimension, ConstructTime) {
 }
 
 TEST(TestDimension, ConstructMass) {
-  Dimension type{poids::MassD({2, 3})};
+  Dimension type{poids::metric::MassD({2, 3})};
 
   EXPECT_EQ(poids::util::Rational(0, 1), type.time);
   EXPECT_EQ(poids::util::Rational(2, 3), type.mass);
@@ -31,7 +32,7 @@ TEST(TestDimension, ConstructMass) {
 }
 
 TEST(TestDimension, ConstructLength) {
-  Dimension type{poids::LengthD({5, 4})};
+  Dimension type{poids::metric::LengthD({5, 4})};
 
   EXPECT_EQ(poids::util::Rational(0, 1), type.time);
   EXPECT_EQ(poids::util::Rational(0, 1), type.mass);
@@ -43,7 +44,7 @@ TEST(TestDimension, ConstructLength) {
 }
 
 TEST(TestDimension, ConstructTemperature) {
-  Dimension type{poids::TemperatureD({7, 2})};
+  Dimension type{poids::metric::TemperatureD({7, 2})};
 
   EXPECT_EQ(poids::util::Rational(0, 1), type.time);
   EXPECT_EQ(poids::util::Rational(0, 1), type.mass);
@@ -55,7 +56,7 @@ TEST(TestDimension, ConstructTemperature) {
 }
 
 TEST(TestDimension, ConstructCurrent) {
-  Dimension type{poids::CurrentD({9, 5})};
+  Dimension type{poids::metric::CurrentD({9, 5})};
 
   EXPECT_EQ(poids::util::Rational(0, 1), type.time);
   EXPECT_EQ(poids::util::Rational(0, 1), type.mass);
@@ -67,7 +68,7 @@ TEST(TestDimension, ConstructCurrent) {
 }
 
 TEST(TestDimension, ConstructAmount) {
-  Dimension type{poids::AmountD({5, 9})};
+  Dimension type{poids::metric::AmountD({5, 9})};
 
   EXPECT_EQ(poids::util::Rational(0, 1), type.time);
   EXPECT_EQ(poids::util::Rational(0, 1), type.mass);
@@ -79,7 +80,7 @@ TEST(TestDimension, ConstructAmount) {
 }
 
 TEST(TestDimension, ConstructLuminosity) {
-  Dimension type{poids::LuminosityD({4, 7})};
+  Dimension type{poids::metric::LuminosityD({4, 7})};
 
   EXPECT_EQ(poids::util::Rational(0, 1), type.time);
   EXPECT_EQ(poids::util::Rational(0, 1), type.mass);
@@ -91,7 +92,7 @@ TEST(TestDimension, ConstructLuminosity) {
 }
 
 TEST(TestDimension, ConstructDimensionless) {
-  Dimension type{poids::Dimensionless()};
+  Dimension type{poids::metric::Dimensionless()};
 
   EXPECT_EQ(poids::util::Rational(0, 1), type.time);
   EXPECT_EQ(poids::util::Rational(0, 1), type.mass);
@@ -103,7 +104,7 @@ TEST(TestDimension, ConstructDimensionless) {
 }
 
 TEST(TestDimension, CreateCompound1) {
-  poids::Dimension type{poids::TimeD({1, 2}) + poids::LengthD(1)};
+  Dimension type{poids::metric::TimeD({1, 2}) + poids::metric::LengthD(1)};
 
   EXPECT_EQ(poids::util::Rational(1, 2), type.time);
   EXPECT_EQ(poids::util::Rational(0, 1), type.mass);
@@ -115,8 +116,8 @@ TEST(TestDimension, CreateCompound1) {
 }
 
 TEST(TestDimension, CreateCompound2) {
-  poids::Dimension type = poids::MassD({3, 2}) +
-                         poids::AmountD(-2);
+  Dimension type = poids::metric::MassD({3, 2}) +
+                   poids::metric::AmountD(-2);
 
   EXPECT_EQ(poids::util::Rational(0, 1), type.time);
   EXPECT_EQ(poids::util::Rational(3, 2), type.mass);
@@ -128,10 +129,10 @@ TEST(TestDimension, CreateCompound2) {
 }
 
 TEST(TestDimension, CreateCompound3) {
-  poids::Dimension type = poids::LuminosityD(4) -
-                         poids::LengthD({3, 4}) +
-                         poids::TemperatureD({6}) -
-                         poids::TimeD(-1);
+  Dimension type = poids::metric::LuminosityD(4) -
+                         poids::metric::LengthD({3, 4}) +
+                         poids::metric::TemperatureD({6}) -
+                         poids::metric::TimeD(-1);
 
   EXPECT_EQ(poids::util::Rational(1, 1), type.time);
   EXPECT_EQ(poids::util::Rational(0, 1), type.mass);

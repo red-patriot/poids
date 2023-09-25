@@ -2,7 +2,7 @@
 
 #include <tuple>
 
-#include <rational.h>
+#include <util/rational.h>
 
 using poids::util::Rational;
 using std::tuple;

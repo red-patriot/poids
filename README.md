@@ -33,13 +33,12 @@ auto bad_value = time + distance;   // Compile error: units don't match
 ```
 
 To get the value of any unit, the `as` member function performs calculations and conversions between
-compatible values.
 ```
 poids::metric::Length distance = 300 * meter;
 
 distance.as(poids::metric::kilo(meter));    // returns 0.3
 distance.as(poids::metric::milli(meter));   // returns 300,000
+distance.base();                            // returns 300
 
 ```
-
 

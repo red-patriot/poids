@@ -7,15 +7,23 @@ namespace poids {
   template <typename ScalarType,
             typename UnitType>
   class Quantity {
+    struct InternalTag { };
+
    public:
     using Scalar = ScalarType;
     using Unit = UnitType;
     using ThisType = Quantity<Scalar, Unit>;
 
+    /*implicit*/ Quantity(const Scalar& baseValue) :
+        value_(baseValue) {
+      static_assert(IsUnitless<Unit>::value,
+                    "Only a unitless poids::Quantity can only be constructed from a Scalar. Use poids::Quantity::makeBase instead to explicitly construct this object");
+    }
+
     const Scalar& base() const { return value_; }
 
     static ThisType makeBase(const Scalar& baseValue) {
-      return ThisType(baseValue);
+      return ThisType(baseValue, InternalTag{});
     }
 
     bool operator==(const ThisType& other) const {
@@ -43,7 +51,7 @@ namespace poids {
    private:
     Scalar value_{};
 
-    Quantity(const Scalar& baseValue) :
+    Quantity(const Scalar& baseValue, InternalTag) :
         value_{baseValue} { }
   };
 

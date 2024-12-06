@@ -6,8 +6,12 @@ FetchContent_Declare(
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
+set(KGMS_TESTS
+    "kgms/test_dimensional_analysis.cpp"
+)
+
 add_executable(poids_test
-    "dummy.cpp"
+    ${KGMS_TESTS}
 )
 
 set_target_properties(poids_test

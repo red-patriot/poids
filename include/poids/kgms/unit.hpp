@@ -29,9 +29,22 @@ namespace kgms {
                                            typename Other::time>>;
     };
 
+    /** Implements dividing this UnitType with another*/
+    template <typename Other>
+    struct DivideImpl {
+      using type = UnitType<std::ratio_subtract<mass,
+                                                typename Other::mass>,
+                            std::ratio_subtract<length,
+                                                typename Other::length>,
+                            std::ratio_subtract<time,
+                                                typename Other::time>>;
+    };
+
    public:
     template <typename Other>
     using multiply_t = typename MultiplyImpl<Other>::type;
+    template <typename Other>
+    using divide_t = typename DivideImpl<Other>::type;
   };
 }  // namespace kgms
 

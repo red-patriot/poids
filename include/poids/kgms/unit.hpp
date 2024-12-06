@@ -4,6 +4,8 @@
 #include <cstdint>
 #include <type_traits>
 
+#include "poids/core/traits.hpp"
+
 namespace kgms {
   namespace detail {
     template <typename T>
@@ -27,7 +29,6 @@ namespace kgms {
     static_assert(detail::is_std_ratio<MassRatio>::value, "MassRatio must be a specialization of std::ratio");
     static_assert(detail::is_std_ratio<LengthRatio>::value, "LengthRatio must be a specialization of std::ratio");
     static_assert(detail::is_std_ratio<TimeRatio>::value, "TimeRatio must be a specialization of std::ratio");
-
 
     using mass = MassRatio;     /**< The quantity of mass units*/
     using length = LengthRatio; /**< The quantity of length units*/
@@ -63,5 +64,12 @@ namespace kgms {
     using divide_t = typename DivideImpl<Other>::type;
   };
 }  // namespace kgms
+
+namespace poids {
+  template <>
+  struct IsUnitless<kgms::UnitType<std::ratio<0>,
+                                   std::ratio<0>,
+                                   std::ratio<0>>> : public std::true_type { };
+}  // namespace poids
 
 #endif

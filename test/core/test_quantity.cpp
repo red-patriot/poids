@@ -13,6 +13,14 @@ TEST(TestQuantity, BaseConstruct) {
   EXPECT_DOUBLE_EQ(expected, actual.base());
 }
 
+TEST(TestQuantity, DetectUnitlessQuantity) {
+  using actual = poids::Quantity<double,
+                                 kgms::UnitType<std::ratio<0>,
+                                                std::ratio<0>,
+                                                std::ratio<0>>>;
+  EXPECT_TRUE(poids::IsUnitless<actual>::value);
+}
+
 TEST(TestQuantityComparison, Equals) {
   auto expected = poids::Quantity<double,
                                   kgms::UnitType<std::ratio<1>,
@@ -90,5 +98,3 @@ TEST(TestQuantityComparison, LessThanOrEqual) {
 
   EXPECT_LE(expected, actual);
 }
-
-

@@ -1,6 +1,8 @@
 #ifndef POIDS_CORE_QUANTITY_HPP
 #define POIDS_CORE_QUANTITY_HPP
 
+#include "traits.hpp"
+
 namespace poids {
   template <typename ScalarType,
             typename UnitType>
@@ -44,6 +46,10 @@ namespace poids {
     Quantity(const Scalar& baseValue) :
         value_{baseValue} { }
   };
+
+  /** If a quantity is tested for being dimensionless, forward the request to its DimensionType*/
+  template <typename Scalar, typename DimensionType>
+  struct IsUnitless<Quantity<Scalar, DimensionType>> : public IsUnitless<DimensionType> { };
 }  // namespace poids
 
 #endif

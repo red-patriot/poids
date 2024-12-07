@@ -31,6 +31,28 @@ TEST(TestQuantity, ImplicitFromScalarIfUnitless) {
   EXPECT_DOUBLE_EQ(5.6, actual.base());
 }
 
+TEST(TestQuantity, ExplicitAsConversion) {
+  double expected = 5600.0;
+
+  auto meters = poids::Quantity<double,
+                                kgms::UnitType<std::ratio<0>,
+                                               std::ratio<1>,
+                                               std::ratio<0>>>::makeBase(1);
+  auto millimeters = poids::Quantity<double,
+                                     kgms::UnitType<std::ratio<0>,
+                                                    std::ratio<1>,
+                                                    std::ratio<0>>>::makeBase(0.001);
+
+  auto value = poids::Quantity<double,
+                               kgms::UnitType<std::ratio<0>,
+                                              std::ratio<1>,
+                                              std::ratio<0>>>::makeBase(5.6);
+
+  auto actual = value.as(millimeters);
+
+  EXPECT_NEAR(expected, actual, 1e-6);
+}
+
 TEST(TestQuantityComparison, Equals) {
   auto expected = poids::Quantity<double,
                                   kgms::UnitType<std::ratio<1>,

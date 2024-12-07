@@ -12,7 +12,7 @@ namespace poids {
    public:
     using Scalar = ScalarType;
     using Unit = UnitType;
-    using ThisType = Quantity<Scalar, Unit>;
+    using Type = Quantity<Scalar, Unit>;
 
     /*implicit*/ Quantity(const Scalar& baseValue) :
         value_(baseValue) {
@@ -20,31 +20,35 @@ namespace poids {
                     "Only a unitless poids::Quantity can only be constructed from a Scalar. Use poids::Quantity::makeBase instead to explicitly construct this object");
     }
 
+    Scalar base() { return value_; }
     const Scalar& base() const { return value_; }
 
-    static ThisType makeBase(const Scalar& baseValue) {
-      return ThisType(baseValue, InternalTag{});
+    /** Gets the value in the desired units. */
+    Scalar as(const Type& desired) const { return value_ / desired.base(); }
+
+    static Type makeBase(const Scalar& baseValue) {
+      return Type(baseValue, InternalTag{});
     }
 
-    bool operator==(const ThisType& other) const {
+    bool operator==(const Type& other) const {
       return this->value_ == other.value_;
     }
 
-    bool operator!=(const ThisType& other) const {
+    bool operator!=(const Type& other) const {
       return !this->operator==(other);
     }
 
-    bool operator<(const ThisType& other) const {
+    bool operator<(const Type& other) const {
       return this->value_ < other.value_;
     }
 
-    bool operator>(const ThisType& other) const {
+    bool operator>(const Type& other) const {
       return other.operator<(*this);
     }
-    bool operator<=(const ThisType& other) const {
+    bool operator<=(const Type& other) const {
       return this->operator==(other) || this->operator<(other);
     }
-    bool operator>=(const ThisType& other) const {
+    bool operator>=(const Type& other) const {
       return this->operator==(other) || this->operator>(other);
     }
 

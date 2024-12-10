@@ -32,6 +32,14 @@ namespace poids::detail {
       return this->operator==(other) || this->operator>(other);
     }
 
+    Derived operator+(const Derived& other) const {
+      return Derived{derived()->value_ + other.value_, typename Derived::InternalTag{}};
+    }
+
+    Derived operator-(const Derived& other) const {
+      return Derived{derived()->value_ - other.value_, typename Derived::InternalTag{}};
+    }
+
    protected:
     /** Only children can directly access this class*/
     QuantityBase() = default;

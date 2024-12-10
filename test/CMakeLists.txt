@@ -7,6 +7,7 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
 set(POIDS_CORE_TESTS
+    "core/test_arithmetic.cpp"
     "core/test_base_quantity.cpp"
     "core/test_quantity.cpp"
 )

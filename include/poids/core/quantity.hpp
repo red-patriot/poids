@@ -26,6 +26,9 @@ namespace poids {
                     "Only a unitless poids::Quantity can only be constructed from a Scalar. Use poids::Quantity::makeFromBaseUnitValue instead to explicitly construct this object");
     }
 
+    /*implicit*/ Quantity(const BaseType& baseQuantity) :
+        value_(baseQuantity.value()) { }
+
     /** Gets the value in the desired units. */
     Scalar as(const BaseType& desired) const { return value_ / desired.base(); }
 
@@ -53,6 +56,9 @@ namespace poids {
   struct UnitOf<Quantity<ScalarType, DimensionType>> {
     using type = DimensionType;
   };
+
+  template <typename ScalarType, typename DimensionType>
+  Quantity(BaseQuantity<ScalarType, DimensionType>) -> Quantity<ScalarType, DimensionType>;
 }  // namespace poids
 
 #endif

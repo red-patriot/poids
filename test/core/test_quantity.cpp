@@ -49,6 +49,17 @@ TEST(TestQuantity, ExplicitAsConversion) {
   EXPECT_NEAR(expected, actual, 1e-6);
 }
 
+TEST(TestQuantity, ImplicitlyConstructibleFromBaseQuantity) {
+  auto meters = poids::BaseQuantity<double,
+                                    kgms::UnitType<std::ratio<0>,
+                                                   std::ratio<1>,
+                                                   std::ratio<0>>>::makeBase(1.0);
+
+  poids::Quantity actual{meters};
+
+  EXPECT_NEAR(1.0, actual.as(meters), 1e-6);
+}
+
 TEST(TestQuantityComparison, Equals) {
   auto expected = poids::Quantity<double,
                                   kgms::UnitType<std::ratio<1>,

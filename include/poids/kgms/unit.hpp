@@ -62,6 +62,8 @@ namespace kgms {
     using multiply_t = typename MultiplyImpl<Other>::type;
     template <typename Other>
     using divide_t = typename DivideImpl<Other>::type;
+
+    using unitless_t = kgms::UnitType<std::ratio<0>, std::ratio<0>, std::ratio<0>>;
   };
 }  // namespace kgms
 

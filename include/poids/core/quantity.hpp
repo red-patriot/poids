@@ -8,8 +8,7 @@
 namespace poids {
   template <typename ScalarType,
             typename UnitType>
-  class Quantity : public detail::QuantityBase<Quantity<ScalarType, UnitType>> {
-    friend detail::QuantityBase<Quantity<ScalarType, UnitType>>;
+  class Quantity : public detail::QuantityBase<Quantity, ScalarType, UnitType> {
     struct InternalTag { };
 
    public:
@@ -36,11 +35,50 @@ namespace poids {
       return Type(baseValue, InternalTag{});
     }
 
+    template <typename ScalarTypeRHS, typename UnitTypeRHS>
+    auto operator*(const Quantity<ScalarTypeRHS, UnitTypeRHS>& rhs) const {
+      using ResultType = Quantity<Scalar,
+                                  typename Unit::multiply_t<UnitTypeRHS>>;
+
+      return ResultType{this->base() * rhs.base(), typename ResultType::InternalTag{}};
+    }
+
+    template <typename ScalarTypeRHS, typename UnitTypeRHS>
+    auto operator*(const BaseQuantity<ScalarTypeRHS, UnitTypeRHS>& rhs) const {
+      using ResultType = Quantity<Scalar,
+                                  typename Unit::multiply_t<UnitTypeRHS>>;
+
+      return ResultType{this->base() * rhs.base(), typename ResultType::InternalTag{}};
+    }
+
+    template <typename ScalarTypeRHS, typename UnitTypeRHS>
+    auto operator/(const Quantity<ScalarTypeRHS, UnitTypeRHS>& rhs) const {
+      using ResultType = Quantity<ScalarType,
+                                  typename Unit::divide_t<UnitTypeRHS>>;
+
+      return ResultType{this->base() / rhs.base(), typename ResultType::InternalTag{}};
+    }
+
+    template <typename ScalarTypeRHS, typename UnitTypeRHS>
+    auto operator/(const BaseQuantity<ScalarTypeRHS, UnitTypeRHS>& rhs) const {
+      using ResultType = Quantity<ScalarType,
+                                  typename Unit::divide_t<UnitTypeRHS>>;
+
+      return ResultType{this->base() / rhs.base(), typename ResultType::InternalTag{}};
+    }
+
    private:
     Scalar value_{};
 
     Quantity(const Scalar& baseValue, InternalTag) :
         value_{baseValue} { }
+
+    template <template <typename, typename> typename, typename, typename>
+    friend class detail::QuantityBase;
+    template <typename, typename>
+    friend class Quantity;
+    template <typename, typename>
+    friend class BaseQuantity;
   };
 
   /** If a quantity is tested for being dimensionless, forward the request to its DimensionType*/
@@ -59,6 +97,11 @@ namespace poids {
 
   template <typename ScalarType, typename UnitType>
   Quantity(BaseQuantity<ScalarType, UnitType>) -> Quantity<ScalarType, UnitType>;
+
+  template <typename QuantityType>
+  inline BaseQuantity<ScalarOf_t<QuantityType>, UnitOf_t<QuantityType>> makeBase(const ScalarOf_t<QuantityType>& scalar) {
+    return makeBase<ScalarOf_t<QuantityType>, UnitOf_t<QuantityType>>(scalar);
+  }
 }  // namespace poids
 
 #endif

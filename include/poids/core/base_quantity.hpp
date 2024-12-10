@@ -8,15 +8,16 @@ namespace poids {
   template <typename ScalarType,
             typename UnitType>
   class BaseQuantity;
+  template <typename ScalarType,
+            typename UnitType>
+  class Quantity;
 
   template <typename ScalarType, typename UnitType>
   BaseQuantity<ScalarType, UnitType> makeBase(const ScalarType& scalar);
 
   template <typename ScalarType,
             typename UnitType>
-  class BaseQuantity : public detail::QuantityBase<BaseQuantity<ScalarType, UnitType>> {
-    friend detail::QuantityBase<BaseQuantity<ScalarType, UnitType>>;
-    friend BaseQuantity<ScalarType, UnitType> makeBase<ScalarType, UnitType>(const ScalarType& scalar);
+  class BaseQuantity : public detail::QuantityBase<BaseQuantity, ScalarType, UnitType> {
     struct InternalTag { };
 
    public:
@@ -33,11 +34,57 @@ namespace poids {
     /** Gets the value in the base\ units. */
     Scalar value() const { return value_; }
 
+    using detail::QuantityBase<BaseQuantity, ScalarType, UnitType>::operator+;
+
+    Quantity<Scalar, Unit> operator+(const Quantity<Scalar, Unit>& rhs) const {
+      return Quantity<Scalar, Unit>{this->value_ + rhs.value_,
+                                    typename Quantity<Scalar, Unit>::InternalTag{}};
+    }
+
+    template <typename ScalarTypeRHS, typename UnitTypeRHS>
+    auto operator*(const BaseQuantity<ScalarTypeRHS, UnitTypeRHS>& rhs) const {
+      using ResultType = BaseQuantity<Scalar,
+                                      typename Unit::multiply_t<UnitTypeRHS>>;
+
+      return ResultType{this->base() * rhs.base(), typename ResultType::InternalTag{}};
+    }
+
+    template <typename ScalarTypeRHS, typename UnitTypeRHS>
+    auto operator*(const Quantity<ScalarTypeRHS, UnitTypeRHS>& rhs) const {
+      using ResultType = Quantity<Scalar,
+                                  typename Unit::multiply_t<UnitTypeRHS>>;
+
+      return ResultType{this->base() * rhs.base(), typename ResultType::InternalTag{}};
+    }
+
+    template <typename ScalarTypeRHS, typename UnitTypeRHS>
+    auto operator/(const BaseQuantity<ScalarTypeRHS, UnitTypeRHS>& rhs) const {
+      using ResultType = BaseQuantity<ScalarType,
+                                      typename Unit::divide_t<UnitTypeRHS>>;
+
+      return ResultType{this->base() / rhs.base(), typename ResultType::InternalTag{}};
+    }
+
+    template <typename ScalarTypeRHS, typename UnitTypeRHS>
+    auto operator/(const Quantity<ScalarTypeRHS, UnitTypeRHS>& rhs) const {
+      using ResultType = Quantity<ScalarType,
+                                  typename Unit::divide_t<UnitTypeRHS>>;
+
+      return ResultType{this->base() / rhs.base(), typename ResultType::InternalTag{}};
+    }
+
    private:
     Scalar value_{};
 
     BaseQuantity(const Scalar& baseValue, InternalTag) :
         value_{baseValue} { }
+
+    template <template <typename, typename> typename, typename, typename>
+    friend class detail::QuantityBase;
+    template <typename, typename>
+    friend class BaseQuantity;
+
+    friend BaseQuantity<ScalarType, UnitType> makeBase<ScalarType, UnitType>(const ScalarType& scalar);
   };
 
   template <typename ScalarType, typename UnitType>

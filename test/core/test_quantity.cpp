@@ -34,10 +34,10 @@ TEST(TestQuantity, ImplicitFromScalarIfUnitless) {
 TEST(TestQuantity, ExplicitAsConversion) {
   double expected = 5600.0;
 
-  auto millimeters = poids::BaseQuantity<double,
-                                         kgms::UnitType<std::ratio<0>,
-                                                        std::ratio<1>,
-                                                        std::ratio<0>>>::makeBase(0.001);
+  auto millimeters = poids::makeBase<double,
+                                     kgms::UnitType<std::ratio<0>,
+                                                    std::ratio<1>,
+                                                    std::ratio<0>>>(0.001);
 
   auto value = poids::Quantity<double,
                                kgms::UnitType<std::ratio<0>,
@@ -50,10 +50,10 @@ TEST(TestQuantity, ExplicitAsConversion) {
 }
 
 TEST(TestQuantity, ImplicitlyConstructibleFromBaseQuantity) {
-  auto meters = poids::BaseQuantity<double,
-                                    kgms::UnitType<std::ratio<0>,
-                                                   std::ratio<1>,
-                                                   std::ratio<0>>>::makeBase(1.0);
+  auto meters = poids::makeBase<double,
+                                kgms::UnitType<std::ratio<0>,
+                                               std::ratio<1>,
+                                               std::ratio<0>>>(1.0);
 
   poids::Quantity actual{meters};
 

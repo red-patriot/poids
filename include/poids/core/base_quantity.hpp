@@ -7,8 +7,16 @@
 namespace poids {
   template <typename ScalarType,
             typename UnitType>
+  class BaseQuantity;
+
+  template <typename ScalarType, typename UnitType>
+  BaseQuantity<ScalarType, UnitType> makeBase(const ScalarType& scalar);
+
+  template <typename ScalarType,
+            typename UnitType>
   class BaseQuantity : public detail::QuantityBase<BaseQuantity<ScalarType, UnitType>> {
     friend detail::QuantityBase<BaseQuantity<ScalarType, UnitType>>;
+    friend BaseQuantity<ScalarType, UnitType> makeBase<ScalarType, UnitType>(const ScalarType& scalar);
     struct InternalTag { };
 
    public:
@@ -25,10 +33,6 @@ namespace poids {
     /** Gets the value in the base\ units. */
     Scalar value() const { return value_; }
 
-    static Type makeBase(const Scalar& baseValue) {
-      return Type(baseValue, InternalTag{});
-    }
-
    private:
     Scalar value_{};
 
@@ -36,18 +40,24 @@ namespace poids {
         value_{baseValue} { }
   };
 
-  /** If a quantity is tested for being dimensionless, forward the request to its DimensionType*/
-  template <typename Scalar, typename DimensionType>
-  struct IsUnitless<BaseQuantity<Scalar, DimensionType>> : public IsUnitless<DimensionType> { };
+  template <typename ScalarType, typename UnitType>
+  inline BaseQuantity<ScalarType, UnitType> makeBase(const ScalarType& scalar) {
+    return BaseQuantity<ScalarType, UnitType>{scalar,
+                                              typename BaseQuantity<ScalarType, UnitType>::InternalTag{}};
+  };
 
-  template <typename ScalarType, typename DimensionType>
-  struct ScalarOf<BaseQuantity<ScalarType, DimensionType>> {
+  /** If a quantity is tested for being dimensionless, forward the request to its DimensionType*/
+  template <typename Scalar, typename UnitType>
+  struct IsUnitless<BaseQuantity<Scalar, UnitType>> : public IsUnitless<UnitType> { };
+
+  template <typename ScalarType, typename UnitType>
+  struct ScalarOf<BaseQuantity<ScalarType, UnitType>> {
     using type = ScalarType;
   };
 
-  template <typename ScalarType, typename DimensionType>
-  struct UnitOf<BaseQuantity<ScalarType, DimensionType>> {
-    using type = DimensionType;
+  template <typename ScalarType, typename UnitType>
+  struct UnitOf<BaseQuantity<ScalarType, UnitType>> {
+    using type = UnitType;
   };
 }  // namespace poids
 

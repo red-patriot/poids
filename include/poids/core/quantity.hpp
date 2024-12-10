@@ -44,21 +44,21 @@ namespace poids {
   };
 
   /** If a quantity is tested for being dimensionless, forward the request to its DimensionType*/
-  template <typename Scalar, typename DimensionType>
-  struct IsUnitless<Quantity<Scalar, DimensionType>> : public IsUnitless<DimensionType> { };
+  template <typename Scalar, typename UnitType>
+  struct IsUnitless<Quantity<Scalar, UnitType>> : public IsUnitless<UnitType> { };
 
-  template <typename ScalarType, typename DimensionType>
-  struct ScalarOf<Quantity<ScalarType, DimensionType>> {
+  template <typename ScalarType, typename UnitType>
+  struct ScalarOf<Quantity<ScalarType, UnitType>> {
     using type = ScalarType;
   };
 
-  template <typename ScalarType, typename DimensionType>
-  struct UnitOf<Quantity<ScalarType, DimensionType>> {
-    using type = DimensionType;
+  template <typename ScalarType, typename UnitType>
+  struct UnitOf<Quantity<ScalarType, UnitType>> {
+    using type = UnitType;
   };
 
-  template <typename ScalarType, typename DimensionType>
-  Quantity(BaseQuantity<ScalarType, DimensionType>) -> Quantity<ScalarType, DimensionType>;
+  template <typename ScalarType, typename UnitType>
+  Quantity(BaseQuantity<ScalarType, UnitType>) -> Quantity<ScalarType, UnitType>;
 }  // namespace poids
 
 #endif

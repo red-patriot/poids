@@ -2,54 +2,35 @@
 #define POIDS_CORE_QUANTITY_HPP
 
 #include "traits.hpp"
+#include "quantity_base.hpp"
+#include "base_quantity.hpp"
 
 namespace poids {
   template <typename ScalarType,
             typename UnitType>
-  class Quantity {
+  class Quantity : public detail::QuantityBase<Quantity<ScalarType, UnitType>> {
+    friend detail::QuantityBase<Quantity<ScalarType, UnitType>>;
     struct InternalTag { };
 
    public:
-    using Scalar = ScalarType;
-    using Unit = UnitType;
+    using Scalar = ScalarOf_t<Quantity<ScalarType, UnitType>>;
+    using Unit = UnitOf_t<Quantity<ScalarType, UnitType>>;
     using Type = Quantity<Scalar, Unit>;
+    using BaseType = BaseQuantity<Scalar, Unit>;
+
+    Quantity() = default;
 
     /*implicit*/ Quantity(const Scalar& baseValue) :
         value_(baseValue) {
       static_assert(IsUnitless<Unit>::value,
-                    "Only a unitless poids::Quantity can only be constructed from a Scalar. Use poids::Quantity::makeBase instead to explicitly construct this object");
+                    "Only a unitless poids::Quantity can only be constructed from a Scalar. Use poids::Quantity::makeFromBaseUnitValue instead to explicitly construct this object");
     }
-
-    Scalar base() { return value_; }
-    const Scalar& base() const { return value_; }
 
     /** Gets the value in the desired units. */
-    Scalar as(const Type& desired) const { return value_ / desired.base(); }
+    Scalar as(const BaseType& desired) const { return value_ / desired.base(); }
 
-    static Type makeBase(const Scalar& baseValue) {
+    static Type makeFromBaseUnitValue(const Scalar& baseValue) {
       return Type(baseValue, InternalTag{});
-    }
-
-    bool operator==(const Type& other) const {
-      return this->value_ == other.value_;
-    }
-
-    bool operator!=(const Type& other) const {
-      return !this->operator==(other);
-    }
-
-    bool operator<(const Type& other) const {
-      return this->value_ < other.value_;
-    }
-
-    bool operator>(const Type& other) const {
-      return other.operator<(*this);
-    }
-    bool operator<=(const Type& other) const {
-      return this->operator==(other) || this->operator<(other);
-    }
-    bool operator>=(const Type& other) const {
-      return this->operator==(other) || this->operator>(other);
     }
 
    private:
@@ -62,6 +43,16 @@ namespace poids {
   /** If a quantity is tested for being dimensionless, forward the request to its DimensionType*/
   template <typename Scalar, typename DimensionType>
   struct IsUnitless<Quantity<Scalar, DimensionType>> : public IsUnitless<DimensionType> { };
+
+  template <typename ScalarType, typename DimensionType>
+  struct ScalarOf<Quantity<ScalarType, DimensionType>> {
+    using type = ScalarType;
+  };
+
+  template <typename ScalarType, typename DimensionType>
+  struct UnitOf<Quantity<ScalarType, DimensionType>> {
+    using type = DimensionType;
+  };
 }  // namespace poids
 
 #endif

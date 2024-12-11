@@ -4,14 +4,20 @@
 #include <type_traits>
 
 namespace poids {
-  template <typename T>
+  template <typename T, typename = void>
   struct IsUnitless : public std::false_type { };
+
+  template <typename T>
+  struct IsUnitless<T, std::void_t<typename T::unitless_t>> : public std::is_same<T, typename T::unitless_t> { };
 
   template <typename T>
   struct ScalarOf { };
 
   template <typename T>
   struct UnitOf { };
+
+  template <typename T>
+  constexpr bool IsUnitless_v = IsUnitless<T>::value;
 
   template <typename T>
   using ScalarOf_t = typename ScalarOf<T>::type;

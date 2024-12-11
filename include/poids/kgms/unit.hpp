@@ -67,11 +67,4 @@ namespace kgms {
   };
 }  // namespace kgms
 
-namespace poids {
-  template <>
-  struct IsUnitless<kgms::UnitType<std::ratio<0>,
-                                   std::ratio<0>,
-                                   std::ratio<0>>> : public std::true_type { };
-}  // namespace poids
-
 #endif

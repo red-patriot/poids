@@ -13,7 +13,7 @@ namespace poids {
   class Quantity;
 
   template <typename ScalarType, typename UnitType>
-  BaseQuantity<ScalarType, UnitType> makeBase(const ScalarType& scalar);
+  constexpr BaseQuantity<ScalarType, UnitType> makeBase(const ScalarType& scalar);
 
   template <typename ScalarType,
             typename UnitType>
@@ -25,14 +25,14 @@ namespace poids {
     using Unit = UnitOf_t<BaseQuantity<ScalarType, UnitType>>;
     using Type = BaseQuantity<Scalar, Unit>;
 
-    explicit BaseQuantity(const Scalar& baseValue) :
+    constexpr explicit BaseQuantity(const Scalar& baseValue) :
         value_(baseValue) {
       static_assert(IsUnitless<Unit>::value,
                     "Only a unitless poids::BaseQuantity can only be constructed from a Scalar. Use poids::BaseQuantity::makeBase instead to explicitly construct this object");
     }
 
     /** Gets the value in the base\ units. */
-    Scalar value() const { return value_; }
+    constexpr Scalar value() const { return value_; }
 
     using detail::QuantityBase<BaseQuantity, ScalarType, UnitType>::operator+;
 
@@ -124,7 +124,7 @@ namespace poids {
    private:
     Scalar value_{};
 
-    BaseQuantity(const Scalar& baseValue, InternalTag) :
+    constexpr BaseQuantity(const Scalar& baseValue, InternalTag) :
         value_{baseValue} { }
 
     template <template <typename, typename> typename, typename, typename>
@@ -132,11 +132,11 @@ namespace poids {
     template <typename, typename>
     friend class BaseQuantity;
 
-    friend BaseQuantity<ScalarType, UnitType> makeBase<ScalarType, UnitType>(const ScalarType& scalar);
+    friend constexpr BaseQuantity<ScalarType, UnitType> makeBase<ScalarType, UnitType>(const ScalarType& scalar);
   };
 
   template <typename ScalarType, typename UnitType>
-  inline BaseQuantity<ScalarType, UnitType> makeBase(const ScalarType& scalar) {
+  inline constexpr BaseQuantity<ScalarType, UnitType> makeBase(const ScalarType& scalar) {
     return BaseQuantity<ScalarType, UnitType>{scalar,
                                               typename BaseQuantity<ScalarType, UnitType>::InternalTag{}};
   };

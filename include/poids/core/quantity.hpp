@@ -156,7 +156,7 @@ namespace poids {
   Quantity(BaseQuantity<ScalarType, UnitType>) -> Quantity<ScalarType, UnitType>;
 
   template <typename QuantityType>
-  inline BaseQuantity<ScalarOf_t<QuantityType>, UnitOf_t<QuantityType>> makeBase(const ScalarOf_t<QuantityType>& scalar) {
+  inline constexpr BaseQuantity<ScalarOf_t<QuantityType>, UnitOf_t<QuantityType>> makeBase(const ScalarOf_t<QuantityType>& scalar) {
     return makeBase<ScalarOf_t<QuantityType>, UnitOf_t<QuantityType>>(scalar);
   }
 }  // namespace poids

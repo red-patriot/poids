@@ -92,6 +92,35 @@ namespace poids {
       return UnitlessQuantity{lhs, typename UnitlessQuantity::InternalTag{}} / rhs;
     }
 
+    using detail::QuantityBase<BaseQuantity, ScalarType, UnitType>::operator==;
+    using detail::QuantityBase<BaseQuantity, ScalarType, UnitType>::operator!=;
+    using detail::QuantityBase<BaseQuantity, ScalarType, UnitType>::operator<;
+    using detail::QuantityBase<BaseQuantity, ScalarType, UnitType>::operator>;
+    using detail::QuantityBase<BaseQuantity, ScalarType, UnitType>::operator>=;
+    using detail::QuantityBase<BaseQuantity, ScalarType, UnitType>::operator<=;
+
+    bool operator==(const Quantity<Scalar, Unit>& rhs) const {
+      return this->value_ == rhs.value_;
+    }
+
+    bool operator!=(const Quantity<Scalar, Unit>& rhs) const {
+      return !this->operator==(rhs);
+    }
+
+    bool operator<(const Quantity<Scalar, Unit>& rhs) const {
+      return this->value_ < rhs.value_;
+    }
+
+    bool operator>(const Quantity<Scalar, Unit>& rhs) const {
+      return rhs.operator<(*this);
+    }
+    bool operator<=(const Quantity<Scalar, Unit>& rhs) const {
+      return this->operator==(rhs) || this->operator<(rhs);
+    }
+    bool operator>=(const Quantity<Scalar, Unit>& rhs) const {
+      return this->operator==(rhs) || this->operator>(rhs);
+    }
+
    private:
     Scalar value_{};
 

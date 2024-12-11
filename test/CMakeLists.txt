@@ -13,6 +13,7 @@ set(POIDS_CORE_TESTS
 )
 
 set(KGMS_TESTS
+    "kgms/test_base_constants.cpp"
     "kgms/test_dimensional_analysis.cpp"
 )
 

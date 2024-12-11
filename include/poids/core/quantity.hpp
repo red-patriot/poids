@@ -51,6 +51,14 @@ namespace poids {
       return ResultType{this->base() * rhs.base(), typename ResultType::InternalTag{}};
     }
 
+    auto operator*(const Scalar& rhs) const {
+      return Type{this->base() * rhs, InternalTag{}};
+    }
+
+    friend auto operator*(const Scalar& lhs, const Type& rhs) {
+      return rhs.operator*(lhs);
+    }
+
     template <typename ScalarTypeRHS, typename UnitTypeRHS>
     auto operator/(const Quantity<ScalarTypeRHS, UnitTypeRHS>& rhs) const {
       using ResultType = Quantity<ScalarType,

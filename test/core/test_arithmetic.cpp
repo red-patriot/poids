@@ -126,6 +126,30 @@ TEST(TestQuantityArithmetic, MultiplyBaseQuantityQuantity) {
   EXPECT_NEAR(expected.base(), actual.base(), 1e-6);
 }
 
+TEST(TestQuantityArithmetic, MultiplyQuantityScalar) {
+  auto expected = kgms::Mass::makeFromBaseUnitValue(14.0);
+
+  auto a = kgms::Mass::makeFromBaseUnitValue(7);
+  double b = 2.0;
+
+  auto actual = a * b;
+
+  EXPECT_TRUE((std::is_same_v<kgms::Mass, decltype(actual)>));
+  EXPECT_NEAR(expected.base(), actual.base(), 1e-6);
+}
+
+TEST(TestQuantityArithmetic, MultiplyScalarQuantity) {
+  auto expected = kgms::Energy::makeFromBaseUnitValue(14.0);
+
+  double a = 2.0;
+  auto b = kgms::Energy::makeFromBaseUnitValue(7);
+
+  auto actual = a * b;
+
+  EXPECT_TRUE((std::is_same_v<kgms::Energy, decltype(actual)>));
+  EXPECT_NEAR(expected.base(), actual.base(), 1e-6);
+}
+
 TEST(TestQuantityArithmetic, DivideQuantityQuantity) {
   auto expected = kgms::Area::makeFromBaseUnitValue(3.0);
 

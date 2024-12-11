@@ -28,6 +28,8 @@ namespace kgms {
 
   using Force = poids::Quantity<double,
                                 UnitType<std::ratio<1>, std::ratio<1>, std::ratio<-2>>>;
+  using Energy = poids::Quantity<double,
+                                 UnitType<std::ratio<1>, std::ratio<2>, std::ratio<-2>>>;
 }  // namespace kgms
 
 #endif

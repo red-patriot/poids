@@ -75,6 +75,15 @@ namespace poids {
       return ResultType{this->base() / rhs.base(), typename ResultType::InternalTag{}};
     }
 
+    auto operator/(const Scalar& rhs) const {
+      return Type{this->base() / rhs, InternalTag{}};
+    }
+
+    friend auto operator/(const Scalar& lhs, const Type& rhs) {
+      using UnitlessQuantity = Quantity<Scalar, typename Unit::unitless_t>;
+      return UnitlessQuantity{lhs, typename UnitlessQuantity::InternalTag{}} / rhs;
+    }
+
    private:
     Scalar value_{};
 

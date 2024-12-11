@@ -21,6 +21,9 @@ namespace kgms {
   using SecondMomentOfArea = poids::Quantity<double,
                                              UnitType<std::ratio<0>, std::ratio<4>, std::ratio<0>>>;
 
+  using Frequency = poids::Quantity<double,
+                                    UnitType<std::ratio<0>, std::ratio<0>, std::ratio<-1>>>;
+
   using Velocity = poids::Quantity<double,
                                    UnitType<std::ratio<0>, std::ratio<1>, std::ratio<-1>>>;
   using Acceleration = poids::Quantity<double,

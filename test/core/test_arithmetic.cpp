@@ -197,3 +197,27 @@ TEST(TestQuantityArithmetic, DivideBaseQuantityQuantity) {
   EXPECT_TRUE((std::is_same_v<kgms::Acceleration, decltype(actual)>));
   EXPECT_NEAR(expected.base(), actual.base(), 1e-6);
 }
+
+TEST(TestQuantityArithmetic, DivideQuantityScalar) {
+  auto expected = kgms::Time::makeFromBaseUnitValue(12.0);
+
+  auto a = kgms::Time::makeFromBaseUnitValue(48.0);
+  double b = 4.0;
+
+  auto actual = a / b;
+
+  EXPECT_TRUE((std::is_same_v<kgms::Time, decltype(actual)>));
+  EXPECT_NEAR(expected.base(), actual.base(), 1e-6);
+}
+
+TEST(TestQuantityArithmetic, DivideScalarQuantity) {
+  auto expected = kgms::Frequency::makeFromBaseUnitValue(0.5);
+
+  double a = 4.0;
+  auto b = kgms::Time::makeFromBaseUnitValue(8.0);
+
+  auto actual = a / b;
+
+  EXPECT_TRUE((std::is_same_v<kgms::Frequency, decltype(actual)>));
+  EXPECT_NEAR(expected.base(), actual.base(), 1e-6);
+}

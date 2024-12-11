@@ -1,6 +1,8 @@
 #ifndef POIDS_CORE_TRAITS_HPP
 #define POIDS_CORE_TRAITS_HPP
 
+#include <cstdint>
+#include <ratio>
 #include <type_traits>
 
 namespace poids {
@@ -25,6 +27,11 @@ namespace poids {
   template <typename T>
   using UnitOf_t = typename UnitOf<T>::type;
 
+  template <typename T>
+  struct is_std_ratio : public std::false_type { };
+
+  template <intmax_t Num, intmax_t Den>
+  struct is_std_ratio<std::ratio<Num, Den>> : public std::true_type { };
 }  // namespace poids
 
 #endif

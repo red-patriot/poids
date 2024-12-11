@@ -7,14 +7,6 @@
 #include "poids/core/traits.hpp"
 
 namespace kgms {
-  namespace detail {
-    template <typename T>
-    struct is_std_ratio : public std::false_type { };
-
-    template <intmax_t Num, intmax_t Den>
-    struct is_std_ratio<std::ratio<Num, Den>> : public std::true_type { };
-  }  // namespace detail
-
   /**
    * A Unit in the KGMS system
    *
@@ -26,9 +18,9 @@ namespace kgms {
             typename LengthRatio,
             typename TimeRatio>
   struct UnitType {
-    static_assert(detail::is_std_ratio<MassRatio>::value, "MassRatio must be a specialization of std::ratio");
-    static_assert(detail::is_std_ratio<LengthRatio>::value, "LengthRatio must be a specialization of std::ratio");
-    static_assert(detail::is_std_ratio<TimeRatio>::value, "TimeRatio must be a specialization of std::ratio");
+    static_assert(poids::is_std_ratio<MassRatio>::value, "MassRatio must be a specialization of std::ratio");
+    static_assert(poids::is_std_ratio<LengthRatio>::value, "LengthRatio must be a specialization of std::ratio");
+    static_assert(poids::is_std_ratio<TimeRatio>::value, "TimeRatio must be a specialization of std::ratio");
 
     using mass = MassRatio;     /**< The quantity of mass units*/
     using length = LengthRatio; /**< The quantity of length units*/

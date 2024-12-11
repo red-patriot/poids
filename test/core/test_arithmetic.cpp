@@ -269,3 +269,14 @@ TEST(TestQuantityArithmetic, DivideScalarBaseQuantity) {
   EXPECT_TRUE((std::is_same_v<kgms::Frequency, decltype(actual)>));
   EXPECT_NEAR(expected.base(), actual.base(), 1e-6);
 }
+
+TEST(TestQuantityArithmetic, DivideQuantityWithSelf) {
+  double expected = 10.0;
+
+  auto a = kgms::Length::makeFromBaseUnitValue(100.0);
+  auto b = kgms::Length::makeFromBaseUnitValue(10.0);
+
+  double actual{a / b};
+
+  EXPECT_NEAR(expected, actual, 1e-6);
+}

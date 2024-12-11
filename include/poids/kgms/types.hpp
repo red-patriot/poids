@@ -5,6 +5,9 @@
 #include <poids/kgms/unit.hpp>
 
 namespace kgms {
+  using Unitless = poids::Quantity<double,
+                                   UnitType<std::ratio<0>, std::ratio<0>, std::ratio<0>>>;
+
   using Mass = poids::Quantity<double,
                                UnitType<std::ratio<1>, std::ratio<0>, std::ratio<0>>>;
 

@@ -22,11 +22,22 @@ namespace poids {
     /*implicit*/ Quantity(const Scalar& baseValue) :
         value_(baseValue) {
       static_assert(IsUnitless<Unit>::value,
-                    "Only a unitless poids::Quantity can only be constructed from a Scalar. Use poids::Quantity::makeFromBaseUnitValue instead to explicitly construct this object");
+                    "Only a unitless poids::Quantity can only be constructed "
+                    "from a Scalar. Use poids::Quantity::makeFromBaseUnitValue "
+                    "instead to explicitly construct this object from the base "
+                    "unit quantity");
     }
 
     /*implicit*/ Quantity(const BaseType& baseQuantity) :
         value_(baseQuantity.value()) { }
+
+    explicit operator Scalar() const {
+      static_assert(IsUnitless<Unit>::value,
+                    "Only a unitless poids::Quantity is convertible to Scalar. "
+                    "Use poids::Quantity::base instead to explicitly get the "
+                    "value in base units as a Scalar.");
+      return this->base();
+    }
 
     /** Gets the value in the desired units. */
     Scalar as(const BaseType& desired) const { return value_ / desired.base(); }

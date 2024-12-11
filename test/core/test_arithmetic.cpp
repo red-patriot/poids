@@ -150,6 +150,30 @@ TEST(TestQuantityArithmetic, MultiplyScalarQuantity) {
   EXPECT_NEAR(expected.base(), actual.base(), 1e-6);
 }
 
+TEST(TestQuantityArithmetic, MultiplyBaseQuantityScalar) {
+  auto expected = kgms::Time::makeFromBaseUnitValue(63.0);
+
+  auto a = poids::makeBase<kgms::Time>(9.0);
+  double b = 7.0;
+
+  auto actual = a * b;
+
+  EXPECT_TRUE((std::is_same_v<kgms::Time, decltype(actual)>));
+  EXPECT_NEAR(expected.base(), actual.base(), 1e-6);
+}
+
+TEST(TestQuantityArithmetic, MultiplyScalarBaseQuantity) {
+  auto expected = kgms::Time::makeFromBaseUnitValue(63.0);
+
+  double a = 7.0;
+  auto b = poids::makeBase<kgms::Time>(9.0);
+
+  auto actual = a * b;
+
+  EXPECT_TRUE((std::is_same_v<kgms::Time, decltype(actual)>));
+  EXPECT_NEAR(expected.base(), actual.base(), 1e-6);
+}
+
 TEST(TestQuantityArithmetic, DivideQuantityQuantity) {
   auto expected = kgms::Area::makeFromBaseUnitValue(3.0);
 
@@ -215,6 +239,30 @@ TEST(TestQuantityArithmetic, DivideScalarQuantity) {
 
   double a = 4.0;
   auto b = kgms::Time::makeFromBaseUnitValue(8.0);
+
+  auto actual = a / b;
+
+  EXPECT_TRUE((std::is_same_v<kgms::Frequency, decltype(actual)>));
+  EXPECT_NEAR(expected.base(), actual.base(), 1e-6);
+}
+
+TEST(TestQuantityArithmetic, DivideBaseQuantityScalar) {
+  auto expected = kgms::Volume::makeFromBaseUnitValue(4.5);
+
+  auto a = poids::makeBase<kgms::Volume>(9.0);
+  double b = 2.0;
+
+  auto actual = a / b;
+
+  EXPECT_TRUE((std::is_same_v<kgms::Volume, decltype(actual)>));
+  EXPECT_NEAR(expected.base(), actual.base(), 1e-6);
+}
+
+TEST(TestQuantityArithmetic, DivideScalarBaseQuantity) {
+  auto expected = kgms::Frequency::makeFromBaseUnitValue(0.5);
+
+  double a = 4.0;
+  auto b = poids::makeBase<kgms::Time>(8.0);
 
   auto actual = a / b;
 

@@ -57,6 +57,15 @@ namespace poids {
       return ResultType{this->base() * rhs.base(), typename ResultType::InternalTag{}};
     }
 
+    auto operator*(const Scalar& rhs) const {
+      using ResultType = Quantity<Scalar, Unit>;
+      return ResultType{this->base() * rhs, typename ResultType::InternalTag{}};
+    }
+
+    friend auto operator*(const Scalar& lhs, const Type& rhs) {
+      return rhs.operator*(lhs);
+    }
+
     template <typename ScalarTypeRHS, typename UnitTypeRHS>
     auto operator/(const BaseQuantity<ScalarTypeRHS, UnitTypeRHS>& rhs) const {
       using ResultType = BaseQuantity<ScalarType,
@@ -71,6 +80,16 @@ namespace poids {
                                   typename Unit::divide_t<UnitTypeRHS>>;
 
       return ResultType{this->base() / rhs.base(), typename ResultType::InternalTag{}};
+    }
+
+    auto operator/(const Scalar& rhs) const {
+      using ResultType = Quantity<Scalar, Unit>;
+      return ResultType{this->base() / rhs, typename ResultType::InternalTag{}};
+    }
+
+    friend auto operator/(const Scalar& lhs, const Type& rhs) {
+      using UnitlessQuantity = Quantity<Scalar, typename Unit::unitless_t>;
+      return UnitlessQuantity{lhs, typename UnitlessQuantity::InternalTag{}} / rhs;
     }
 
    private:

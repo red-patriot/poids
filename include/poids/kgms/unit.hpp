@@ -18,9 +18,12 @@ namespace kgms {
             typename LengthRatio,
             typename TimeRatio>
   struct UnitType {
-    static_assert(poids::is_std_ratio<MassRatio>::value, "MassRatio must be a specialization of std::ratio");
-    static_assert(poids::is_std_ratio<LengthRatio>::value, "LengthRatio must be a specialization of std::ratio");
-    static_assert(poids::is_std_ratio<TimeRatio>::value, "TimeRatio must be a specialization of std::ratio");
+    static_assert(poids::is_std_ratio<MassRatio>::value,
+                  "MassRatio must be a specialization of std::ratio");
+    static_assert(poids::is_std_ratio<LengthRatio>::value,
+                  "LengthRatio must be a specialization of std::ratio");
+    static_assert(poids::is_std_ratio<TimeRatio>::value,
+                  "TimeRatio must be a specialization of std::ratio");
 
     using mass = MassRatio;     /**< The quantity of mass units*/
     using length = LengthRatio; /**< The quantity of length units*/
@@ -50,11 +53,18 @@ namespace kgms {
     };
 
    public:
+    /** The resultant units of the operation
+     * kgms::UnitType * kgms::UnitType
+     */
     template <typename Other>
     using multiply_t = typename MultiplyImpl<Other>::type;
+    /** The resultant units of the operation
+     * kgms::UnitType / kgms::UnitType
+     */
     template <typename Other>
     using divide_t = typename DivideImpl<Other>::type;
 
+    /** The unitless units */
     using unitless_t = kgms::UnitType<std::ratio<0>, std::ratio<0>, std::ratio<0>>;
   };
 }  // namespace kgms

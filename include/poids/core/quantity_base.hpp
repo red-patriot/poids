@@ -3,18 +3,19 @@
 
 #include "traits.hpp"
 
+/** Mixin classes to provide extra functionality to Quantity and BaseQuantity*/
 namespace poids::detail {
   template <typename Derived, bool IsBase>
-  class QuantityBase {
+  class QuantityMixin {
    public:
    protected:
     /** Only children can directly access this class*/
-    QuantityBase() = default;
-    QuantityBase(const QuantityBase&) = default;
-    QuantityBase& operator=(const QuantityBase&) = default;
-    QuantityBase(QuantityBase&&) = default;
-    QuantityBase& operator=(QuantityBase&&) = default;
-    ~QuantityBase() = default;
+    QuantityMixin() = default;
+    QuantityMixin(const QuantityMixin&) = default;
+    QuantityMixin& operator=(const QuantityMixin&) = default;
+    QuantityMixin(QuantityMixin&&) = default;
+    QuantityMixin& operator=(QuantityMixin&&) = default;
+    ~QuantityMixin() = default;
 
    private:
     Derived* derived() { return static_cast<Derived*>(this); }
@@ -22,19 +23,19 @@ namespace poids::detail {
   };
 
   template <typename Derived>
-  class QuantityBase<Derived, true> {
+  class QuantityMixin<Derived, true> {
    public:
     /** Gets the value in the base units. */
     constexpr ScalarOf_t<Derived> value() const { return derived()->value_; }
 
    protected:
     /** Only children can directly access this class*/
-    QuantityBase() = default;
-    QuantityBase(const QuantityBase&) = default;
-    QuantityBase& operator=(const QuantityBase&) = default;
-    QuantityBase(QuantityBase&&) = default;
-    QuantityBase& operator=(QuantityBase&&) = default;
-    ~QuantityBase() = default;
+    QuantityMixin() = default;
+    QuantityMixin(const QuantityMixin&) = default;
+    QuantityMixin& operator=(const QuantityMixin&) = default;
+    QuantityMixin(QuantityMixin&&) = default;
+    QuantityMixin& operator=(QuantityMixin&&) = default;
+    ~QuantityMixin() = default;
 
    private:
     constexpr Derived* derived() { return static_cast<Derived*>(this); }

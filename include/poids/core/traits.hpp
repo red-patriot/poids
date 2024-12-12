@@ -6,27 +6,36 @@
 #include <type_traits>
 
 namespace poids {
-  template <typename T, typename = void>
+  /** Indicates if a given type is unitless */
+  template <typename UnitType, typename = void>
   struct IsUnitless : public std::false_type { };
 
-  template <typename T>
-  struct IsUnitless<T, std::void_t<typename T::unitless_t>> : public std::is_same<T, typename T::unitless_t> { };
+  template <typename UnitType>
+  struct IsUnitless<UnitType,
+                    std::void_t<typename UnitType::unitless_t>>
+      : public std::is_same<UnitType, typename UnitType::unitless_t> { };
 
-  template <typename T>
+  template <typename QuantityType>
   struct ScalarOf { };
 
-  template <typename T>
+  template <typename QuantityType>
   struct UnitOf { };
 
-  template <typename T>
-  constexpr bool IsUnitless_v = IsUnitless<T>::value;
+  /** Indicates if the given type T is unitless  */
+  template <typename QuantityType>
+  constexpr bool IsUnitless_v = IsUnitless<QuantityType>::value;
 
-  template <typename T>
-  using ScalarOf_t = typename ScalarOf<T>::type;
+  /** Accesses the Scalar type of the given QuantityType*/
+  template <typename QuantityType>
+  using ScalarOf_t = typename ScalarOf<QuantityType>::type;
 
-  template <typename T>
-  using UnitOf_t = typename UnitOf<T>::type;
+  /** Accesses the Scalar type of the given QuantityType*/
+  template <typename QuantityType>
+  using UnitOf_t = typename UnitOf<QuantityType>::type;
 
+  /** Convenience function for unit systems, indicates if a given type is a
+   * specialization of std::ratio
+   */
   template <typename T>
   struct is_std_ratio : public std::false_type { };
 

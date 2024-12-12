@@ -9,6 +9,7 @@ FetchContent_MakeAvailable(googletest)
 set(POIDS_CORE_TESTS
     "core/test_arithmetic.cpp"
     "core/test_base_quantity.cpp"
+    "core/test_long_double_scalar_support.cpp"
     "core/test_quantity.cpp"
 )
 

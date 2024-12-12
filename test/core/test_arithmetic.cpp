@@ -22,7 +22,7 @@ TEST(TestQuantityArithmetic, AddBases) {
   auto a = poids::makeBase<kgms::Mass>(0.54);
   auto b = poids::makeBase<kgms::Mass>(3.99);
 
-  kgms::Mass::BaseType actual = a + b;
+  auto actual = a + b;
 
   EXPECT_TRUE((std::is_same_v<kgms::Mass::BaseType, decltype(actual)>));
   EXPECT_NEAR(expected.base(), actual.base(), 1e-6);

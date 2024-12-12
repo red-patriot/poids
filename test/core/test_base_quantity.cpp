@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "poids/core/base_quantity.hpp"
+#include "poids/core/quantity.hpp"
 #include "poids/kgms/unit.hpp"
 
 TEST(TestBaseQuantity, BaseConstruct) {
@@ -27,7 +27,7 @@ TEST(TestBaseQuantity, DetectUnitlessBaseQuantity) {
   EXPECT_FALSE(poids::IsUnitless<NotUnitless>::value);
 }
 
-TEST(TestBaseQuantity, ExplicitAsConversion) {
+TEST(TestBaseQuantity, ExplicitValueConversion) {
   double expected = 5600.0;
 
   auto value = poids::makeBase<double,

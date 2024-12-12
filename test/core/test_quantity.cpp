@@ -27,12 +27,12 @@ TEST(TestQuantity, DetectUnitlessQuantity) {
   EXPECT_FALSE(poids::IsUnitless_v<NotUnitless>);
 }
 
-TEST(TestQuantity, ImplicitFromScalarIfUnitless) {
+TEST(TestQuantity, ConstructFromScalarIfUnitless) {
   poids::Quantity<double,
                   kgms::UnitType<std::ratio<0>,
                                  std::ratio<0>,
                                  std::ratio<0>>>
-      actual = 5.6;
+      actual{5.6};
 
   EXPECT_DOUBLE_EQ(5.6, actual.base());
 }

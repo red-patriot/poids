@@ -14,6 +14,9 @@ namespace kgms {
     inline constexpr auto meter = poids::makeBase<::kgms::Length>(1.0);
     /** The base unit for Time in KGMS.*/
     inline constexpr auto second = poids::makeBase<::kgms::Time>(1.0);
+
+    inline constexpr auto radian = poids::makeBase<::kgms::Unitless>(1.0);
+    inline constexpr auto degree = poids::makeBase<::kgms::Unitless>(0.017'453'292'519'943'295);
   }  // namespace base
 
   namespace detail {

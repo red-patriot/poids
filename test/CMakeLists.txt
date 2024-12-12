@@ -18,14 +18,9 @@ set(KGMS_TESTS
     "kgms/test_metric_prefixes.cpp"
 )
 
-set(ANGLE_TESTS
-    "angle/test_angle_system.cpp"
-)
-
 add_executable(poids_test
     ${POIDS_CORE_TESTS}
     ${KGMS_TESTS}
-    ${ANGLE_TESTS}
 )
 
 set_target_properties(poids_test

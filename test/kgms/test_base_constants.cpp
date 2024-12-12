@@ -33,3 +33,19 @@ TEST(TestKGMSBase, Time) {
 
   EXPECT_EQ(expected, actual);
 }
+
+TEST(TestKGMSBase, Radian) {
+  auto expected = poids::makeBase<kgms::Angle>(1.0);
+
+  kgms::Angle actual = kgms::base::radian;
+
+  EXPECT_EQ(expected, actual);
+}
+
+TEST(TestKGMSBase, Degree) {
+  auto expected = poids::makeBase<kgms::Angle>(0.017'453'292'519'943'295);
+
+  kgms::Angle actual = kgms::base::degree;
+
+  EXPECT_EQ(expected, actual);
+}

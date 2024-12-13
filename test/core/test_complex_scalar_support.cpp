@@ -88,3 +88,48 @@ TEST(TestComplexSupport, AddDoubleQuantityComplexQuantity) {
   EXPECT_NEAR(expected.real(), actual.real(), 1e-6);
   EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
 }
+
+TEST(TestComplexSupport, SubtractComplexQuantityComplexQuantity) {
+  auto expected = kgms::templates::Time<CpxDbl>::makeFromBaseUnitValue(-0.4 + 0.5i);
+
+  auto a = kgms::templates::Time<CpxDbl>::makeFromBaseUnitValue(2.6 + 0.75i);
+  auto b = kgms::templates::Time<CpxDbl>::makeFromBaseUnitValue(3.0 + 0.25i);
+
+  auto actual = a - b;
+
+  EXPECT_TRUE((std::is_same_v<kgms::units::TimeUnit,
+                              decltype(actual)::Unit>));
+  EXPECT_TRUE((std::is_same_v<std::complex<double>, decltype(actual)::Scalar>));
+  EXPECT_NEAR(expected.real(), actual.real(), 1e-6);
+  EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
+}
+
+TEST(TestComplexSupport, SubtractComplexQuantityDoubleQuantity) {
+  auto expected = kgms::templates::Length<CpxDbl>::makeFromBaseUnitValue(19.5 + 0.5i);
+
+  auto a = kgms::templates::Length<CpxDbl>::makeFromBaseUnitValue(25.0 + 0.5i);
+  auto b = kgms::Length::makeFromBaseUnitValue(5.5);
+
+  auto actual = a - b;
+
+  EXPECT_TRUE((std::is_same_v<kgms::units::LengthUnit,
+                              decltype(actual)::Unit>));
+  EXPECT_TRUE((std::is_same_v<std::complex<double>, decltype(actual)::Scalar>));
+  EXPECT_NEAR(expected.real(), actual.real(), 1e-6);
+  EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
+}
+
+TEST(TestComplexSupport, SubtractDoubleQuantityComplexQuantity) {
+  auto expected = kgms::templates::Mass<CpxDbl>::makeFromBaseUnitValue(10.5 - 0.5i);
+
+  auto a = 15.5 * kgms::base::kilogram;
+  auto b = kgms::templates::Mass<CpxDbl>::makeFromBaseUnitValue(5.0 + 0.5i);
+
+  auto actual = a - b;
+
+  EXPECT_TRUE((std::is_same_v<kgms::units::MassUnit,
+                              decltype(actual)::Unit>));
+  EXPECT_TRUE((std::is_same_v<std::complex<double>, decltype(actual)::Scalar>));
+  EXPECT_NEAR(expected.real(), actual.real(), 1e-6);
+  EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
+}

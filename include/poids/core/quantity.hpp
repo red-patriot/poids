@@ -99,9 +99,11 @@ namespace poids {
                     typename Result::InternalTag{}};
     }
 
-    template <bool IsBaseRHS>
-    auto operator-(const Quantity<Scalar, Unit, IsBaseRHS>& rhs) const {
-      using Result = Quantity<Scalar, Unit, IsBase && IsBaseRHS>;
+    template <typename ScalarTypeRHS, bool IsBaseRHS>
+    auto operator-(const Quantity<ScalarTypeRHS, Unit, IsBaseRHS>& rhs) const {
+      using Result = Quantity<scalar::ArithmeticResult_t<Scalar, ScalarTypeRHS>,
+                              Unit,
+                              IsBase && IsBaseRHS>;
       return Result{this->value_ - rhs.value_,
                     typename Result::InternalTag{}};
     }

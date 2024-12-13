@@ -2,6 +2,7 @@
 #define POIDS_CORE_QUANTITY_HPP
 
 #include "quantity_base.hpp"
+#include "scalar_support.hpp"
 #include "traits.hpp"
 
 namespace poids {
@@ -30,7 +31,8 @@ namespace poids {
   template <typename ScalarType,
             typename UnitType,
             bool IsBase>
-  class Quantity : public detail::QuantityMixin<Quantity<ScalarType, UnitType, IsBase>, IsBase> {
+  class Quantity : public detail::QuantityMixin<Quantity<ScalarType, UnitType, IsBase>, IsBase>,
+                   public scalar::ScalarMixin<Quantity<ScalarType, UnitType, IsBase>, ScalarType> {
     struct InternalTag { };
 
    public:
@@ -88,9 +90,11 @@ namespace poids {
       return Type(baseValue, InternalTag{});
     }
 
-    template <bool IsBaseRHS>
-    auto operator+(const Quantity<Scalar, Unit, IsBaseRHS>& rhs) const {
-      using Result = Quantity<Scalar, Unit, IsBase && IsBaseRHS>;
+    template <typename ScalarTypeRHS, bool IsBaseRHS>
+    auto operator+(const Quantity<ScalarTypeRHS, Unit, IsBaseRHS>& rhs) const {
+      using Result = Quantity<scalar::ArithmeticResult_t<Scalar, ScalarTypeRHS>,
+                              Unit,
+                              IsBase && IsBaseRHS>;
       return Result{this->value_ + rhs.value_,
                     typename Result::InternalTag{}};
     }

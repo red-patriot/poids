@@ -7,7 +7,7 @@ using namespace kgms::base;
 TEST(TestMetricPrefix, Nano) {
   auto expected = poids::makeBase<kgms::Length>(1e-9);
 
-  auto actual = kgms::nano(meter);
+  auto actual = nano(meter);
 
   EXPECT_NEAR(expected.value(), actual.value(), 1e-15);
 }
@@ -15,7 +15,7 @@ TEST(TestMetricPrefix, Nano) {
 TEST(TestMetricPrefix, Micro) {
   auto expected = poids::makeBase<kgms::Length>(1e-6);
 
-  constexpr auto actual = kgms::micro(meter);
+  constexpr auto actual = micro(meter);
 
   EXPECT_NEAR(expected.value(), actual.value(), 1e-12);
 }
@@ -23,7 +23,7 @@ TEST(TestMetricPrefix, Micro) {
 TEST(TestMetricPrefix, Milli) {
   auto expected = poids::makeBase<kgms::Length>(1e-3);
 
-  constexpr auto actual = kgms::milli(meter);
+  constexpr auto actual = milli(meter);
 
   EXPECT_NEAR(expected.value(), actual.value(), 1e-9);
 }
@@ -31,7 +31,7 @@ TEST(TestMetricPrefix, Milli) {
 TEST(TestMetricPrefix, Centi) {
   auto expected = poids::makeBase<kgms::Length>(1e-2);
 
-  constexpr auto actual = kgms::centi(meter);
+  constexpr auto actual = centi(meter);
 
   EXPECT_NEAR(expected.value(), actual.value(), 1e-8);
 }
@@ -39,7 +39,7 @@ TEST(TestMetricPrefix, Centi) {
 TEST(TestMetricPrefix, Kilo) {
   auto expected = poids::makeBase<kgms::Mass>(1.0);
 
-  auto actual = kgms::kilo(gram);
+  auto actual = kilo(gram);
 
   EXPECT_NEAR(expected.value(), actual.value(), 1e-3);
 }
@@ -47,7 +47,7 @@ TEST(TestMetricPrefix, Kilo) {
 TEST(TestMetricPrefix, Mega) {
   auto expected = poids::makeBase<kgms::Mass>(1e3);
 
-  auto actual = kgms::mega(gram);
+  auto actual = mega(gram);
 
   EXPECT_NEAR(expected.value(), actual.value(), 1e-3);
 }
@@ -55,7 +55,7 @@ TEST(TestMetricPrefix, Mega) {
 TEST(TestMetricPrefix, Giga) {
   auto expected = poids::makeBase<kgms::Mass>(1e6);
 
-  auto actual = kgms::giga(gram);
+  auto actual = giga(gram);
 
   EXPECT_NEAR(expected.value(), actual.value(), 1.0);
 }

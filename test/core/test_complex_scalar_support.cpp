@@ -44,7 +44,7 @@ TEST(TestComplexSupport, GetImaginaryPart) {
   EXPECT_DOUBLE_EQ(expected, actual);
 }
 
-TEST(TestComplexSupport, AddComplexQuantityComplexQuantity) {
+TEST(TestComplexArithmeticSupport, AddComplexQuantityComplexQuantity) {
   auto expected = kgms::templates::Velocity<CpxDbl>::makeFromBaseUnitValue(5.6 + 1.0i);
 
   auto a = kgms::templates::Velocity<CpxDbl>::makeFromBaseUnitValue(2.6 + 0.75i);
@@ -59,7 +59,7 @@ TEST(TestComplexSupport, AddComplexQuantityComplexQuantity) {
   EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
 }
 
-TEST(TestComplexSupport, AddComplexQuantityDoubleQuantity) {
+TEST(TestComplexArithmeticSupport, AddComplexQuantityDoubleQuantity) {
   auto expected = kgms::templates::Mass<CpxDbl>::makeFromBaseUnitValue(10.5 + 0.5i);
 
   auto a = kgms::templates::Mass<CpxDbl>::makeFromBaseUnitValue(5.0 + 0.5i);
@@ -74,7 +74,7 @@ TEST(TestComplexSupport, AddComplexQuantityDoubleQuantity) {
   EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
 }
 
-TEST(TestComplexSupport, AddDoubleQuantityComplexQuantity) {
+TEST(TestComplexArithmeticSupport, AddDoubleQuantityComplexQuantity) {
   auto expected = kgms::templates::Mass<CpxDbl>::makeFromBaseUnitValue(10.5 + 0.5i);
 
   auto a = 5.5 * kgms::base::kilogram;
@@ -89,7 +89,7 @@ TEST(TestComplexSupport, AddDoubleQuantityComplexQuantity) {
   EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
 }
 
-TEST(TestComplexSupport, SubtractComplexQuantityComplexQuantity) {
+TEST(TestComplexArithmeticSupport, SubtractComplexQuantityComplexQuantity) {
   auto expected = kgms::templates::Time<CpxDbl>::makeFromBaseUnitValue(-0.4 + 0.5i);
 
   auto a = kgms::templates::Time<CpxDbl>::makeFromBaseUnitValue(2.6 + 0.75i);
@@ -104,7 +104,7 @@ TEST(TestComplexSupport, SubtractComplexQuantityComplexQuantity) {
   EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
 }
 
-TEST(TestComplexSupport, SubtractComplexQuantityDoubleQuantity) {
+TEST(TestComplexArithmeticSupport, SubtractComplexQuantityDoubleQuantity) {
   auto expected = kgms::templates::Length<CpxDbl>::makeFromBaseUnitValue(19.5 + 0.5i);
 
   auto a = kgms::templates::Length<CpxDbl>::makeFromBaseUnitValue(25.0 + 0.5i);
@@ -119,7 +119,7 @@ TEST(TestComplexSupport, SubtractComplexQuantityDoubleQuantity) {
   EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
 }
 
-TEST(TestComplexSupport, SubtractDoubleQuantityComplexQuantity) {
+TEST(TestComplexArithmeticSupport, SubtractDoubleQuantityComplexQuantity) {
   auto expected = kgms::templates::Mass<CpxDbl>::makeFromBaseUnitValue(10.5 - 0.5i);
 
   auto a = 15.5 * kgms::base::kilogram;
@@ -134,7 +134,7 @@ TEST(TestComplexSupport, SubtractDoubleQuantityComplexQuantity) {
   EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
 }
 
-TEST(TestComplexSupport, MultiplyComplexQuantityComplexQuantity) {
+TEST(TestComplexArithmeticSupport, MultiplyComplexQuantityComplexQuantity) {
   auto expected = kgms::templates::Energy<CpxDbl>::makeFromBaseUnitValue(125.0 - 125i);
 
   auto a = kgms::templates::Length<CpxDbl>::makeFromBaseUnitValue(5.0 - 15i);
@@ -149,7 +149,7 @@ TEST(TestComplexSupport, MultiplyComplexQuantityComplexQuantity) {
   EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
 }
 
-TEST(TestComplexSupport, MultiplyComplexQuantityDoubleQuantity) {
+TEST(TestComplexArithmeticSupport, MultiplyComplexQuantityDoubleQuantity) {
   auto expected = kgms::templates::Energy<CpxDbl>::makeFromBaseUnitValue(50.0 - 150i);
 
   auto a = kgms::templates::Length<CpxDbl>::makeFromBaseUnitValue(5.0 - 15i);
@@ -164,7 +164,7 @@ TEST(TestComplexSupport, MultiplyComplexQuantityDoubleQuantity) {
   EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
 }
 
-TEST(TestComplexSupport, MultiplyDoubleQuantityComplexQuantity) {
+TEST(TestComplexArithmeticSupport, MultiplyDoubleQuantityComplexQuantity) {
   auto expected = kgms::templates::Area<CpxDbl>::makeFromBaseUnitValue(5.0 + 5i);
 
   auto a = kgms::Length::makeFromBaseUnitValue(2.5);
@@ -179,7 +179,7 @@ TEST(TestComplexSupport, MultiplyDoubleQuantityComplexQuantity) {
   EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
 }
 
-TEST(TestComplexSupport, MultiplyComplexQuantityComplex) {
+TEST(TestComplexArithmeticSupport, MultiplyComplexQuantityComplex) {
   auto expected = kgms::templates::Volume<CpxDbl>::makeFromBaseUnitValue(125.0 - 125i);
 
   auto a = kgms::templates::Volume<CpxDbl>::makeFromBaseUnitValue(5.0 - 15i);
@@ -194,7 +194,7 @@ TEST(TestComplexSupport, MultiplyComplexQuantityComplex) {
   EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
 }
 
-TEST(TestComplexSupport, MultiplyComplexComplexQuantity) {
+TEST(TestComplexArithmeticSupport, MultiplyComplexComplexQuantity) {
   auto expected = kgms::templates::Frequency<CpxDbl>::makeFromBaseUnitValue(125.0 - 125i);
 
   auto a = (5.0 - 15i);
@@ -209,7 +209,7 @@ TEST(TestComplexSupport, MultiplyComplexComplexQuantity) {
   EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
 }
 
-TEST(TestComplexSupport, MultiplyComplexQuantityDouble) {
+TEST(TestComplexArithmeticSupport, MultiplyComplexQuantityDouble) {
   auto expected = kgms::templates::Length<CpxDbl>::makeFromBaseUnitValue(38.0 - 84.55i);
 
   auto a = kgms::templates::Length<CpxDbl>::makeFromBaseUnitValue(4.0 - 8.9i);
@@ -224,7 +224,7 @@ TEST(TestComplexSupport, MultiplyComplexQuantityDouble) {
   EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
 }
 
-TEST(TestComplexSupport, MultiplyDoubleComplexQuantity) {
+TEST(TestComplexArithmeticSupport, MultiplyDoubleComplexQuantity) {
   auto expected = kgms::templates::Acceleration<CpxDbl>::makeFromBaseUnitValue(64.8 + 72i);
 
   double a = 12.0;
@@ -239,7 +239,7 @@ TEST(TestComplexSupport, MultiplyDoubleComplexQuantity) {
   EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
 }
 
-TEST(TestComplexSupport, DivideComplexQuantityComplexQuantity) {
+TEST(TestComplexArithmeticSupport, DivideComplexQuantityComplexQuantity) {
   auto expected = kgms::templates::Force<CpxDbl>::makeFromBaseUnitValue(3.5 + 4.5i);
 
   auto a = kgms::templates::Energy<CpxDbl>::makeFromBaseUnitValue(8.0 + 1i);
@@ -254,7 +254,7 @@ TEST(TestComplexSupport, DivideComplexQuantityComplexQuantity) {
   EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
 }
 
-TEST(TestComplexSupport, DivideComplexQuantityDoubleQuantity) {
+TEST(TestComplexArithmeticSupport, DivideComplexQuantityDoubleQuantity) {
   auto expected = kgms::templates::Length<CpxDbl>::makeFromBaseUnitValue(5.0 - 15i);
 
   auto a = kgms::templates::Energy<CpxDbl>::makeFromBaseUnitValue(50.0 - 150i);
@@ -269,7 +269,7 @@ TEST(TestComplexSupport, DivideComplexQuantityDoubleQuantity) {
   EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
 }
 
-TEST(TestComplexSupport, DivideDoubleQuantityComplexQuantity) {
+TEST(TestComplexArithmeticSupport, DivideDoubleQuantityComplexQuantity) {
   auto expected = kgms::templates::Area<CpxDbl>::makeFromBaseUnitValue(0.625 - 0.625i);
 
   auto a = kgms::Volume::makeFromBaseUnitValue(2.5);
@@ -284,7 +284,7 @@ TEST(TestComplexSupport, DivideDoubleQuantityComplexQuantity) {
   EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
 }
 
-TEST(TestComplexSupport, DivideComplexQuantityComplex) {
+TEST(TestComplexArithmeticSupport, DivideComplexQuantityComplex) {
   auto expected = kgms::templates::Volume<CpxDbl>::makeFromBaseUnitValue(-12.5i);
 
   auto a = kgms::templates::Volume<CpxDbl>::makeFromBaseUnitValue(125.0 - 125i);
@@ -299,7 +299,7 @@ TEST(TestComplexSupport, DivideComplexQuantityComplex) {
   EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
 }
 
-TEST(TestComplexSupport, DivideComplexComplexQuantity) {
+TEST(TestComplexArithmeticSupport, DivideComplexComplexQuantity) {
   auto expected = kgms::templates::Frequency<CpxDbl>::makeFromBaseUnitValue(-0.2 - 1.4i);
 
   auto a = (5.0 - 15i);
@@ -315,7 +315,7 @@ TEST(TestComplexSupport, DivideComplexComplexQuantity) {
   EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
 }
 
-TEST(TestComplexSupport, DivideComplexQuantityDouble) {
+TEST(TestComplexArithmeticSupport, DivideComplexQuantityDouble) {
   auto expected = kgms::templates::Length<CpxDbl>::makeFromBaseUnitValue(2.0 - 4.45i);
 
   auto a = kgms::templates::Length<CpxDbl>::makeFromBaseUnitValue(4.0 - 8.9i);
@@ -330,7 +330,7 @@ TEST(TestComplexSupport, DivideComplexQuantityDouble) {
   EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
 }
 
-TEST(TestComplexSupport, DivideDoubleComplexQuantity) {
+TEST(TestComplexArithmeticSupport, DivideDoubleComplexQuantity) {
   auto expected = kgms::templates::Frequency<CpxDbl>::makeFromBaseUnitValue(2.4 - 1.2i);
 
   double a = 12.0;

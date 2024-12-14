@@ -31,6 +31,15 @@ set_target_properties(poids_test
     CXX_STANDARD_REQUIRED ON
 )
 
+if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+    target_compile_options(poids_test
+        PRIVATE
+        -Wall
+        -Wextra
+        -Werror
+    )
+endif()
+
 target_link_libraries(poids_test
     poids
     GTest::gtest 

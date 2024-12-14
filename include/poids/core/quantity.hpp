@@ -17,6 +17,15 @@ namespace poids {
             bool IsBase = false>
   class Quantity;
 
+  template <typename T>
+  struct IsQuantity : public std::false_type { };
+  template <typename ScalarType, typename UnitType, bool IsBase>
+  struct IsQuantity<Quantity<ScalarType, UnitType, IsBase>> : public std::true_type { };
+
+  /** Indicates if the given type T is a specialization of poids::Quantity*/
+  template <typename T>
+  constexpr bool IsQuantity_v = IsQuantity<T>::value;
+
   /** A base quantity that can be used for value extraction with Quantity::as */
   template <typename ScalarType, typename UnitType>
   using BaseQuantity = Quantity<ScalarType, UnitType, true>;
@@ -110,8 +119,8 @@ namespace poids {
 
     template <typename ScalarTypeRHS, typename UnitTypeRHS, bool IsBaseRHS>
     auto operator*(const Quantity<ScalarTypeRHS, UnitTypeRHS, IsBaseRHS>& rhs) const {
-      using Result = Quantity<Scalar,
-                              typename Unit::multiply_t<UnitTypeRHS>,
+      using Result = Quantity<scalar::ArithmeticResult_t<Scalar, ScalarTypeRHS>,
+                              typename Unit::template multiply_t<UnitTypeRHS>,
                               IsBase && IsBaseRHS>;
 
       return Result{this->base() * rhs.base(), typename Result::InternalTag{}};
@@ -126,7 +135,7 @@ namespace poids {
     template <typename ScalarTypeRHS, typename UnitTypeRHS, bool IsBaseRHS>
     auto operator/(const Quantity<ScalarTypeRHS, UnitTypeRHS, IsBaseRHS>& rhs) const {
       using Result = Quantity<ScalarType,
-                              typename Unit::divide_t<UnitTypeRHS>,
+                              typename Unit::template divide_t<UnitTypeRHS>,
                               IsBase && IsBaseRHS>;
 
       return Result{this->base() / rhs.base(), typename Result::InternalTag{}};
@@ -180,8 +189,10 @@ namespace poids {
     friend constexpr BaseQuantity<ScalarType, UnitType> makeBase<ScalarType, UnitType>(const ScalarType& scalar);
   };
 
-  template <typename ScalarType, typename UnitType, bool IsBase>
-  auto operator*(const ScalarType& lhs, const Quantity<ScalarType, UnitType, IsBase>& rhs) {
+  template <typename ScalarTypeLHS, typename ScalarTypeRHS, typename UnitType, bool IsBase>
+  auto operator*(const ScalarTypeLHS& lhs, const Quantity<ScalarTypeRHS, UnitType, IsBase>& rhs)
+      -> std::enable_if_t<!IsQuantity_v<ScalarTypeLHS>,
+                          decltype(std::declval<Quantity<ScalarTypeRHS, UnitType, IsBase>>().operator*(std::declval<ScalarTypeLHS>()))> {
     return rhs.operator*(lhs);
   }
 

@@ -133,3 +133,108 @@ TEST(TestComplexSupport, SubtractDoubleQuantityComplexQuantity) {
   EXPECT_NEAR(expected.real(), actual.real(), 1e-6);
   EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
 }
+
+TEST(TestComplexSupport, MultiplyComplexQuantityComplexQuantity) {
+  auto expected = kgms::templates::Energy<CpxDbl>::makeFromBaseUnitValue(125.0 - 125i);
+
+  auto a = kgms::templates::Length<CpxDbl>::makeFromBaseUnitValue(5.0 - 15i);
+  auto b = kgms::templates::Force<CpxDbl>::makeFromBaseUnitValue(10.0 + 5i);
+
+  auto actual = a * b;
+
+  EXPECT_TRUE((std::is_same_v<kgms::units::EnergyUnit,
+                              decltype(actual)::Unit>));
+  EXPECT_TRUE((std::is_same_v<std::complex<double>, decltype(actual)::Scalar>));
+  EXPECT_NEAR(expected.real(), actual.real(), 1e-6);
+  EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
+}
+
+TEST(TestComplexSupport, MultiplyComplexQuantityDoubleQuantity) {
+  auto expected = kgms::templates::Energy<CpxDbl>::makeFromBaseUnitValue(50.0 - 150i);
+
+  auto a = kgms::templates::Length<CpxDbl>::makeFromBaseUnitValue(5.0 - 15i);
+  auto b = kgms::Force::makeFromBaseUnitValue(10.0);
+
+  auto actual = a * b;
+
+  EXPECT_TRUE((std::is_same_v<kgms::units::EnergyUnit,
+                              decltype(actual)::Unit>));
+  EXPECT_TRUE((std::is_same_v<std::complex<double>, decltype(actual)::Scalar>));
+  EXPECT_NEAR(expected.real(), actual.real(), 1e-6);
+  EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
+}
+
+TEST(TestComplexSupport, MultiplyDoubleQuantityComplexQuantity) {
+  auto expected = kgms::templates::Area<CpxDbl>::makeFromBaseUnitValue(5.0 + 5i);
+
+  auto a = kgms::Length::makeFromBaseUnitValue(2.5);
+  auto b = kgms::templates::Length<CpxDbl>::makeFromBaseUnitValue(2.0 + 2.0i);
+
+  auto actual = a * b;
+
+  EXPECT_TRUE((std::is_same_v<kgms::units::AreaUnit,
+                              decltype(actual)::Unit>));
+  EXPECT_TRUE((std::is_same_v<std::complex<double>, decltype(actual)::Scalar>));
+  EXPECT_NEAR(expected.real(), actual.real(), 1e-6);
+  EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
+}
+
+TEST(TestComplexSupport, MultiplyComplexQuantityComplex) {
+  auto expected = kgms::templates::Volume<CpxDbl>::makeFromBaseUnitValue(125.0 - 125i);
+
+  auto a = kgms::templates::Volume<CpxDbl>::makeFromBaseUnitValue(5.0 - 15i);
+  auto b = (10.0 + 5i);
+
+  auto actual = a * b;
+
+  EXPECT_TRUE((std::is_same_v<kgms::units::VolumeUnit,
+                              decltype(actual)::Unit>));
+  EXPECT_TRUE((std::is_same_v<std::complex<double>, decltype(actual)::Scalar>));
+  EXPECT_NEAR(expected.real(), actual.real(), 1e-6);
+  EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
+}
+
+TEST(TestComplexSupport, MultiplyComplexComplexQuantity) {
+  auto expected = kgms::templates::Frequency<CpxDbl>::makeFromBaseUnitValue(125.0 - 125i);
+
+  auto a = (5.0 - 15i);
+  auto b = kgms::templates::Frequency<CpxDbl>::makeFromBaseUnitValue(10.0 + 5i);
+
+  auto actual = a * b;
+
+  EXPECT_TRUE((std::is_same_v<kgms::units::FrequencyUnit,
+                              decltype(actual)::Unit>));
+  EXPECT_TRUE((std::is_same_v<std::complex<double>, decltype(actual)::Scalar>));
+  EXPECT_NEAR(expected.real(), actual.real(), 1e-6);
+  EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
+}
+
+TEST(TestComplexSupport, MultiplyComplexQuantityDouble) {
+  auto expected = kgms::templates::Length<CpxDbl>::makeFromBaseUnitValue(38.0 - 84.55i);
+
+  auto a = kgms::templates::Length<CpxDbl>::makeFromBaseUnitValue(4.0 - 8.9i);
+  double b = 9.5;
+
+  auto actual = a * b;
+
+  EXPECT_TRUE((std::is_same_v<kgms::units::LengthUnit,
+                              decltype(actual)::Unit>));
+  EXPECT_TRUE((std::is_same_v<std::complex<double>, decltype(actual)::Scalar>));
+  EXPECT_NEAR(expected.real(), actual.real(), 1e-6);
+  EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
+}
+
+TEST(TestComplexSupport, MultiplyDoubleComplexQuantity) {
+  auto expected = kgms::templates::Acceleration<CpxDbl>::makeFromBaseUnitValue(64.8 + 72i);
+
+  double a = 12.0;
+  auto b = kgms::templates::Acceleration<CpxDbl>::makeFromBaseUnitValue(5.4 + 6i);
+
+  auto actual = a * b;
+
+  EXPECT_TRUE((std::is_same_v<kgms::units::AccelerationUnit,
+                              decltype(actual)::Unit>));
+  EXPECT_TRUE((std::is_same_v<std::complex<double>, decltype(actual)::Scalar>));
+  EXPECT_NEAR(expected.real(), actual.real(), 1e-6);
+  EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
+}

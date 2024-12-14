@@ -17,15 +17,6 @@ namespace poids {
             bool IsBase = false>
   class Quantity;
 
-  template <typename T>
-  struct IsQuantity : public std::false_type { };
-  template <typename ScalarType, typename UnitType, bool IsBase>
-  struct IsQuantity<Quantity<ScalarType, UnitType, IsBase>> : public std::true_type { };
-
-  /** Indicates if the given type T is a specialization of poids::Quantity*/
-  template <typename T>
-  constexpr bool IsQuantity_v = IsQuantity<T>::value;
-
   /** A base quantity that can be used for value extraction with Quantity::as */
   template <typename ScalarType, typename UnitType>
   using BaseQuantity = Quantity<ScalarType, UnitType, true>;
@@ -190,7 +181,7 @@ namespace poids {
   };
 
   template <typename ScalarTypeLHS, typename ScalarTypeRHS, typename UnitType, bool IsBase>
-  auto operator*(const ScalarTypeLHS& lhs, const Quantity<ScalarTypeRHS, UnitType, IsBase>& rhs)
+  inline auto operator*(const ScalarTypeLHS& lhs, const Quantity<ScalarTypeRHS, UnitType, IsBase>& rhs)
       -> std::enable_if_t<!IsQuantity_v<ScalarTypeLHS>,
                           decltype(std::declval<Quantity<ScalarTypeRHS, UnitType, IsBase>>().operator*(std::declval<ScalarTypeLHS>()))> {
     return rhs.operator*(lhs);
@@ -211,7 +202,10 @@ namespace poids {
   };
 
   template <typename ScalarType, typename UnitType, bool IsBase>
-  struct IsBaseUnit<Quantity<ScalarType, UnitType, IsBase>> : public std::bool_constant<IsBase> {  };
+  struct IsQuantity<Quantity<ScalarType, UnitType, IsBase>> : public std::true_type { };
+
+  template <typename ScalarType, typename UnitType, bool IsBase>
+  struct IsBaseUnit<Quantity<ScalarType, UnitType, IsBase>> : public std::bool_constant<IsBase> { };
 
   template <typename ScalarType, typename UnitType>
   Quantity(BaseQuantity<ScalarType, UnitType>) -> Quantity<ScalarType, UnitType>;

@@ -68,6 +68,36 @@ TEST(TestComplexSupport, GetImaginaryPart) {
   EXPECT_DOUBLE_EQ(expected, actual.as(meter / second));
 }
 
+// TODO
+// TEST(TestComplexSupport, GetRealPartInPlace) {
+//   using namespace kgms::base;
+//   kgms::Mass expected = 4.0 * kilogram;
+
+//   auto quantity = (2.0 + 3i) * kilogram;
+
+//   quantity.real() = expected;
+
+//   auto actual = quantity.real();
+
+//   EXPECT_TRUE((std::is_same_v<kgms::Area, decltype(actual)>));
+//   EXPECT_DOUBLE_EQ(expected.base(), actual.as(kilogram));
+// }
+
+// TODO
+// TEST(TestComplexSupport, GetImaginaryPartInPlace) {
+//   using namespace kgms::base;
+//   kgms::Mass expected = 4.0 * kilogram;
+
+//   auto quantity = (2.0 + 3i) * kilogram;
+
+//   quantity.imag() = expected;
+
+//   auto actual = quantity.imag();
+
+//   EXPECT_TRUE((std::is_same_v<kgms::Area, decltype(actual)>));
+//   EXPECT_DOUBLE_EQ(expected.base(), actual.as(kilogram));
+// }
+
 TEST(TestComplexArithmeticSupport, AddComplexQuantityComplexQuantity) {
   auto expected = kgms::templates::Velocity<CpxDbl>::makeFromBaseUnitValue(5.6 + 1.0i);
 

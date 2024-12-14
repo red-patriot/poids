@@ -240,7 +240,8 @@ TEST(TestQuantityArithmetic, DivideScalarQuantity) {
   double a = 4.0;
   auto b = kgms::Time::makeFromBaseUnitValue(8.0);
 
-  auto actual = a / b;
+  //! NOTE: In order to divide a Scalar by a Quantity, wrap the scalar in a Unitless first
+  auto actual = kgms::Unitless{a} / b;
 
   EXPECT_TRUE((std::is_same_v<kgms::Frequency, decltype(actual)>));
   EXPECT_NEAR(expected.base(), actual.base(), 1e-6);
@@ -264,7 +265,8 @@ TEST(TestQuantityArithmetic, DivideScalarBaseQuantity) {
   double a = 4.0;
   auto b = poids::makeBase<kgms::Time>(8.0);
 
-  auto actual = a / b;
+  //! NOTE: In order to divide a Scalar by a Quantity, wrap the scalar in a Unitless first
+  auto actual = kgms::Unitless{a} / b;
 
   EXPECT_TRUE((std::is_same_v<kgms::Frequency, decltype(actual)>));
   EXPECT_NEAR(expected.base(), actual.base(), 1e-6);

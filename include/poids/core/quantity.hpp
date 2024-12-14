@@ -34,9 +34,6 @@ namespace poids {
   template <typename ScalarType, typename UnitType>
   constexpr BaseQuantity<ScalarType, UnitType> makeBase(const ScalarType& scalar);
 
-  template <typename ScalarType, typename UnitType, bool IsBase>
-  auto operator/(const ScalarType& lhs, const Quantity<ScalarType, UnitType, IsBase>& rhs);
-
   template <typename ScalarType,
             typename UnitType,
             bool IsBase>
@@ -134,7 +131,7 @@ namespace poids {
 
     template <typename ScalarTypeRHS, typename UnitTypeRHS, bool IsBaseRHS>
     auto operator/(const Quantity<ScalarTypeRHS, UnitTypeRHS, IsBaseRHS>& rhs) const {
-      using Result = Quantity<ScalarType,
+      using Result = Quantity<scalar::ArithmeticResult_t<Scalar, ScalarTypeRHS>,
                               typename Unit::template divide_t<UnitTypeRHS>,
                               IsBase && IsBaseRHS>;
 
@@ -194,12 +191,6 @@ namespace poids {
       -> std::enable_if_t<!IsQuantity_v<ScalarTypeLHS>,
                           decltype(std::declval<Quantity<ScalarTypeRHS, UnitType, IsBase>>().operator*(std::declval<ScalarTypeLHS>()))> {
     return rhs.operator*(lhs);
-  }
-
-  template <typename ScalarType, typename UnitType, bool IsBase>
-  auto operator/(const ScalarType& lhs, const Quantity<ScalarType, UnitType, IsBase>& rhs) {
-    using UnitlessQuantity = Quantity<ScalarType, typename UnitType::unitless_t, false>;
-    return UnitlessQuantity{lhs} / rhs;
   }
 
   /** If a quantity is tested for being dimensionless, forward the request to its DimensionType*/

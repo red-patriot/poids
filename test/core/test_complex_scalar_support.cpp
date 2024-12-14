@@ -238,3 +238,110 @@ TEST(TestComplexSupport, MultiplyDoubleComplexQuantity) {
   EXPECT_NEAR(expected.real(), actual.real(), 1e-6);
   EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
 }
+
+TEST(TestComplexSupport, DivideComplexQuantityComplexQuantity) {
+  auto expected = kgms::templates::Force<CpxDbl>::makeFromBaseUnitValue(3.5 + 4.5i);
+
+  auto a = kgms::templates::Energy<CpxDbl>::makeFromBaseUnitValue(8.0 + 1i);
+  auto b = kgms::templates::Length<CpxDbl>::makeFromBaseUnitValue(1.0 - 1i);
+
+  auto actual = a / b;
+
+  EXPECT_TRUE((std::is_same_v<kgms::units::ForceUnit,
+                              decltype(actual)::Unit>));
+  EXPECT_TRUE((std::is_same_v<std::complex<double>, decltype(actual)::Scalar>));
+  EXPECT_NEAR(expected.real(), actual.real(), 1e-6);
+  EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
+}
+
+TEST(TestComplexSupport, DivideComplexQuantityDoubleQuantity) {
+  auto expected = kgms::templates::Length<CpxDbl>::makeFromBaseUnitValue(5.0 - 15i);
+
+  auto a = kgms::templates::Energy<CpxDbl>::makeFromBaseUnitValue(50.0 - 150i);
+  auto b = kgms::Force::makeFromBaseUnitValue(10.0);
+
+  auto actual = a / b;
+
+  EXPECT_TRUE((std::is_same_v<kgms::units::LengthUnit,
+                              decltype(actual)::Unit>));
+  EXPECT_TRUE((std::is_same_v<std::complex<double>, decltype(actual)::Scalar>));
+  EXPECT_NEAR(expected.real(), actual.real(), 1e-6);
+  EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
+}
+
+TEST(TestComplexSupport, DivideDoubleQuantityComplexQuantity) {
+  auto expected = kgms::templates::Area<CpxDbl>::makeFromBaseUnitValue(0.625 - 0.625i);
+
+  auto a = kgms::Volume::makeFromBaseUnitValue(2.5);
+  auto b = kgms::templates::Length<CpxDbl>::makeFromBaseUnitValue(2.0 + 2.0i);
+
+  auto actual = a / b;
+
+  EXPECT_TRUE((std::is_same_v<kgms::units::AreaUnit,
+                              decltype(actual)::Unit>));
+  EXPECT_TRUE((std::is_same_v<std::complex<double>, decltype(actual)::Scalar>));
+  EXPECT_NEAR(expected.real(), actual.real(), 1e-6);
+  EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
+}
+
+TEST(TestComplexSupport, DivideComplexQuantityComplex) {
+  auto expected = kgms::templates::Volume<CpxDbl>::makeFromBaseUnitValue(-12.5i);
+
+  auto a = kgms::templates::Volume<CpxDbl>::makeFromBaseUnitValue(125.0 - 125i);
+  auto b = (10.0 + 10i);
+
+  auto actual = a / b;
+
+  EXPECT_TRUE((std::is_same_v<kgms::units::VolumeUnit,
+                              decltype(actual)::Unit>));
+  EXPECT_TRUE((std::is_same_v<std::complex<double>, decltype(actual)::Scalar>));
+  EXPECT_NEAR(expected.real(), actual.real(), 1e-6);
+  EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
+}
+
+TEST(TestComplexSupport, DivideComplexComplexQuantity) {
+  auto expected = kgms::templates::Frequency<CpxDbl>::makeFromBaseUnitValue(-0.2 - 1.4i);
+
+  auto a = (5.0 - 15i);
+  auto b = kgms::templates::Time<CpxDbl>::makeFromBaseUnitValue(10.0 + 5i);
+
+  //! NOTE: In order to divide a Scalar by a Quantity, wrap the scalar in a Unitless first
+  auto actual = kgms::templates::Unitless<std::complex<double>>{a} / b;
+
+  EXPECT_TRUE((std::is_same_v<kgms::units::FrequencyUnit,
+                              decltype(actual)::Unit>));
+  EXPECT_TRUE((std::is_same_v<std::complex<double>, decltype(actual)::Scalar>));
+  EXPECT_NEAR(expected.real(), actual.real(), 1e-6);
+  EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
+}
+
+TEST(TestComplexSupport, DivideComplexQuantityDouble) {
+  auto expected = kgms::templates::Length<CpxDbl>::makeFromBaseUnitValue(2.0 - 4.45i);
+
+  auto a = kgms::templates::Length<CpxDbl>::makeFromBaseUnitValue(4.0 - 8.9i);
+  double b = 2.0;
+
+  auto actual = a / b;
+
+  EXPECT_TRUE((std::is_same_v<kgms::units::LengthUnit,
+                              decltype(actual)::Unit>));
+  EXPECT_TRUE((std::is_same_v<std::complex<double>, decltype(actual)::Scalar>));
+  EXPECT_NEAR(expected.real(), actual.real(), 1e-6);
+  EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
+}
+
+TEST(TestComplexSupport, DivideDoubleComplexQuantity) {
+  auto expected = kgms::templates::Frequency<CpxDbl>::makeFromBaseUnitValue(2.4 - 1.2i);
+
+  double a = 12.0;
+  auto b = kgms::templates::Time<CpxDbl>::makeFromBaseUnitValue(4.0 + 2i);
+
+  //! NOTE: In order to divide a Scalar by a Quantity, wrap the scalar in a Unitless first
+  auto actual = kgms::Unitless{a} / b;
+
+  EXPECT_TRUE((std::is_same_v<kgms::units::FrequencyUnit,
+                              decltype(actual)::Unit>));
+  EXPECT_TRUE((std::is_same_v<std::complex<double>, decltype(actual)::Scalar>));
+  EXPECT_NEAR(expected.real(), actual.real(), 1e-6);
+  EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
+}

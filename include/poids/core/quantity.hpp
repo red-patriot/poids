@@ -123,8 +123,11 @@ namespace poids {
       return Result{this->base() * rhs.base(), typename Result::InternalTag{}};
     }
 
-    auto operator*(const Scalar& rhs) const {
-      using Result = Quantity<Scalar, Unit, false>;
+    template <typename ScalarTypeRHS>
+    auto operator*(const ScalarTypeRHS& rhs) const
+        -> std::enable_if_t<!IsQuantity_v<ScalarTypeRHS>,
+                            Quantity<scalar::ArithmeticResult_t<Scalar, ScalarTypeRHS>, Unit, false>> {
+      using Result = Quantity<scalar::ArithmeticResult_t<Scalar, ScalarTypeRHS>, Unit, false>;
       return Result{this->base() * rhs,
                     typename Result::InternalTag{}};
     }

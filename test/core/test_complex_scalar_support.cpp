@@ -18,13 +18,14 @@ TEST(TestComplexSupport, FactoryConstruct) {
   EXPECT_EQ(expected, actual.base());
 }
 
-// TEST(TestComplexSupport, CreateWithBase) {
-//   std::complex<double> expected = 3.0 + 1i;
+TEST(TestComplexSupport, CreateWithBase) {
+  std::complex<double> expected = 3.0 + 1i;
 
-//   auto actual = (3.0 + 1.0i) * kgms::base::meter;
+  auto actual = (3.0 + 1.0i) * kgms::base::meter;
 
-//   EXPECT_DOUBLE_EQ(expected, actual.base());
-// }
+  EXPECT_DOUBLE_EQ(expected.real(), actual.real());
+  EXPECT_DOUBLE_EQ(expected.imag(), actual.imag());
+}
 
 TEST(TestComplexSupport, GetRealPart) {
   double expected = 15.6;

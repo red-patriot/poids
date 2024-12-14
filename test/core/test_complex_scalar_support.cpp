@@ -27,7 +27,7 @@ TEST(TestComplexSupport, CreateWithBase) {
   EXPECT_DOUBLE_EQ(expected.imag(), actual.imagBase());
 }
 
-TEST(TestComplexSupport, GetRealPart) {
+TEST(TestComplexSupport, GetRealBaseValue) {
   double expected = 15.6;
   auto quantity = kgms::templates::Time<CpxDbl>::makeFromBaseUnitValue(15.6 - 9.5i);
 
@@ -36,13 +36,36 @@ TEST(TestComplexSupport, GetRealPart) {
   EXPECT_DOUBLE_EQ(expected, actual);
 }
 
-TEST(TestComplexSupport, GetImaginaryPart) {
+TEST(TestComplexSupport, GetImaginaryBaseValue) {
   double expected = -9.5;
   auto quantity = kgms::templates::Force<CpxDbl>::makeFromBaseUnitValue(15.6 - 9.5i);
 
   auto actual = quantity.imagBase();
 
   EXPECT_DOUBLE_EQ(expected, actual);
+}
+
+TEST(TestComplexSupport, GetRealPart) {
+  double expected = 4.0;
+  auto m2 = kgms::base::meter * kgms::base::meter;
+  kgms::templates::Area<CpxDbl> quantity = (4.0 + 5i) * m2;
+
+  auto actual = quantity.real();
+
+  EXPECT_TRUE((std::is_same_v<kgms::Area, decltype(actual)>));
+  EXPECT_DOUBLE_EQ(expected, actual.as(m2));
+}
+
+TEST(TestComplexSupport, GetImaginaryPart) {
+  double expected = 5.0;
+  using namespace kgms::base;
+
+  kgms::templates::Velocity<CpxDbl> quantity = (4.0 + 5i) * (meter / second);
+
+  auto actual = quantity.imag();
+
+  EXPECT_TRUE((std::is_same_v<kgms::Velocity, decltype(actual)>));
+  EXPECT_DOUBLE_EQ(expected, actual.as(meter / second));
 }
 
 TEST(TestComplexArithmeticSupport, AddComplexQuantityComplexQuantity) {

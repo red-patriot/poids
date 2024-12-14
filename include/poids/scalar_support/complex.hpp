@@ -3,6 +3,7 @@
 
 #include <complex>
 
+#include "poids/core/quantity.hpp"
 #include "poids/core/scalar_support.hpp"
 
 namespace poids::scalar {
@@ -10,7 +11,18 @@ namespace poids::scalar {
   template <typename Derived,
             typename T>
   class ScalarMixin<Derived, std::complex<T>> {
+   private:
+    using RealQuantity = Quantity<T, UnitOf_t<Derived>, IsBaseUnit_v<Derived>>;
+
    public:
+    RealQuantity real() const {
+      return RealQuantity::makeFromBaseUnitValue(derived()->base().real());
+    }
+
+    RealQuantity imag() const {
+      return RealQuantity::makeFromBaseUnitValue(derived()->base().imag());
+    }
+
     /** Accesses the real component in base units*/
     T realBase() const {
       return derived()->base().real();

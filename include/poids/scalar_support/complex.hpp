@@ -6,15 +6,18 @@
 #include "poids/core/scalar_support.hpp"
 
 namespace poids::scalar {
+  /** Additional functionality for complex Quantities*/
   template <typename Derived,
             typename T>
   class ScalarMixin<Derived, std::complex<T>> {
    public:
-    T real() const {
+    /** Accesses the real component in base units*/
+    T realBase() const {
       return derived()->base().real();
     }
 
-    T imag() const {
+    /** Accesses the imaginary component in base units*/
+    T imagBase() const {
       return derived()->base().imag();
     }
 

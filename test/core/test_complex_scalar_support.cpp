@@ -23,15 +23,15 @@ TEST(TestComplexSupport, CreateWithBase) {
 
   auto actual = (3.0 + 1.0i) * kgms::base::meter;
 
-  EXPECT_DOUBLE_EQ(expected.real(), actual.real());
-  EXPECT_DOUBLE_EQ(expected.imag(), actual.imag());
+  EXPECT_DOUBLE_EQ(expected.real(), actual.realBase());
+  EXPECT_DOUBLE_EQ(expected.imag(), actual.imagBase());
 }
 
 TEST(TestComplexSupport, GetRealPart) {
   double expected = 15.6;
   auto quantity = kgms::templates::Time<CpxDbl>::makeFromBaseUnitValue(15.6 - 9.5i);
 
-  auto actual = quantity.real();
+  auto actual = quantity.realBase();
 
   EXPECT_DOUBLE_EQ(expected, actual);
 }
@@ -40,7 +40,7 @@ TEST(TestComplexSupport, GetImaginaryPart) {
   double expected = -9.5;
   auto quantity = kgms::templates::Force<CpxDbl>::makeFromBaseUnitValue(15.6 - 9.5i);
 
-  auto actual = quantity.imag();
+  auto actual = quantity.imagBase();
 
   EXPECT_DOUBLE_EQ(expected, actual);
 }
@@ -56,8 +56,8 @@ TEST(TestComplexArithmeticSupport, AddComplexQuantityComplexQuantity) {
   EXPECT_TRUE((std::is_same_v<kgms::units::VelocityUnit,
                               decltype(actual)::Unit>));
   EXPECT_TRUE((std::is_same_v<std::complex<double>, decltype(actual)::Scalar>));
-  EXPECT_NEAR(expected.real(), actual.real(), 1e-6);
-  EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
+  EXPECT_NEAR(expected.realBase(), actual.realBase(), 1e-6);
+  EXPECT_NEAR(expected.imagBase(), actual.imagBase(), 1e-6);
 }
 
 TEST(TestComplexArithmeticSupport, AddComplexQuantityDoubleQuantity) {
@@ -71,8 +71,8 @@ TEST(TestComplexArithmeticSupport, AddComplexQuantityDoubleQuantity) {
   EXPECT_TRUE((std::is_same_v<kgms::units::MassUnit,
                               decltype(actual)::Unit>));
   EXPECT_TRUE((std::is_same_v<std::complex<double>, decltype(actual)::Scalar>));
-  EXPECT_NEAR(expected.real(), actual.real(), 1e-6);
-  EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
+  EXPECT_NEAR(expected.realBase(), actual.realBase(), 1e-6);
+  EXPECT_NEAR(expected.imagBase(), actual.imagBase(), 1e-6);
 }
 
 TEST(TestComplexArithmeticSupport, AddDoubleQuantityComplexQuantity) {
@@ -86,8 +86,8 @@ TEST(TestComplexArithmeticSupport, AddDoubleQuantityComplexQuantity) {
   EXPECT_TRUE((std::is_same_v<kgms::units::MassUnit,
                               decltype(actual)::Unit>));
   EXPECT_TRUE((std::is_same_v<std::complex<double>, decltype(actual)::Scalar>));
-  EXPECT_NEAR(expected.real(), actual.real(), 1e-6);
-  EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
+  EXPECT_NEAR(expected.realBase(), actual.realBase(), 1e-6);
+  EXPECT_NEAR(expected.imagBase(), actual.imagBase(), 1e-6);
 }
 
 TEST(TestComplexArithmeticSupport, SubtractComplexQuantityComplexQuantity) {
@@ -101,8 +101,8 @@ TEST(TestComplexArithmeticSupport, SubtractComplexQuantityComplexQuantity) {
   EXPECT_TRUE((std::is_same_v<kgms::units::TimeUnit,
                               decltype(actual)::Unit>));
   EXPECT_TRUE((std::is_same_v<std::complex<double>, decltype(actual)::Scalar>));
-  EXPECT_NEAR(expected.real(), actual.real(), 1e-6);
-  EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
+  EXPECT_NEAR(expected.realBase(), actual.realBase(), 1e-6);
+  EXPECT_NEAR(expected.imagBase(), actual.imagBase(), 1e-6);
 }
 
 TEST(TestComplexArithmeticSupport, SubtractComplexQuantityDoubleQuantity) {
@@ -116,8 +116,8 @@ TEST(TestComplexArithmeticSupport, SubtractComplexQuantityDoubleQuantity) {
   EXPECT_TRUE((std::is_same_v<kgms::units::LengthUnit,
                               decltype(actual)::Unit>));
   EXPECT_TRUE((std::is_same_v<std::complex<double>, decltype(actual)::Scalar>));
-  EXPECT_NEAR(expected.real(), actual.real(), 1e-6);
-  EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
+  EXPECT_NEAR(expected.realBase(), actual.realBase(), 1e-6);
+  EXPECT_NEAR(expected.imagBase(), actual.imagBase(), 1e-6);
 }
 
 TEST(TestComplexArithmeticSupport, SubtractDoubleQuantityComplexQuantity) {
@@ -131,8 +131,8 @@ TEST(TestComplexArithmeticSupport, SubtractDoubleQuantityComplexQuantity) {
   EXPECT_TRUE((std::is_same_v<kgms::units::MassUnit,
                               decltype(actual)::Unit>));
   EXPECT_TRUE((std::is_same_v<std::complex<double>, decltype(actual)::Scalar>));
-  EXPECT_NEAR(expected.real(), actual.real(), 1e-6);
-  EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
+  EXPECT_NEAR(expected.realBase(), actual.realBase(), 1e-6);
+  EXPECT_NEAR(expected.imagBase(), actual.imagBase(), 1e-6);
 }
 
 TEST(TestComplexArithmeticSupport, MultiplyComplexQuantityComplexQuantity) {
@@ -146,8 +146,8 @@ TEST(TestComplexArithmeticSupport, MultiplyComplexQuantityComplexQuantity) {
   EXPECT_TRUE((std::is_same_v<kgms::units::EnergyUnit,
                               decltype(actual)::Unit>));
   EXPECT_TRUE((std::is_same_v<std::complex<double>, decltype(actual)::Scalar>));
-  EXPECT_NEAR(expected.real(), actual.real(), 1e-6);
-  EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
+  EXPECT_NEAR(expected.realBase(), actual.realBase(), 1e-6);
+  EXPECT_NEAR(expected.imagBase(), actual.imagBase(), 1e-6);
 }
 
 TEST(TestComplexArithmeticSupport, MultiplyComplexQuantityDoubleQuantity) {
@@ -161,8 +161,8 @@ TEST(TestComplexArithmeticSupport, MultiplyComplexQuantityDoubleQuantity) {
   EXPECT_TRUE((std::is_same_v<kgms::units::EnergyUnit,
                               decltype(actual)::Unit>));
   EXPECT_TRUE((std::is_same_v<std::complex<double>, decltype(actual)::Scalar>));
-  EXPECT_NEAR(expected.real(), actual.real(), 1e-6);
-  EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
+  EXPECT_NEAR(expected.realBase(), actual.realBase(), 1e-6);
+  EXPECT_NEAR(expected.imagBase(), actual.imagBase(), 1e-6);
 }
 
 TEST(TestComplexArithmeticSupport, MultiplyDoubleQuantityComplexQuantity) {
@@ -176,8 +176,8 @@ TEST(TestComplexArithmeticSupport, MultiplyDoubleQuantityComplexQuantity) {
   EXPECT_TRUE((std::is_same_v<kgms::units::AreaUnit,
                               decltype(actual)::Unit>));
   EXPECT_TRUE((std::is_same_v<std::complex<double>, decltype(actual)::Scalar>));
-  EXPECT_NEAR(expected.real(), actual.real(), 1e-6);
-  EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
+  EXPECT_NEAR(expected.realBase(), actual.realBase(), 1e-6);
+  EXPECT_NEAR(expected.imagBase(), actual.imagBase(), 1e-6);
 }
 
 TEST(TestComplexArithmeticSupport, MultiplyComplexQuantityComplex) {
@@ -191,8 +191,8 @@ TEST(TestComplexArithmeticSupport, MultiplyComplexQuantityComplex) {
   EXPECT_TRUE((std::is_same_v<kgms::units::VolumeUnit,
                               decltype(actual)::Unit>));
   EXPECT_TRUE((std::is_same_v<std::complex<double>, decltype(actual)::Scalar>));
-  EXPECT_NEAR(expected.real(), actual.real(), 1e-6);
-  EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
+  EXPECT_NEAR(expected.realBase(), actual.realBase(), 1e-6);
+  EXPECT_NEAR(expected.imagBase(), actual.imagBase(), 1e-6);
 }
 
 TEST(TestComplexArithmeticSupport, MultiplyComplexComplexQuantity) {
@@ -206,8 +206,8 @@ TEST(TestComplexArithmeticSupport, MultiplyComplexComplexQuantity) {
   EXPECT_TRUE((std::is_same_v<kgms::units::FrequencyUnit,
                               decltype(actual)::Unit>));
   EXPECT_TRUE((std::is_same_v<std::complex<double>, decltype(actual)::Scalar>));
-  EXPECT_NEAR(expected.real(), actual.real(), 1e-6);
-  EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
+  EXPECT_NEAR(expected.realBase(), actual.realBase(), 1e-6);
+  EXPECT_NEAR(expected.imagBase(), actual.imagBase(), 1e-6);
 }
 
 TEST(TestComplexArithmeticSupport, MultiplyComplexQuantityDouble) {
@@ -221,8 +221,8 @@ TEST(TestComplexArithmeticSupport, MultiplyComplexQuantityDouble) {
   EXPECT_TRUE((std::is_same_v<kgms::units::LengthUnit,
                               decltype(actual)::Unit>));
   EXPECT_TRUE((std::is_same_v<std::complex<double>, decltype(actual)::Scalar>));
-  EXPECT_NEAR(expected.real(), actual.real(), 1e-6);
-  EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
+  EXPECT_NEAR(expected.realBase(), actual.realBase(), 1e-6);
+  EXPECT_NEAR(expected.imagBase(), actual.imagBase(), 1e-6);
 }
 
 TEST(TestComplexArithmeticSupport, MultiplyDoubleComplexQuantity) {
@@ -236,8 +236,8 @@ TEST(TestComplexArithmeticSupport, MultiplyDoubleComplexQuantity) {
   EXPECT_TRUE((std::is_same_v<kgms::units::AccelerationUnit,
                               decltype(actual)::Unit>));
   EXPECT_TRUE((std::is_same_v<std::complex<double>, decltype(actual)::Scalar>));
-  EXPECT_NEAR(expected.real(), actual.real(), 1e-6);
-  EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
+  EXPECT_NEAR(expected.realBase(), actual.realBase(), 1e-6);
+  EXPECT_NEAR(expected.imagBase(), actual.imagBase(), 1e-6);
 }
 
 TEST(TestComplexArithmeticSupport, DivideComplexQuantityComplexQuantity) {
@@ -251,8 +251,8 @@ TEST(TestComplexArithmeticSupport, DivideComplexQuantityComplexQuantity) {
   EXPECT_TRUE((std::is_same_v<kgms::units::ForceUnit,
                               decltype(actual)::Unit>));
   EXPECT_TRUE((std::is_same_v<std::complex<double>, decltype(actual)::Scalar>));
-  EXPECT_NEAR(expected.real(), actual.real(), 1e-6);
-  EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
+  EXPECT_NEAR(expected.realBase(), actual.realBase(), 1e-6);
+  EXPECT_NEAR(expected.imagBase(), actual.imagBase(), 1e-6);
 }
 
 TEST(TestComplexArithmeticSupport, DivideComplexQuantityDoubleQuantity) {
@@ -266,8 +266,8 @@ TEST(TestComplexArithmeticSupport, DivideComplexQuantityDoubleQuantity) {
   EXPECT_TRUE((std::is_same_v<kgms::units::LengthUnit,
                               decltype(actual)::Unit>));
   EXPECT_TRUE((std::is_same_v<std::complex<double>, decltype(actual)::Scalar>));
-  EXPECT_NEAR(expected.real(), actual.real(), 1e-6);
-  EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
+  EXPECT_NEAR(expected.realBase(), actual.realBase(), 1e-6);
+  EXPECT_NEAR(expected.imagBase(), actual.imagBase(), 1e-6);
 }
 
 TEST(TestComplexArithmeticSupport, DivideDoubleQuantityComplexQuantity) {
@@ -281,8 +281,8 @@ TEST(TestComplexArithmeticSupport, DivideDoubleQuantityComplexQuantity) {
   EXPECT_TRUE((std::is_same_v<kgms::units::AreaUnit,
                               decltype(actual)::Unit>));
   EXPECT_TRUE((std::is_same_v<std::complex<double>, decltype(actual)::Scalar>));
-  EXPECT_NEAR(expected.real(), actual.real(), 1e-6);
-  EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
+  EXPECT_NEAR(expected.realBase(), actual.realBase(), 1e-6);
+  EXPECT_NEAR(expected.imagBase(), actual.imagBase(), 1e-6);
 }
 
 TEST(TestComplexArithmeticSupport, DivideComplexQuantityComplex) {
@@ -296,8 +296,8 @@ TEST(TestComplexArithmeticSupport, DivideComplexQuantityComplex) {
   EXPECT_TRUE((std::is_same_v<kgms::units::VolumeUnit,
                               decltype(actual)::Unit>));
   EXPECT_TRUE((std::is_same_v<std::complex<double>, decltype(actual)::Scalar>));
-  EXPECT_NEAR(expected.real(), actual.real(), 1e-6);
-  EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
+  EXPECT_NEAR(expected.realBase(), actual.realBase(), 1e-6);
+  EXPECT_NEAR(expected.imagBase(), actual.imagBase(), 1e-6);
 }
 
 TEST(TestComplexArithmeticSupport, DivideComplexComplexQuantity) {
@@ -312,8 +312,8 @@ TEST(TestComplexArithmeticSupport, DivideComplexComplexQuantity) {
   EXPECT_TRUE((std::is_same_v<kgms::units::FrequencyUnit,
                               decltype(actual)::Unit>));
   EXPECT_TRUE((std::is_same_v<std::complex<double>, decltype(actual)::Scalar>));
-  EXPECT_NEAR(expected.real(), actual.real(), 1e-6);
-  EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
+  EXPECT_NEAR(expected.realBase(), actual.realBase(), 1e-6);
+  EXPECT_NEAR(expected.imagBase(), actual.imagBase(), 1e-6);
 }
 
 TEST(TestComplexArithmeticSupport, DivideComplexQuantityDouble) {
@@ -327,8 +327,8 @@ TEST(TestComplexArithmeticSupport, DivideComplexQuantityDouble) {
   EXPECT_TRUE((std::is_same_v<kgms::units::LengthUnit,
                               decltype(actual)::Unit>));
   EXPECT_TRUE((std::is_same_v<std::complex<double>, decltype(actual)::Scalar>));
-  EXPECT_NEAR(expected.real(), actual.real(), 1e-6);
-  EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
+  EXPECT_NEAR(expected.realBase(), actual.realBase(), 1e-6);
+  EXPECT_NEAR(expected.imagBase(), actual.imagBase(), 1e-6);
 }
 
 TEST(TestComplexArithmeticSupport, DivideDoubleComplexQuantity) {
@@ -343,6 +343,6 @@ TEST(TestComplexArithmeticSupport, DivideDoubleComplexQuantity) {
   EXPECT_TRUE((std::is_same_v<kgms::units::FrequencyUnit,
                               decltype(actual)::Unit>));
   EXPECT_TRUE((std::is_same_v<std::complex<double>, decltype(actual)::Scalar>));
-  EXPECT_NEAR(expected.real(), actual.real(), 1e-6);
-  EXPECT_NEAR(expected.imag(), actual.imag(), 1e-6);
+  EXPECT_NEAR(expected.realBase(), actual.realBase(), 1e-6);
+  EXPECT_NEAR(expected.imagBase(), actual.imagBase(), 1e-6);
 }

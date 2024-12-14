@@ -2,6 +2,12 @@
 #define POIDS_CORE_MIXIN_HPP
 
 namespace poids::scalar {
+  /** CRTP mixin to allow different scalars to add custom functionality to
+   * Quantities.
+   *
+   * \tparam Derived the concrete derived type being instantiated
+   * \tparam ScalarType the concrete scalar being instantiated
+   */
   template <typename Derived,
             typename ScalarType>
   class ScalarMixin { };

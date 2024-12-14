@@ -210,6 +210,9 @@ namespace poids {
     using type = UnitType;
   };
 
+  template <typename ScalarType, typename UnitType, bool IsBase>
+  struct IsBaseUnit<Quantity<ScalarType, UnitType, IsBase>> : public std::bool_constant<IsBase> {  };
+
   template <typename ScalarType, typename UnitType>
   Quantity(BaseQuantity<ScalarType, UnitType>) -> Quantity<ScalarType, UnitType>;
 

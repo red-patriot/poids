@@ -15,16 +15,29 @@ TEST(TestQuantity, BaseConstruct) {
 
 TEST(TestQuantity, DetectUnitlessQuantity) {
   using Unitless = poids::Quantity<double,
-                                 kgms::UnitType<std::ratio<0>,
-                                                std::ratio<0>,
-                                                std::ratio<0>>>;
+                                   kgms::UnitType<std::ratio<0>,
+                                                  std::ratio<0>,
+                                                  std::ratio<0>>>;
   EXPECT_TRUE(poids::IsUnitless_v<Unitless>);
 
   using NotUnitless = poids::Quantity<double,
-                                 kgms::UnitType<std::ratio<1>,
-                                                std::ratio<1>,
-                                                std::ratio<-2>>>;
+                                      kgms::UnitType<std::ratio<1>,
+                                                     std::ratio<1>,
+                                                     std::ratio<-2>>>;
   EXPECT_FALSE(poids::IsUnitless_v<NotUnitless>);
+}
+
+TEST(TestQuantity, DetectBaseQuantity) {
+  using NotBase = poids::Quantity<long double,
+                                  kgms::UnitType<std::ratio<0>, std::ratio<2, 3>, std::ratio<4>>>;
+
+  EXPECT_FALSE(poids::IsBaseUnit_v<NotBase>);
+
+  using Base = poids::Quantity<long double,
+                               kgms::UnitType<std::ratio<1>, std::ratio<-5>, std::ratio<4>>,
+                               true>;
+
+  EXPECT_TRUE(poids::IsBaseUnit_v<Base>);
 }
 
 TEST(TestQuantity, ConstructFromScalarIfUnitless) {

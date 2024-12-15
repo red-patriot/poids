@@ -16,6 +16,9 @@ namespace poids {
             typename UnitType,
             bool IsBase = false>
   class Quantity;
+  template <typename ScalarType,
+            typename UnitType>
+  class ReferenceQuantity;
 
   /** A base quantity that can be used for value extraction with Quantity::as */
   template <typename ScalarType, typename UnitType>
@@ -176,6 +179,7 @@ namespace poids {
 
     template <typename, typename, bool>
     friend class Quantity;
+    friend class ReferenceQuantity<Scalar, Unit>;
     friend class detail::QuantityMixin<Quantity<ScalarType, UnitType, IsBase>, IsBase>;
     friend constexpr BaseQuantity<ScalarType, UnitType> makeBase<ScalarType, UnitType>(const ScalarType& scalar);
   };

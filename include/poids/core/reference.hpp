@@ -35,7 +35,6 @@ namespace poids {
       return reference_ / desired.value();
     }
 
-    Reference base() { return reference_; }
     const Reference base() const { return reference_; }
 
     static Type makeReference(Reference baseValue) {

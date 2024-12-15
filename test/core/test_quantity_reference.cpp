@@ -15,6 +15,17 @@ TEST(TestQuantityReference, ImplicitlyConstructFromQuantity) {
   EXPECT_DOUBLE_EQ(expected, actual.base());
 }
 
+TEST(TestQuantityReference, ReferencesOriginalQuantity) {
+  double expected = 10.0;
+  kgms::Mass actual = kgms::Mass::makeFromBaseUnitValue(4.5);
+
+  poids::ReferenceQuantity<double, kgms::units::MassUnit> reference = actual;
+
+  reference = expected * kilogram;
+
+  EXPECT_DOUBLE_EQ(expected, actual.as(kilogram));
+}
+
 TEST(TestQuantityReference, ConstructFromScalar) {
   double expected = 3.0;
   double actual = 10.0;
@@ -42,4 +53,13 @@ TEST(TestQuantityReference, ExplicitlyConvertibleToQuantity) {
   kgms::Area actual{reference};
 
   EXPECT_DOUBLE_EQ(expected, actual.as(meter * meter));
+}
+
+TEST(TestQuantityReference, AsConversion) {
+  double expected = 9'700;
+  double value = 9.7;
+  auto actual = poids::ReferenceQuantity<double, kgms::units::LengthUnit>::makeReference(value);
+
+  EXPECT_DOUBLE_EQ(expected, actual.as(milli(meter)));
+  EXPECT_DOUBLE_EQ(9.7, value);
 }

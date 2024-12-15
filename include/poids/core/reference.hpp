@@ -18,8 +18,7 @@ namespace poids {
     /** Identity of this ReferenceQuantity */
     using Type = ReferenceQuantity<Scalar, Unit>;
 
-    template <bool IsBase>
-    /*implicit*/ ReferenceQuantity(Quantity<Scalar, Unit, IsBase>& quantity) :
+    /*implicit*/ ReferenceQuantity(Quantity<Scalar, Unit>& quantity) :
         reference_(quantity.value_) { }
 
     template <bool IsBase>
@@ -30,6 +29,10 @@ namespace poids {
 
     explicit operator Quantity<Scalar, Unit>() const {
       return Quantity<Scalar, Unit>::makeFromBaseUnitValue(reference_);
+    }
+
+    Scalar as(const BaseQuantity<Scalar, Unit>& desired) {
+      return reference_ / desired.value();
     }
 
     Reference base() { return reference_; }

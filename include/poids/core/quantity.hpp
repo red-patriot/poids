@@ -85,6 +85,13 @@ namespace poids {
      */
     const Scalar& base() const { return this->value_; }
 
+    /** Returns a raw pointer the underlying scalar value.
+     * \warning Modifying the value returned from this function can circumvent the guarantees
+     * provided by the library. Use only with great caution.
+     *
+     */
+    Scalar& data() { return this->value_; }
+
     /** Constructs a Quantity with the given baseValue in base units. */
     static Type makeFromBaseUnitValue(const Scalar& baseValue) {
       return Type(baseValue, InternalTag{});

@@ -48,7 +48,7 @@ TEST(TestComplexSupport, GetImaginaryBaseValue) {
 TEST(TestComplexSupport, GetRealPart) {
   double expected = 4.0;
   auto m2 = kgms::base::meter * kgms::base::meter;
-  kgms::templates::Area<CpxDbl> quantity = (4.0 + 5i) * m2;
+  const kgms::templates::Area<CpxDbl> quantity = (4.0 + 5i) * m2;
 
   auto actual = quantity.real();
 
@@ -68,35 +68,33 @@ TEST(TestComplexSupport, GetImaginaryPart) {
   EXPECT_DOUBLE_EQ(expected, actual.as(meter / second));
 }
 
-// TODO
-// TEST(TestComplexSupport, GetRealPartInPlace) {
-//   using namespace kgms::base;
-//   kgms::Mass expected = 4.0 * kilogram;
+TEST(TestComplexSupport, GetRealPartInPlace) {
+  using namespace kgms::base;
+  kgms::Mass expected = 4.0 * kilogram;
 
-//   auto quantity = (2.0 + 3i) * kilogram;
+  auto quantity = (2.0 + 3i) * kilogram;
 
-//   quantity.real() = expected;
+  quantity.realm() = expected;
 
-//   auto actual = quantity.real();
+  kgms::Mass actual = quantity.real();
 
-//   EXPECT_TRUE((std::is_same_v<kgms::Area, decltype(actual)>));
-//   EXPECT_DOUBLE_EQ(expected.base(), actual.as(kilogram));
-// }
+  EXPECT_TRUE((std::is_same_v<kgms::Mass, decltype(actual)>));
+  EXPECT_DOUBLE_EQ(expected.base(), actual.as(kilogram));
+}
 
-// TODO
-// TEST(TestComplexSupport, GetImaginaryPartInPlace) {
-//   using namespace kgms::base;
-//   kgms::Mass expected = 4.0 * kilogram;
+TEST(TestComplexSupport, GetImaginaryPartInPlace) {
+  using namespace kgms::base;
+  kgms::Mass expected = 4.0 * kilogram;
 
-//   auto quantity = (2.0 + 3i) * kilogram;
+  auto quantity = (2.0 + 3i) * kilogram;
 
-//   quantity.imag() = expected;
+  quantity.imagm() = expected;
 
-//   auto actual = quantity.imag();
+  auto actual = quantity.imag();
 
-//   EXPECT_TRUE((std::is_same_v<kgms::Area, decltype(actual)>));
-//   EXPECT_DOUBLE_EQ(expected.base(), actual.as(kilogram));
-// }
+  EXPECT_TRUE((std::is_same_v<kgms::Mass, decltype(actual)>));
+  EXPECT_DOUBLE_EQ(expected.base(), actual.as(kilogram));
+}
 
 TEST(TestComplexArithmeticSupport, AddComplexQuantityComplexQuantity) {
   auto expected = kgms::templates::Velocity<CpxDbl>::makeFromBaseUnitValue(5.6 + 1.0i);

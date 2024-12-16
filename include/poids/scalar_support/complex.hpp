@@ -4,6 +4,7 @@
 #include <complex>
 
 #include "poids/core/quantity.hpp"
+#include "poids/core/reference.hpp"
 #include "poids/core/scalar_support.hpp"
 
 namespace poids::scalar {
@@ -15,10 +16,22 @@ namespace poids::scalar {
     using RealQuantity = Quantity<T, UnitOf_t<Derived>, IsBaseUnit_v<Derived>>;
 
    public:
+    /**Returns a mutable reference to the real part of this quantity*/
+    ReferenceQuantity<T, UnitOf_t<Derived>> realm() {
+      return ReferenceQuantity<T, UnitOf_t<Derived>>::makeReference(reinterpret_cast<T(&)[2]>(derived()->data())[0]);
+    }
+
+    /**Returns a mutable reference to the imaginary part of this quantity*/
+    ReferenceQuantity<T, UnitOf_t<Derived>> imagm() {
+      return ReferenceQuantity<T, UnitOf_t<Derived>>::makeReference(reinterpret_cast<T(&)[2]>(derived()->data())[1]);
+    }
+
+    /**Returns the real part of this quantity*/
     RealQuantity real() const {
       return RealQuantity::makeFromBaseUnitValue(derived()->base().real());
     }
 
+    /**Returns the imaginary part of this quantity*/
     RealQuantity imag() const {
       return RealQuantity::makeFromBaseUnitValue(derived()->base().imag());
     }

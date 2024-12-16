@@ -6,6 +6,17 @@
 #include <type_traits>
 
 namespace poids {
+  template <typename T,
+            typename = void>
+  struct IsValidUnit : public std::false_type { };
+
+  template <typename T>
+  struct IsValidUnit<T,
+                     std::void_t<typename T::template multiply_t<T>,
+                                 typename T::template divide_t<T>,
+                                 typename T::template power_t<int{1}, unsigned{1}>>>
+      : public std::true_type { };
+
   /** Indicates if a given type is unitless */
   template <typename UnitType, typename = void>
   struct IsUnitless : public std::false_type { };
@@ -31,6 +42,10 @@ namespace poids {
   struct PowerOf {
     using type = typename UnitType::template power_t<N, D>;
   };
+
+  /** Indicates if the given type T is a valid unit type */
+  template <typename T>
+  inline constexpr bool IsValidUnit_v = IsValidUnit<T>::value;
 
   /** Indicates if the given type T is unitless  */
   template <typename QuantityType>

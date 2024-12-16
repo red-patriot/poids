@@ -117,3 +117,99 @@ TEST(TestQuantityReferenceComparison, LessOrEqualRefRef) {
 
   EXPECT_LE(ref1, ref2);
 }
+
+TEST(TestQuantityReferenceComparison, EqualRefQuantity) {
+  kgms::Energy quantity1 = 10.0 * kilogram * meter * meter / (second * second);
+  kgms::Energy quantity2 = 10.0 * kilogram * meter * meter / (second * second);
+  poids::ReferenceQuantity ref = quantity1;
+
+  EXPECT_EQ(ref, quantity2);
+}
+
+TEST(TestQuantityReferenceComparison, NotEqualRefQuantity) {
+  kgms::Energy quantity1 = 10.0 * kilogram * meter * meter / (second * second);
+  kgms::Energy quantity2 = 11.0 * kilogram * meter * meter / (second * second);
+  poids::ReferenceQuantity ref = quantity1;
+
+  EXPECT_NE(ref, quantity2);
+}
+
+TEST(TestQuantityReferenceComparison, LessThanRefQuantity) {
+  kgms::Energy quantity1 = 9.5 * kilogram * meter * meter / (second * second);
+  kgms::Energy quantity2 = 10.0 * kilogram * meter * meter / (second * second);
+  poids::ReferenceQuantity ref = quantity1;
+
+  EXPECT_LT(ref, quantity2);
+}
+
+TEST(TestQuantityReferenceComparison, GreaterThanRefQuantity) {
+  kgms::Energy quantity1 = 12.0 * kilogram * meter * meter / (second * second);
+  kgms::Energy quantity2 = 10.0 * kilogram * meter * meter / (second * second);
+  poids::ReferenceQuantity ref = quantity1;
+
+  EXPECT_GT(ref, quantity2);
+}
+
+TEST(TestQuantityReferenceComparison, LessOrEqualRefQuantity) {
+  kgms::Energy quantity1 = 10.0 * kilogram * meter * meter / (second * second);
+  kgms::Energy quantity2 = 10.0 * kilogram * meter * meter / (second * second);
+  poids::ReferenceQuantity ref = quantity1;
+
+  EXPECT_LE(ref, quantity2);
+}
+
+TEST(TestQuantityReferenceComparison, GreaterOrEqualRefQuantity) {
+  kgms::Energy quantity1 = 15.0 * kilogram * meter * meter / (second * second);
+  kgms::Energy quantity2 = 10.0 * kilogram * meter * meter / (second * second);
+  poids::ReferenceQuantity ref = quantity1;
+
+  EXPECT_GE(ref, quantity2);
+}
+
+TEST(TestQuantityReferenceComparison, EqualQuantityRef) {
+  kgms::Energy quantity1 = 10.0 * kilogram * meter * meter / (second * second);
+  kgms::Energy quantity2 = 10.0 * kilogram * meter * meter / (second * second);
+  poids::ReferenceQuantity ref = quantity1;
+
+  EXPECT_EQ(quantity2, ref);
+}
+
+TEST(TestQuantityReferenceComparison, NotEqualQuantityRef) {
+  kgms::Energy quantity1 = 10.0 * kilogram * meter * meter / (second * second);
+  kgms::Energy quantity2 = 11.0 * kilogram * meter * meter / (second * second);
+  poids::ReferenceQuantity ref = quantity1;
+
+  EXPECT_NE(quantity2, ref);
+}
+
+TEST(TestQuantityReferenceComparison, LessThanQuantityRef) {
+  kgms::Energy quantity1 = 9.5 * kilogram * meter * meter / (second * second);
+  kgms::Energy quantity2 = 8.0 * kilogram * meter * meter / (second * second);
+  poids::ReferenceQuantity ref = quantity1;
+
+  EXPECT_LT(quantity2, ref);
+}
+
+TEST(TestQuantityReferenceComparison, GreaterThanQuantityRefy) {
+  kgms::Energy quantity1 = 10.0 * kilogram * meter * meter / (second * second);
+  kgms::Energy quantity2 = 12.0 * kilogram * meter * meter / (second * second);
+  poids::ReferenceQuantity ref = quantity1;
+
+  EXPECT_GT(quantity2, ref);
+}
+
+TEST(TestQuantityReferenceComparison, LessOrEqualQuantityRef) {
+  kgms::Energy quantity1 = 10.0 * kilogram * meter * meter / (second * second);
+  kgms::Energy quantity2 = 10.0 * kilogram * meter * meter / (second * second);
+  poids::ReferenceQuantity ref = quantity1;
+
+  EXPECT_LE(quantity2, ref);
+}
+
+TEST(TestQuantityReferenceComparison, GreaterOrEqualQuantityRef) {
+  kgms::Energy quantity1 = 10.0 * kilogram * meter * meter / (second * second);
+  kgms::Energy quantity2 = 15.0 * kilogram * meter * meter / (second * second);
+  poids::ReferenceQuantity ref = quantity1;
+
+  EXPECT_GE(quantity2, ref);
+}

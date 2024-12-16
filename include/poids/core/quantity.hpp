@@ -141,41 +141,41 @@ namespace poids {
                     typename Result::InternalTag{}};
     }
 
-    template <bool OtherBase>
-    bool operator==(const Quantity<Scalar, Unit, OtherBase>& rhs) const {
-      return this->value_ == rhs.value_;
-    }
-
-    template <bool OtherBase>
-    bool operator!=(const Quantity<Scalar, Unit, OtherBase>& rhs) const {
-      return !this->operator==(rhs);
-    }
-
-    template <bool OtherBase>
-    bool operator<(const Quantity<Scalar, Unit, OtherBase>& rhs) const {
-      return this->value_ < rhs.value_;
-    }
-
-    template <bool OtherBase>
-    bool operator>(const Quantity<Scalar, Unit, OtherBase>& rhs) const {
-      return rhs.operator<(*this);
-    }
-
-    template <bool OtherBase>
-    bool operator<=(const Quantity<Scalar, Unit, OtherBase>& rhs) const {
-      return this->operator==(rhs) || this->operator<(rhs);
-    }
-
-    template <bool OtherBase>
-    bool operator>=(const Quantity<Scalar, Unit, OtherBase>& rhs) const {
-      return this->operator==(rhs) || this->operator>(rhs);
-    }
-
    private:
     Scalar value_{}; /**< The Scalar value of this quantity in base units. */
 
     constexpr Quantity(const Scalar& baseValue, InternalTag) :
         value_{baseValue} { }
+
+    template <bool OtherBase>
+    friend bool operator==(const Type& lhs, const Quantity<Scalar, Unit, OtherBase>& rhs) {
+      return lhs.value_ == rhs.value_;
+    }
+
+    template <bool OtherBase>
+    friend bool operator!=(const Type& lhs, const Quantity<Scalar, Unit, OtherBase>& rhs) {
+      return !(lhs == rhs);
+    }
+
+    template <bool OtherBase>
+    friend bool operator<(const Type& lhs, const Quantity<Scalar, Unit, OtherBase>& rhs) {
+      return lhs.value_ < rhs.value_;
+    }
+
+    template <bool OtherBase>
+    friend bool operator>(const Type& lhs, const Quantity<Scalar, Unit, OtherBase>& rhs) {
+      return rhs < lhs;
+    }
+
+    template <bool OtherBase>
+    friend bool operator<=(const Type& lhs, const Quantity<Scalar, Unit, OtherBase>& rhs) {
+      return lhs == rhs || lhs < rhs;
+    }
+
+    template <bool OtherBase>
+    friend bool operator>=(const Type& lhs, const Quantity<Scalar, Unit, OtherBase>& rhs) {
+      return lhs == rhs || rhs < lhs;
+    }
 
     template <typename, typename, bool>
     friend class Quantity;

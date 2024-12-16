@@ -22,6 +22,8 @@ namespace kgms::units {
 
   using ForceUnit = UnitType<std::ratio<1>, std::ratio<1>, std::ratio<-2>>;
   using EnergyUnit = UnitType<std::ratio<1>, std::ratio<2>, std::ratio<-2>>;
+  using PowerUnit = UnitType<std::ratio<1>, std::ratio<2>, std::ratio<-3>>;
+
 
 }  // namespace kgms::units
 

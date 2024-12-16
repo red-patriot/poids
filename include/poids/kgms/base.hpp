@@ -13,11 +13,20 @@ namespace kgms::base {
   inline constexpr auto meter = poids::makeBase<::kgms::Length>(1.0);
   /** The base unit for Time in KGMS.*/
   inline constexpr auto second = poids::makeBase<::kgms::Time>(1.0);
+  inline constexpr auto minute = poids::makeBase<::kgms::Time>(60.0);
+  inline constexpr auto hour = poids::makeBase<::kgms::Time>(3600.0);
 
   /** The base unit for Angle in KGMS. */
   inline constexpr auto radian = poids::makeBase<::kgms::Angle>(1.0);
-  /** A common Angle unit in KGMS. */
   inline constexpr auto degree = poids::makeBase<::kgms::Angle>(0.017'453'292'519'943'295);
+
+  inline constexpr auto meter2 = poids::makeBase<::kgms::Area>(1.0);
+  inline constexpr auto meter3 = poids::makeBase<::kgms::Volume>(1.0);
+  inline constexpr auto meter4 = poids::makeBase<::kgms::SecondMomentOfArea>(1.0);
+
+  inline constexpr auto newton = poids::makeBase<::kgms::Force>(1.0);
+  inline constexpr auto joule = poids::makeBase<::kgms::Energy>(1.0);
+  inline constexpr auto watt = poids::makeBase<::kgms::Power>(1.0);
 
   namespace detail {
     template <typename Ratio>

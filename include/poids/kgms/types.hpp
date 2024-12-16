@@ -38,6 +38,8 @@ namespace kgms {
     using Force = poids::Quantity<Scalar, kgms::units::ForceUnit>;
     template <typename Scalar>
     using Energy = poids::Quantity<Scalar, kgms::units::EnergyUnit>;
+    template <typename Scalar>
+    using Power = poids::Quantity<Scalar, kgms::units::PowerUnit>;
   }  // namespace templates
 
   /****************************************************************************/
@@ -61,6 +63,7 @@ namespace kgms {
 
   using Force = templates::Force<double>;
   using Energy = templates::Energy<double>;
+  using Power = templates::Power<double>;
 
   /****************************************************************************/
 
@@ -83,6 +86,7 @@ namespace kgms {
 
   using Force_l = templates::Force<long double>;
   using Energy_l = templates::Energy<long double>;
+  using Power_l = templates::Power<long double>;
 }  // namespace kgms
 
 #endif

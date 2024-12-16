@@ -27,6 +27,11 @@ namespace poids {
   template <typename QuantityType>
   struct IsBaseUnit : public std::false_type { };
 
+  template <typename UnitType, int N, unsigned D>
+  struct PowerOf {
+    using type = typename UnitType::template power_t<N, D>;
+  };
+
   /** Indicates if the given type T is unitless  */
   template <typename QuantityType>
   inline constexpr bool IsUnitless_v = IsUnitless<QuantityType>::value;
@@ -46,6 +51,9 @@ namespace poids {
   /** Indicates if the given QuantityType is a base unit*/
   template <typename QuantityType>
   inline constexpr bool IsBaseUnit_v = IsBaseUnit<QuantityType>::value;
+
+  template <typename UnitType, int N, unsigned D>
+  using PowerOf_t = typename PowerOf<UnitType, N, D>::type;
 
   /** Convenience function for unit systems, indicates if a given type is a
    * specialization of std::ratio

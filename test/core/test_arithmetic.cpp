@@ -282,3 +282,39 @@ TEST(TestQuantityArithmetic, DivideQuantityWithSelf) {
 
   EXPECT_NEAR(expected, actual, 1e-6);
 }
+
+TEST(TestQuantityArithmetic, Pow) {
+  auto expected = poids::Quantity<double,
+                                  kgms::UnitType<std::ratio<0>,
+                                                 std::ratio<2, 3>,
+                                                 std::ratio<-4, 3>>>::makeFromBaseUnitValue(16);
+
+  auto a = kgms::Acceleration::makeFromBaseUnitValue(64.0);
+
+  auto actual = poids::pow<2, 3>(a);
+
+  EXPECT_TRUE((std::is_same_v<decltype(expected), decltype(actual)>));
+  EXPECT_NEAR(expected.base(), actual.base(), 1e-6);
+}
+
+TEST(TestQuantityArithmetic, Square) {
+  auto expected = kgms::Area::makeFromBaseUnitValue(25.0);
+
+  auto a = kgms::Length::makeFromBaseUnitValue(5.0);
+
+  auto actual = poids::square(a);
+
+  EXPECT_TRUE((std::is_same_v<kgms::Area, decltype(actual)>));
+  EXPECT_NEAR(expected.base(), actual.base(), 1e-6);
+}
+
+TEST(TestQuantityArithmetic, Sqrt) {
+  auto expected = kgms::Area::makeFromBaseUnitValue(15.0);
+
+  auto a = kgms::SecondMomentOfArea::makeFromBaseUnitValue(225.0);
+
+  auto actual = poids::sqrt(a);
+
+  EXPECT_TRUE((std::is_same_v<kgms::Area, decltype(actual)>));
+  EXPECT_NEAR(expected.base(), actual.base(), 1e-6);
+}

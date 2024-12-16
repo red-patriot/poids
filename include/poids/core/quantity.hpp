@@ -1,6 +1,8 @@
 #ifndef POIDS_CORE_QUANTITY_HPP
 #define POIDS_CORE_QUANTITY_HPP
 
+#include <cmath>
+
 #include "quantity_base.hpp"
 #include "scalar_support.hpp"
 #include "traits.hpp"
@@ -27,6 +29,8 @@ namespace poids {
   /** Constructs a base quantity with the given Scalar and Unit types. */
   template <typename ScalarType, typename UnitType>
   constexpr BaseQuantity<ScalarType, UnitType> makeBase(const ScalarType& scalar);
+  template <int N, unsigned D, typename ScalarType, typename UnitType, bool IsBase>
+  constexpr auto pow(const Quantity<ScalarType, UnitType, IsBase>& x);
 
   template <typename ScalarType,
             typename UnitType,
@@ -189,6 +193,8 @@ namespace poids {
     friend class ReferenceQuantity<Scalar, Unit>;
     friend class detail::QuantityMixin<Quantity<ScalarType, UnitType, IsBase>, IsBase>;
     friend constexpr BaseQuantity<ScalarType, UnitType> makeBase<ScalarType, UnitType>(const ScalarType& scalar);
+    template <int N, unsigned D, typename ScalarTypeP, typename UnitTypeP, bool IsBaseP>
+    friend constexpr auto pow(const Quantity<ScalarTypeP, UnitTypeP, IsBaseP>& x);
   };
 
   template <typename ScalarTypeLHS, typename ScalarTypeRHS, typename UnitType, bool IsBase>
@@ -222,14 +228,34 @@ namespace poids {
   Quantity(BaseQuantity<ScalarType, UnitType>) -> Quantity<ScalarType, UnitType>;
 
   template <typename ScalarType, typename UnitType>
-  inline constexpr BaseQuantity<ScalarType, UnitType> makeBase(const ScalarType& scalar) {
+  constexpr BaseQuantity<ScalarType, UnitType> makeBase(const ScalarType& scalar) {
     return BaseQuantity<ScalarType, UnitType>{scalar,
                                               typename BaseQuantity<ScalarType, UnitType>::InternalTag{}};
   };
 
   template <typename QuantityType>
-  inline constexpr BaseQuantity<ScalarOf_t<QuantityType>, UnitOf_t<QuantityType>> makeBase(const ScalarOf_t<QuantityType>& scalar) {
+  constexpr BaseQuantity<ScalarOf_t<QuantityType>, UnitOf_t<QuantityType>> makeBase(const ScalarOf_t<QuantityType>& scalar) {
     return makeBase<ScalarOf_t<QuantityType>, UnitOf_t<QuantityType>>(scalar);
+  }
+
+  template <int N, unsigned D, typename ScalarType, typename UnitType, bool IsBase>
+  constexpr auto pow(const Quantity<ScalarType, UnitType, IsBase>& x) {
+    using Result = Quantity<ScalarType,
+                            PowerOf_t<UnitType, N, D>,
+                            IsBase>;
+    using std::pow;
+    return Result{pow(x.value_, static_cast<double>(N) / D),
+                  typename Result::InternalTag{}};
+  }
+
+  template <typename ScalarType, typename UnitType, bool IsBase>
+  constexpr auto square(const Quantity<ScalarType, UnitType, IsBase>& x) {
+    return pow<2, 1>(x);
+  }
+
+  template <typename ScalarType, typename UnitType, bool IsBase>
+  constexpr auto sqrt(const Quantity<ScalarType, UnitType, IsBase>& x) {
+    return pow<1, 2>(x);
   }
 }  // namespace poids
 

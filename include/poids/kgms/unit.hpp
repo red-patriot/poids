@@ -64,6 +64,14 @@ namespace kgms {
     template <typename Other>
     using divide_t = typename DivideImpl<Other>::type;
 
+    /** The resultant units of the operation
+     * kgms::UnitType ** (N/D)
+     */
+    template <int N, unsigned D>
+    using power_t = UnitType<std::ratio_multiply<mass, std::ratio<N, D>>,
+                             std::ratio_multiply<length, std::ratio<N, D>>,
+                             std::ratio_multiply<time, std::ratio<N, D>>>;
+
     /** The unitless units */
     using unitless_t = kgms::UnitType<std::ratio<0>, std::ratio<0>, std::ratio<0>>;
   };

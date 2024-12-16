@@ -13,6 +13,8 @@ namespace poids {
     /** The scalar type of this Quantity */
     using Scalar = ScalarOf_t<ReferenceQuantity<ScalarType, UnitType>>;
     using Reference = std::add_lvalue_reference_t<Scalar>;
+    using ConstReference = std::add_const_t<Reference>;
+
     /** The unit type of this Quantity */
     using Unit = UnitOf_t<ReferenceQuantity<ScalarType, UnitType>>;
     /** Identity of this ReferenceQuantity */
@@ -35,7 +37,7 @@ namespace poids {
       return reference_ / desired.value();
     }
 
-    const Reference base() const { return reference_; }
+    ConstReference base() const { return reference_; }
 
     static Type makeReference(Reference baseValue) {
       return ReferenceQuantity(baseValue, InternalTag{});
@@ -47,41 +49,65 @@ namespace poids {
     ReferenceQuantity(Reference reference, InternalTag) :
         reference_(reference) { }
 
-    friend bool operator==(const Type& lhs, const Type& rhs) { return lhs.base() == rhs.base(); }
+    friend bool operator==(Type lhs, Type rhs) { return lhs.base() == rhs.base(); }
     template <bool IsBase>
-    friend bool operator==(const Type& lhs, const Quantity<Scalar, Unit, IsBase>& rhs) { return lhs.base() == rhs.base(); }
+    friend bool operator==(Type lhs, const Quantity<Scalar, Unit, IsBase>& rhs) { return lhs.base() == rhs.base(); }
     template <bool IsBase>
-    friend bool operator==(const Quantity<Scalar, Unit, IsBase>& lhs, const Type& rhs) { return lhs.base() == rhs.base(); }
+    friend bool operator==(const Quantity<Scalar, Unit, IsBase>& lhs, Type rhs) { return lhs.base() == rhs.base(); }
 
-    friend bool operator!=(const Type& lhs, const Type& rhs) { return !(lhs == rhs); }
+    friend bool operator!=(Type lhs, Type rhs) { return !(lhs == rhs); }
     template <bool IsBase>
-    friend bool operator!=(const Type& lhs, const Quantity<Scalar, Unit, IsBase>& rhs) { return !(lhs == rhs); }
+    friend bool operator!=(Type lhs, const Quantity<Scalar, Unit, IsBase>& rhs) { return !(lhs == rhs); }
     template <bool IsBase>
-    friend bool operator!=(const Quantity<Scalar, Unit, IsBase>& lhs, const Type& rhs) { return !(lhs == rhs); }
+    friend bool operator!=(const Quantity<Scalar, Unit, IsBase>& lhs, Type rhs) { return !(lhs == rhs); }
 
-    friend bool operator<(const Type& lhs, const Type& rhs) { return lhs.base() < rhs.base(); }
+    friend bool operator<(Type lhs, Type rhs) { return lhs.base() < rhs.base(); }
     template <bool IsBase>
-    friend bool operator<(const Type& lhs, const Quantity<Scalar, Unit, IsBase>& rhs) { return lhs.base() < rhs.base(); }
+    friend bool operator<(Type lhs, const Quantity<Scalar, Unit, IsBase>& rhs) { return lhs.base() < rhs.base(); }
     template <bool IsBase>
-    friend bool operator<(const Quantity<Scalar, Unit, IsBase>& lhs, const Type& rhs) { return lhs.base() < rhs.base(); }
+    friend bool operator<(const Quantity<Scalar, Unit, IsBase>& lhs, Type rhs) { return lhs.base() < rhs.base(); }
 
-    friend bool operator>(const Type& lhs, const Type& rhs) { return rhs.base() < lhs.base(); }
+    friend bool operator>(Type lhs, Type rhs) { return rhs.base() < lhs.base(); }
     template <bool IsBase>
-    friend bool operator>(const Type& lhs, const Quantity<Scalar, Unit, IsBase>& rhs) { return rhs.base() < lhs.base(); }
+    friend bool operator>(Type lhs, const Quantity<Scalar, Unit, IsBase>& rhs) { return rhs.base() < lhs.base(); }
     template <bool IsBase>
-    friend bool operator>(const Quantity<Scalar, Unit, IsBase>& lhs, const Type& rhs) { return rhs.base() < lhs.base(); }
+    friend bool operator>(const Quantity<Scalar, Unit, IsBase>& lhs, Type rhs) { return rhs.base() < lhs.base(); }
 
-    friend bool operator<=(const Type& lhs, const Type& rhs) { return lhs < rhs || lhs == rhs; }
+    friend bool operator<=(Type lhs, Type rhs) { return lhs < rhs || lhs == rhs; }
     template <bool IsBase>
-    friend bool operator<=(const Type& lhs, const Quantity<Scalar, Unit, IsBase>& rhs) { return lhs < rhs || lhs == rhs; }
+    friend bool operator<=(Type lhs, const Quantity<Scalar, Unit, IsBase>& rhs) { return lhs < rhs || lhs == rhs; }
     template <bool IsBase>
-    friend bool operator<=(const Quantity<Scalar, Unit, IsBase>& lhs, const Type& rhs) { return lhs < rhs || lhs == rhs; }
+    friend bool operator<=(const Quantity<Scalar, Unit, IsBase>& lhs, Type rhs) { return lhs < rhs || lhs == rhs; }
 
-    friend bool operator>=(const Type& lhs, const Type& rhs) { return rhs < lhs || rhs == lhs; }
+    friend bool operator>=(Type lhs, Type rhs) { return rhs < lhs || rhs == lhs; }
     template <bool IsBase>
-    friend bool operator>=(const Type& lhs, const Quantity<Scalar, Unit, IsBase>& rhs) { return rhs < lhs || rhs == lhs; }
+    friend bool operator>=(Type lhs, const Quantity<Scalar, Unit, IsBase>& rhs) { return rhs < lhs || rhs == lhs; }
     template <bool IsBase>
-    friend bool operator>=(const Quantity<Scalar, Unit, IsBase>& lhs, const Type& rhs) { return rhs < lhs || rhs == lhs; }
+    friend bool operator>=(const Quantity<Scalar, Unit, IsBase>& lhs, Type rhs) { return rhs < lhs || rhs == lhs; }
+
+    friend Quantity<Scalar, Unit> operator+(Type lhs, Type rhs) {
+      return Quantity<Scalar, Unit>::makeFromBaseUnitValue(lhs.base() + rhs.base());
+    }
+    template <bool IsBase>
+    friend Quantity<Scalar, Unit> operator+(Type lhs, const Quantity<Scalar, Unit, IsBase>& rhs) {
+      return Quantity<Scalar, Unit>::makeFromBaseUnitValue(lhs.base() + rhs.base());
+    }
+    template <bool IsBase>
+    friend Quantity<Scalar, Unit> operator+(const Quantity<Scalar, Unit, IsBase>& lhs, Type rhs) {
+      return Quantity<Scalar, Unit>::makeFromBaseUnitValue(lhs.base() + rhs.base());
+    }
+
+    friend Quantity<Scalar, Unit> operator-(Type lhs, Type rhs) {
+      return Quantity<Scalar, Unit>::makeFromBaseUnitValue(lhs.base() - rhs.base());
+    }
+    template <bool IsBase>
+    friend Quantity<Scalar, Unit> operator-(Type lhs, const Quantity<Scalar, Unit, IsBase>& rhs) {
+      return Quantity<Scalar, Unit>::makeFromBaseUnitValue(lhs.base() - rhs.base());
+    }
+    template <bool IsBase>
+    friend Quantity<Scalar, Unit> operator-(const Quantity<Scalar, Unit, IsBase>& lhs, Type rhs) {
+      return Quantity<Scalar, Unit>::makeFromBaseUnitValue(lhs.base() - rhs.base());
+    }
   };
 
   template <typename ScalarType, typename UnitType>

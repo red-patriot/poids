@@ -213,3 +213,83 @@ TEST(TestQuantityReferenceComparison, GreaterOrEqualQuantityRef) {
 
   EXPECT_GE(quantity2, ref);
 }
+
+TEST(TestQuantityReferenceArithmetic, AddRefRef) {
+  kgms::Length expected = 0.055 * meter;
+  kgms::Length quantity1 = 5 * centi(meter);
+  kgms::Length quantity2 = 5 * milli(meter);
+
+  poids::ReferenceQuantity ref1 = quantity1;
+  poids::ReferenceQuantity ref2 = quantity2;
+
+  auto actual = ref1 + ref2;
+
+  EXPECT_TRUE((std::is_same_v<decltype(expected), decltype(actual)>));
+  EXPECT_NEAR(expected.as(meter), actual.as(meter), 1e-6);
+}
+
+TEST(TestQuantityReferenceArithmetic, AddQuantityRef) {
+  kgms::Time expected = 10 * second;
+  kgms::Time quantity1 = 5 * second;
+  kgms::Time quantity2 = 5 * second;
+
+  poids::ReferenceQuantity ref1 = quantity1;
+
+  auto actual = quantity2 + ref1;
+
+  EXPECT_TRUE((std::is_same_v<decltype(expected), decltype(actual)>));
+  EXPECT_NEAR(expected.as(second), actual.as(second), 1e-6);
+}
+
+TEST(TestQuantityReferenceArithmetic, AddRefQuantity) {
+  kgms::Length expected = 17 * meter;
+  kgms::Length quantity1 = 5 * meter;
+  kgms::Length quantity2 = 12 * meter;
+
+  poids::ReferenceQuantity ref2 = quantity2;
+
+  auto actual = quantity1 + ref2;
+
+  EXPECT_TRUE((std::is_same_v<decltype(expected), decltype(actual)>));
+  EXPECT_NEAR(expected.as(meter), actual.as(meter), 1e-6);
+}
+
+TEST(TestQuantityReferenceArithmetic, SubtractRefRef) {
+  kgms::Length expected = 0.045 * (meter);
+  kgms::Length quantity1 = 5 * centi(meter);
+  kgms::Length quantity2 = 5 * milli(meter);
+
+  poids::ReferenceQuantity ref1 = quantity1;
+  poids::ReferenceQuantity ref2 = quantity2;
+
+  auto actual = ref1 - ref2;
+
+  EXPECT_TRUE((std::is_same_v<decltype(expected), decltype(actual)>));
+  EXPECT_NEAR(expected.as(meter), actual.as(meter), 1e-6);
+}
+
+TEST(TestQuantityReferenceArithmetic, SubtractQuantityRef) {
+  kgms::Time expected = 0 * second;
+  kgms::Time quantity1 = 5 * second;
+  kgms::Time quantity2 = 5 * second;
+
+  poids::ReferenceQuantity ref1 = quantity1;
+
+  auto actual = quantity2 - ref1;
+
+  EXPECT_TRUE((std::is_same_v<decltype(expected), decltype(actual)>));
+  EXPECT_NEAR(expected.as(second), actual.as(second), 1e-6);
+}
+
+TEST(TestQuantityReferenceArithmetic, SubtractRefQuantity) {
+  kgms::Length expected = 7 * meter;
+  kgms::Length quantity1 = 12 * meter;
+  kgms::Length quantity2 = 5 * meter;
+
+  poids::ReferenceQuantity ref2 = quantity2;
+
+  auto actual = quantity1 - ref2;
+
+  EXPECT_TRUE((std::is_same_v<decltype(expected), decltype(actual)>));
+  EXPECT_NEAR(expected.as(meter), actual.as(meter), 1e-6);
+}

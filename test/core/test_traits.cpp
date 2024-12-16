@@ -95,3 +95,8 @@ TEST(TestTraits, DetectInvalidUnit) {
   EXPECT_FALSE(poids::IsValidUnit_v<MissingPower<2>>);
   EXPECT_FALSE(poids::IsValidUnit_v<WrongPower<2>>);
 }
+
+TEST(TestTraits, DetermineUnitlessUnit) {
+  EXPECT_TRUE((std::is_same_v<ValidUnit<0>, poids::UnitlessOf_t<ValidUnit<1>>>));
+  EXPECT_TRUE((std::is_same_v<void, poids::UnitlessOf_t<ValidWithoutUnitless<1>>>));
+}

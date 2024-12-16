@@ -41,6 +41,30 @@ namespace poids {
       return ReferenceQuantity(baseValue, InternalTag{});
     }
 
+    bool operator==(const Type& rhs) const {
+      return this->reference_ == rhs.reference_;
+    }
+
+    bool operator!=(const Type& rhs) const {
+      return !this->operator==(rhs);
+    }
+
+    bool operator<(const Type& rhs) const {
+      return this->reference_ < rhs.reference_;
+    }
+
+    bool operator>(const Type& rhs) const {
+      return rhs.operator<(*this);
+    }
+
+    bool operator<=(const Type& rhs) const {
+      return this->operator<(rhs) || this->operator==(rhs);
+    }
+
+    bool operator>=(const Type& rhs) const {
+      return rhs.operator<(*this) || rhs.operator==(*this);
+    }
+
    private:
     Reference reference_;
 
@@ -60,6 +84,9 @@ namespace poids {
 
   template <typename ScalarType, typename UnitType>
   struct IsQuantity<ReferenceQuantity<ScalarType, UnitType>> : public std::true_type { };
+
+  template <typename ScalarType, typename UnitType>
+  ReferenceQuantity(Quantity<ScalarType, UnitType>) -> ReferenceQuantity<ScalarType, UnitType>;
 
 }  // namespace poids
 

@@ -129,7 +129,7 @@ TEST(TestQuantityArithmetic, MultiplyBaseQuantityQuantity) {
 TEST(TestQuantityArithmetic, MultiplyQuantityScalar) {
   auto expected = kgms::Mass::makeFromBaseUnitValue(14.0);
 
-  auto a = kgms::Mass::makeFromBaseUnitValue(7);
+  auto a = kgms::Mass::makeFromBaseUnitValue(7.0);
   double b = 2.0;
 
   auto actual = a * b;
@@ -142,7 +142,7 @@ TEST(TestQuantityArithmetic, MultiplyScalarQuantity) {
   auto expected = kgms::Energy::makeFromBaseUnitValue(14.0);
 
   double a = 2.0;
-  auto b = kgms::Energy::makeFromBaseUnitValue(7);
+  auto b = kgms::Energy::makeFromBaseUnitValue(7.0);
 
   auto actual = a * b;
 
@@ -287,7 +287,7 @@ TEST(TestQuantityArithmetic, Pow) {
   auto expected = poids::Quantity<double,
                                   kgms::UnitType<std::ratio<0>,
                                                  std::ratio<2, 3>,
-                                                 std::ratio<-4, 3>>>::makeFromBaseUnitValue(16);
+                                                 std::ratio<-4, 3>>>::makeFromBaseUnitValue(16.0);
 
   auto a = kgms::Acceleration::makeFromBaseUnitValue(64.0);
 

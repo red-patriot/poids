@@ -8,7 +8,10 @@
 #include "poids/core/scalar_support.hpp"
 
 namespace poids::scalar {
-
-}
+  template <typename Derived,
+            int N>
+  class ScalarMixin<Derived, Eigen::Vector<double, N>> {
+  };
+}  // namespace poids::scalar
 
 #endif

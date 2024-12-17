@@ -97,8 +97,9 @@ namespace poids {
     Scalar& data() { return this->value_; }
 
     /** Constructs a Quantity with the given baseValue in base units. */
-    static Type makeFromBaseUnitValue(const Scalar& baseValue) {
-      return Type(baseValue, InternalTag{});
+    template <typename... Args>
+    static Type makeFromBaseUnitValue(Args&&... args) {
+      return Type(InternalTag{}, std::forward<Args>(args)...);
     }
 
    private:
@@ -106,6 +107,10 @@ namespace poids {
 
     constexpr Quantity(const Scalar& baseValue, InternalTag) :
         value_{baseValue} { }
+
+    template <typename... Args>
+    constexpr Quantity(InternalTag, Args&&... args) :
+        value_{std::forward<Args>(args)...} { }
 
     template <typename ScalarTypeRHS>
     auto doScalarMultiply(const ScalarTypeRHS& rhs) const {

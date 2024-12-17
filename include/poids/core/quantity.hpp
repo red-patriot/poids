@@ -80,7 +80,10 @@ namespace poids {
     }
 
     /** Gets the value in the desired units. */
-    constexpr Scalar as(const BaseType& desired) const { return value_ / desired.value(); }
+    template <typename ScalarTypeOther>
+    constexpr Scalar as(const BaseQuantity<ScalarTypeOther, Unit>& desired) const {
+      return value_ / desired.value();
+    }
 
     /** Gets the value of this quantity in base units.
      * \warning Quantity::as should be preferred over this function to get the quantity value
@@ -99,6 +102,7 @@ namespace poids {
      *
      */
     Scalar& data() { return this->value_; }
+    const Scalar& data() const { return this->value_; }
 
     /** Constructs a Quantity with the given baseValue in base units. */
     template <typename... Args>

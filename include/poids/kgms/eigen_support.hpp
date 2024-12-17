@@ -6,6 +6,8 @@
 #include "units.hpp"
 #include "types.hpp"
 
+#include "poids/scalar_support/eigen_vector.hpp"
+
 namespace kgms {
 #define POIDS_KGMS_DECLARE_VECTOR_UNIT(UnitType) \
   template <int N>                               \

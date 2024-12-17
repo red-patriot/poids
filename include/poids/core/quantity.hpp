@@ -101,44 +101,18 @@ namespace poids {
       return Type(baseValue, InternalTag{});
     }
 
-    template <typename ScalarTypeRHS, typename UnitTypeRHS, bool IsBaseRHS>
-    auto operator*(const Quantity<ScalarTypeRHS, UnitTypeRHS, IsBaseRHS>& rhs) const {
-      using Result = Quantity<scalar::ArithmeticResult_t<Scalar, ScalarTypeRHS>,
-                              typename Unit::template multiply_t<UnitTypeRHS>,
-                              IsBase && IsBaseRHS>;
-
-      return Result{this->base() * rhs.base(), typename Result::InternalTag{}};
-    }
-
-    template <typename ScalarTypeRHS>
-    auto operator*(const ScalarTypeRHS& rhs) const
-        -> std::enable_if_t<!IsQuantity_v<ScalarTypeRHS>,
-                            Quantity<scalar::ArithmeticResult_t<Scalar, ScalarTypeRHS>, Unit, false>> {
-      using Result = Quantity<scalar::ArithmeticResult_t<Scalar, ScalarTypeRHS>, Unit, false>;
-      return Result{this->base() * rhs,
-                    typename Result::InternalTag{}};
-    }
-
-    template <typename ScalarTypeRHS, typename UnitTypeRHS, bool IsBaseRHS>
-    auto operator/(const Quantity<ScalarTypeRHS, UnitTypeRHS, IsBaseRHS>& rhs) const {
-      using Result = Quantity<scalar::ArithmeticResult_t<Scalar, ScalarTypeRHS>,
-                              typename Unit::template divide_t<UnitTypeRHS>,
-                              IsBase && IsBaseRHS>;
-
-      return Result{this->base() / rhs.base(), typename Result::InternalTag{}};
-    }
-
-    auto operator/(const Scalar& rhs) const {
-      using Result = Quantity<Scalar, Unit, false>;
-      return Result{this->base() / rhs,
-                    typename Result::InternalTag{}};
-    }
-
    private:
     Scalar value_{}; /**< The Scalar value of this quantity in base units. */
 
     constexpr Quantity(const Scalar& baseValue, InternalTag) :
         value_{baseValue} { }
+
+    template <typename ScalarTypeRHS>
+    auto doScalarMultiply(const ScalarTypeRHS& rhs) const {
+      using Result = Quantity<scalar::ArithmeticResult_t<Scalar, ScalarTypeRHS>, Unit, false>;
+      return Result{value_ * rhs,
+                    typename Result::InternalTag{}};
+    }
 
     template <typename ScalarTypeRHS, bool IsBaseRHS>
     friend auto operator+(const Type& lhs, const Quantity<ScalarTypeRHS, Unit, IsBaseRHS>& rhs) {
@@ -155,6 +129,44 @@ namespace poids {
                               Unit,
                               IsBase && IsBaseRHS>;
       return Result{lhs.value_ - rhs.value_,
+                    typename Result::InternalTag{}};
+    }
+
+    template <typename ScalarTypeRHS, typename UnitTypeRHS, bool IsBaseRHS>
+    friend auto operator*(const Type& lhs, const Quantity<ScalarTypeRHS, UnitTypeRHS, IsBaseRHS>& rhs) {
+      using Result = Quantity<scalar::ArithmeticResult_t<Scalar, ScalarTypeRHS>,
+                              typename Unit::template multiply_t<UnitTypeRHS>,
+                              IsBase && IsBaseRHS>;
+
+      return Result{lhs.base() * rhs.base(), typename Result::InternalTag{}};
+    }
+
+    template <typename ScalarTypeRHS>
+    friend auto operator*(const Type& lhs, const ScalarTypeRHS& rhs)
+        -> std::enable_if_t<!IsQuantity_v<ScalarTypeRHS>,
+                            decltype(std::declval<Type>().doScalarMultiply(std::declval<ScalarTypeRHS>()))> {
+      return lhs.doScalarMultiply(rhs);
+    }
+
+    template <typename ScalarTypeLHS>
+    friend auto operator*(const ScalarTypeLHS& lhs, const Type& rhs)
+        -> std::enable_if_t<!IsQuantity_v<ScalarTypeLHS>,
+                            decltype(std::declval<Type>().doScalarMultiply(std::declval<ScalarTypeLHS>()))> {
+      return rhs.doScalarMultiply(lhs);
+    }
+
+    template <typename ScalarTypeRHS, typename UnitTypeRHS, bool IsBaseRHS>
+    friend auto operator/(const Type& lhs, const Quantity<ScalarTypeRHS, UnitTypeRHS, IsBaseRHS>& rhs) {
+      using Result = Quantity<scalar::ArithmeticResult_t<Scalar, ScalarTypeRHS>,
+                              typename Unit::template divide_t<UnitTypeRHS>,
+                              IsBase && IsBaseRHS>;
+
+      return Result{lhs.value_ / rhs.value_, typename Result::InternalTag{}};
+    }
+
+    friend auto operator/(const Type& lhs, const Scalar& rhs) {
+      using Result = Quantity<Scalar, Unit, false>;
+      return Result{lhs.value_ / rhs,
                     typename Result::InternalTag{}};
     }
 
@@ -196,13 +208,6 @@ namespace poids {
     template <int N, unsigned D, typename ScalarTypeP, typename UnitTypeP, bool IsBaseP>
     friend constexpr auto pow(const Quantity<ScalarTypeP, UnitTypeP, IsBaseP>& x);
   };
-
-  template <typename ScalarTypeLHS, typename ScalarTypeRHS, typename UnitType, bool IsBase>
-  inline auto operator*(const ScalarTypeLHS& lhs, const Quantity<ScalarTypeRHS, UnitType, IsBase>& rhs)
-      -> std::enable_if_t<!IsQuantity_v<ScalarTypeLHS>,
-                          decltype(std::declval<Quantity<ScalarTypeRHS, UnitType, IsBase>>().operator*(std::declval<ScalarTypeLHS>()))> {
-    return rhs.operator*(lhs);
-  }
 
   /** If a quantity is tested for being dimensionless, forward the request to its DimensionType*/
   template <typename Scalar, typename UnitType, bool IsBase>

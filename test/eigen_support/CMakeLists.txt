@@ -22,6 +22,7 @@ if (${Eigen3_FOUND})
 
     target_link_libraries(poids_test_eigen_support
         poids
+        Eigen3::Eigen
         GTest::gtest 
         GTest::gtest_main
     )

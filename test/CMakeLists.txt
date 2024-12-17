@@ -49,5 +49,7 @@ target_link_libraries(poids_test
     GTest::gtest_main
 )
 
+add_subdirectory("eigen_support")
+
 include(GoogleTest)
 gtest_discover_tests(poids_test)

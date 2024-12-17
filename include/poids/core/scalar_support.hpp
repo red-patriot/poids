@@ -1,5 +1,5 @@
-#ifndef POIDS_CORE_MIXIN_HPP
-#define POIDS_CORE_MIXIN_HPP
+#ifndef POIDS_CORE_SCALAR_SUPPORT_HPP
+#define POIDS_CORE_SCALAR_SUPPORT_HPP
 
 namespace poids::scalar {
   /** CRTP mixin to allow different scalars to add custom functionality to

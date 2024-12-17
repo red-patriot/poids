@@ -10,19 +10,8 @@
 namespace poids::scalar {
   template <typename Derived, int N>
   class ScalarMixin<Derived, typename Eigen::Matrix<double, N, 1, 0, N, 1>> {
+    // TODO: Support other Eigen scalars than double^
   };
-
-//   template <typename Derived,
-//             typename EigenOp,
-//             typename EigenMatrix>
-//   class ScalarMixin<Derived,
-//                     typename Eigen::CwiseNullaryOp<EigenOp,
-//                                                    EigenMatrix>> {
-//    public:
-//     static_assert(false, "1");
-
-//     void foo() const { }
-//   };
 }  // namespace poids::scalar
 
 #endif

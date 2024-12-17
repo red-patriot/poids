@@ -101,24 +101,6 @@ namespace poids {
       return Type(baseValue, InternalTag{});
     }
 
-    template <typename ScalarTypeRHS, bool IsBaseRHS>
-    auto operator+(const Quantity<ScalarTypeRHS, Unit, IsBaseRHS>& rhs) const {
-      using Result = Quantity<scalar::ArithmeticResult_t<Scalar, ScalarTypeRHS>,
-                              Unit,
-                              IsBase && IsBaseRHS>;
-      return Result{this->value_ + rhs.value_,
-                    typename Result::InternalTag{}};
-    }
-
-    template <typename ScalarTypeRHS, bool IsBaseRHS>
-    auto operator-(const Quantity<ScalarTypeRHS, Unit, IsBaseRHS>& rhs) const {
-      using Result = Quantity<scalar::ArithmeticResult_t<Scalar, ScalarTypeRHS>,
-                              Unit,
-                              IsBase && IsBaseRHS>;
-      return Result{this->value_ - rhs.value_,
-                    typename Result::InternalTag{}};
-    }
-
     template <typename ScalarTypeRHS, typename UnitTypeRHS, bool IsBaseRHS>
     auto operator*(const Quantity<ScalarTypeRHS, UnitTypeRHS, IsBaseRHS>& rhs) const {
       using Result = Quantity<scalar::ArithmeticResult_t<Scalar, ScalarTypeRHS>,
@@ -157,6 +139,24 @@ namespace poids {
 
     constexpr Quantity(const Scalar& baseValue, InternalTag) :
         value_{baseValue} { }
+
+    template <typename ScalarTypeRHS, bool IsBaseRHS>
+    friend auto operator+(const Type& lhs, const Quantity<ScalarTypeRHS, Unit, IsBaseRHS>& rhs) {
+      using Result = Quantity<scalar::ArithmeticResult_t<Scalar, ScalarTypeRHS>,
+                              Unit,
+                              IsBase && IsBaseRHS>;
+      return Result{lhs.value_ + rhs.value_,
+                    typename Result::InternalTag{}};
+    }
+
+    template <typename ScalarTypeRHS, bool IsBaseRHS>
+    friend auto operator-(const Type& lhs, const Quantity<ScalarTypeRHS, Unit, IsBaseRHS>& rhs) {
+      using Result = Quantity<scalar::ArithmeticResult_t<Scalar, ScalarTypeRHS>,
+                              Unit,
+                              IsBase && IsBaseRHS>;
+      return Result{lhs.value_ - rhs.value_,
+                    typename Result::InternalTag{}};
+    }
 
     template <bool OtherBase>
     friend bool operator==(const Type& lhs, const Quantity<Scalar, Unit, OtherBase>& rhs) {

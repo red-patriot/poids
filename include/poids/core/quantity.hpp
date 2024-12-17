@@ -64,6 +64,10 @@ namespace poids {
     constexpr /*implicit*/ Quantity(const BaseType& baseQuantity) :
         value_(baseQuantity.value()) { }
 
+    template <typename ScalarTypeOther>
+    constexpr explicit Quantity(const Quantity<ScalarTypeOther, UnitType, IsBase>& other) :
+        Quantity<Scalar, Unit, IsBase>{InternalTag{}, other.value_} { }
+
     /** Retrieves the scalar value of this quantity.
      * \note It is only valid to call this on a quantity where poids::IsUnitless_v<Unit> is true
      */
@@ -115,8 +119,8 @@ namespace poids {
     template <typename ScalarTypeRHS>
     auto doScalarMultiply(const ScalarTypeRHS& rhs) const {
       using Result = Quantity<scalar::ArithmeticResult_t<Scalar, ScalarTypeRHS>, Unit, false>;
-      return Result{value_ * rhs,
-                    typename Result::InternalTag{}};
+      return Result{typename Result::InternalTag{},
+                    value_ * rhs};
     }
 
     template <typename ScalarTypeRHS, bool IsBaseRHS>

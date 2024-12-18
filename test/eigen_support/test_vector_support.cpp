@@ -198,3 +198,17 @@ TEST(TestEigenSupport, SetW) {
 
   EXPECT_TRUE(expected.as(kilogram).isApprox(actual.as(kilogram), 1e-6));
 }
+
+TEST(TestEigenSupport, IsApprox) {
+  kgms::PowerVector<4> quantity1{Vector4d{1.0, 2.0, 3.0, 4.0} * watt};
+  kgms::PowerVector<4> quantity2{Vector4d{1.0, 2.1, 3.0, 4.0} * watt};
+  kgms::PowerVector<4> quantity3{Vector4d{100.0, -4.5, 6.23, 19.5} * watt};
+  kgms::PowerVector<4> quantity4{Vector4d{1.0, 2.0, 2.999'999'98, 4.0} * watt};
+
+  EXPECT_TRUE(quantity1.isApprox(quantity4));
+  EXPECT_FALSE(quantity1.isApprox(quantity2));
+  EXPECT_FALSE(quantity2.isApprox(quantity1));
+  EXPECT_FALSE(quantity1.isApprox(quantity3));
+  EXPECT_TRUE(quantity1.isApprox(quantity2, 0.1 * watt));
+  EXPECT_FALSE(quantity1.isApprox(quantity4, nano(watt)));
+}

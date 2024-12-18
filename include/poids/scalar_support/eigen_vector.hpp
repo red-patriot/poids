@@ -45,6 +45,12 @@ namespace poids::scalar {
     _Scalar w() const { return _Scalar::makeFromBaseUnitValue(derived()->data().w()); }
     _Reference w() { return _Reference::makeReference(derived()->data().w()); }
 
+    bool isApprox(const Derived& other,
+                  const Quantity<double, UnitOf_t<Derived>>& tolerance =
+                      poids::makeBase<_Scalar>(1.0e-6)) const {
+      return derived()->data().isApprox(other.data(), tolerance.base());
+    }
+
    private:
     Derived* derived() { return static_cast<Derived*>(this); }
     const Derived* derived() const { return static_cast<const Derived*>(this); }

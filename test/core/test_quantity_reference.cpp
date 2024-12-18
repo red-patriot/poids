@@ -293,3 +293,11 @@ TEST(TestQuantityReferenceArithmetic, SubtractRefQuantity) {
   EXPECT_TRUE((std::is_same_v<decltype(expected), decltype(actual)>));
   EXPECT_NEAR(expected.as(meter), actual.as(meter), 1e-6);
 }
+
+TEST(TestQuantityReference, IsCopyable) {
+  EXPECT_TRUE((std::is_copy_constructible_v<poids::ReferenceQuantity<double, kgms::units::AreaUnit>>));
+}
+
+TEST(TestQuantityReference, IsCopyAssignable) {
+  EXPECT_TRUE((std::is_copy_assignable_v<poids::ReferenceQuantity<double, kgms::units::AreaUnit>>));
+}

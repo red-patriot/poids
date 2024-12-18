@@ -24,6 +24,8 @@ namespace kgms::base {
   inline constexpr auto meter3 = poids::makeBase<::kgms::Volume>(1.0);
   inline constexpr auto meter4 = poids::makeBase<::kgms::SecondMomentOfArea>(1.0);
 
+  inline constexpr auto hertz = poids::makeBase<::kgms::Frequency>(1.0);
+
   inline constexpr auto newton = poids::makeBase<::kgms::Force>(1.0);
   inline constexpr auto joule = poids::makeBase<::kgms::Energy>(1.0);
   inline constexpr auto watt = poids::makeBase<::kgms::Power>(1.0);

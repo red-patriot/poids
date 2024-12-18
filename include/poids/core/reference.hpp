@@ -29,7 +29,20 @@ namespace poids {
       return *this;
     }
 
-    explicit operator Quantity<Scalar, Unit>() const {
+    ReferenceQuantity(const ReferenceQuantity<Scalar, Unit>& other) :
+        reference_{other.reference_} { }
+
+    Type& operator=(const ReferenceQuantity<Scalar, Unit>& other) {
+      reference_ = other.reference_;
+      return *this;
+    }
+
+    // ReferenceQuantity(Type&&) = copy;
+    // ReferenceQuantity& operator=(Type&&) = copy;
+
+    ~ReferenceQuantity() = default;
+
+    /*implicit*/ operator Quantity<Scalar, Unit>() const {
       return Quantity<Scalar, Unit>::makeFromBaseUnitValue(reference_);
     }
 

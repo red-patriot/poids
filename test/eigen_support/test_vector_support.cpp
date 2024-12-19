@@ -212,3 +212,33 @@ TEST(TestEigenSupport, IsApprox) {
   EXPECT_TRUE(quantity1.isApprox(quantity2, 0.1 * watt));
   EXPECT_FALSE(quantity1.isApprox(quantity4, nano(watt)));
 }
+
+TEST(TestEigenSupport, Norm) {
+  kgms::Energy expected = 25'000 * joule;
+
+  kgms::EnergyVector<3> value{Vector3d{12.0, 15.0, 16.0} * kilo(joule)};
+
+  kgms::Energy actual = value.norm();
+
+  EXPECT_NEAR(expected.as(joule), actual.as(joule), 1e-6);
+}
+
+TEST(TestEigenSupport, Normalized) {
+  kgms::EnergyVector<3> expected{Vector3d{0.48, 0.6, 0.64} * joule};
+
+  kgms::EnergyVector<3> value{Vector3d{12.0, 15.0, 16.0} * joule};
+
+  kgms::EnergyVector<3> actual = value.normalized();
+
+  EXPECT_TRUE(expected.isApprox(actual, 1e-6 * joule));
+}
+
+TEST(TestEigenSupport, Normalize) {
+  kgms::EnergyVector<3> expected{Vector3d{0.133'333'333, 0.666'666'667, 0.733'333'333} * joule};
+
+  kgms::EnergyVector<3> actual{Vector3d{2.0, 10.0, 11.0} * joule};
+
+  actual.normalize();
+
+  EXPECT_TRUE(expected.isApprox(actual, 1e-6 * joule));
+}

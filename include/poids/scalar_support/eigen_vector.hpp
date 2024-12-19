@@ -51,6 +51,18 @@ namespace poids::scalar {
       return derived()->data().isApprox(other.data(), tolerance.base());
     }
 
+    _Scalar norm() const {
+      return _Scalar::makeFromBaseUnitValue(derived()->data().norm());
+    }
+
+    Derived normalized() const {
+      return Derived::makeFromBaseUnitValue(derived()->data().normalized());
+    }
+
+    void normalize() {
+      derived()->data().normalize();
+    }
+
    private:
     Derived* derived() { return static_cast<Derived*>(this); }
     const Derived* derived() const { return static_cast<const Derived*>(this); }

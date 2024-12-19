@@ -2,6 +2,7 @@
 #define POIDS_CORE_QUANTITY_HPP
 
 #include <cmath>
+#include <functional>
 
 #include "quantity_base.hpp"
 #include "scalar_support.hpp"
@@ -122,14 +123,14 @@ namespace poids {
 
     template <typename ScalarTypeRHS>
     auto doScalarMultiply(const ScalarTypeRHS& rhs) const {
-      using Result = Quantity<scalar::ArithmeticResult_t<Scalar, ScalarTypeRHS>, Unit, false>;
+      using Result = Quantity<detail::MultiplyResult_t<Scalar, ScalarTypeRHS>, Unit, false>;
       return Result{typename Result::InternalTag{},
                     value_ * rhs};
     }
 
     template <typename ScalarTypeRHS, bool IsBaseRHS>
     friend auto operator+(const Type& lhs, const Quantity<ScalarTypeRHS, Unit, IsBaseRHS>& rhs) {
-      using Result = Quantity<scalar::ArithmeticResult_t<Scalar, ScalarTypeRHS>,
+      using Result = Quantity<detail::AddResult_t<Scalar, ScalarTypeRHS>,
                               Unit,
                               IsBase && IsBaseRHS>;
       return Result{lhs.value_ + rhs.value_,
@@ -138,7 +139,7 @@ namespace poids {
 
     template <typename ScalarTypeRHS, bool IsBaseRHS>
     friend auto operator-(const Type& lhs, const Quantity<ScalarTypeRHS, Unit, IsBaseRHS>& rhs) {
-      using Result = Quantity<scalar::ArithmeticResult_t<Scalar, ScalarTypeRHS>,
+      using Result = Quantity<detail::SubtractResult_t<Scalar, ScalarTypeRHS>,
                               Unit,
                               IsBase && IsBaseRHS>;
       return Result{lhs.value_ - rhs.value_,
@@ -147,7 +148,7 @@ namespace poids {
 
     template <typename ScalarTypeRHS, typename UnitTypeRHS, bool IsBaseRHS>
     friend auto operator*(const Type& lhs, const Quantity<ScalarTypeRHS, UnitTypeRHS, IsBaseRHS>& rhs) {
-      using Result = Quantity<scalar::ArithmeticResult_t<Scalar, ScalarTypeRHS>,
+      using Result = Quantity<detail::MultiplyResult_t<Scalar, ScalarTypeRHS>,
                               typename Unit::template multiply_t<UnitTypeRHS>,
                               IsBase && IsBaseRHS>;
 
@@ -170,7 +171,7 @@ namespace poids {
 
     template <typename ScalarTypeRHS, typename UnitTypeRHS, bool IsBaseRHS>
     friend auto operator/(const Type& lhs, const Quantity<ScalarTypeRHS, UnitTypeRHS, IsBaseRHS>& rhs) {
-      using Result = Quantity<scalar::ArithmeticResult_t<Scalar, ScalarTypeRHS>,
+      using Result = Quantity<detail::DivideResult_t<Scalar, ScalarTypeRHS>,
                               typename Unit::template divide_t<UnitTypeRHS>,
                               IsBase && IsBaseRHS>;
 

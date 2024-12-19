@@ -90,6 +90,27 @@ namespace poids {
 
   template <intmax_t Num, intmax_t Den>
   struct is_std_ratio<std::ratio<Num, Den>> : public std::true_type { };
+
+  namespace detail {
+#define POIDS_BINARY_ARITHMETIC_RESULT_TYPE(name, op)                                      \
+  template <typename ScalarTypeLHS, typename ScalarTypeRHS>                                \
+  struct name##Result {                                                                    \
+    using type = decltype(std::declval<ScalarTypeLHS>() op std::declval<ScalarTypeRHS>()); \
+  };                                                                                       \
+  template <typename ScalarTypeLHS, typename ScalarTypeRHS>                                \
+  using name##Result_t = typename name##Result<ScalarTypeLHS, ScalarTypeRHS>::type
+
+    /** The resultant type of the operation LHS + RHS*/
+    POIDS_BINARY_ARITHMETIC_RESULT_TYPE(Add, +);
+    /** The resultant type of the operation LHS - RHS*/
+    POIDS_BINARY_ARITHMETIC_RESULT_TYPE(Subtract, -);
+    /** The resultant type of the operation LHS * RHS*/
+    POIDS_BINARY_ARITHMETIC_RESULT_TYPE(Multiply, *);
+    /** The resultant type of the operation LHS / RHS*/
+    POIDS_BINARY_ARITHMETIC_RESULT_TYPE(Divide, /);
+
+#undef POIDS_BINARY_ARITHMETIC_RESULT_TYPE
+  }  // namespace detail
 }  // namespace poids
 
 #endif

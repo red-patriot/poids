@@ -14,19 +14,18 @@ namespace poids::scalar {
   class ScalarMixin<Derived, typename Eigen::Matrix<double, Rows, 1, Options, Rows, 1>> {
     // TODO: Support other Eigen scalars than double^
 
-    using _Scalar = Quantity<double, UnitOf_t<Derived>, IsBaseUnit_v<Derived>>;
-    using _Reference = ReferenceQuantity<double, UnitOf_t<Derived>>;
-    using _ConstReference = const _Reference;
+    using SingleQuantity = Quantity<double, UnitOf_t<Derived>, IsBaseUnit_v<Derived>>;
+    using SingleReference = ReferenceQuantity<double, UnitOf_t<Derived>>;
 
    public:
     /** Accesses an element in-place */
-    _Reference operator[](int i) {
-      return _Reference::makeReference(derived()->data()[i]);
+    SingleReference operator[](int i) {
+      return SingleReference::makeReference(derived()->data()[i]);
     }
 
     /** Accesses the value of an element */
-    _Scalar operator[](int i) const {
-      return _Scalar::makeFromBaseUnitValue(derived()->data()[i]);
+    SingleQuantity operator[](int i) const {
+      return SingleQuantity::makeFromBaseUnitValue(derived()->data()[i]);
     }
 
     /** Returns the number of elements in the Vector*/
@@ -34,26 +33,26 @@ namespace poids::scalar {
       return derived()->data().size();
     }
 
-    _Scalar x() const { return _Scalar::makeFromBaseUnitValue(derived()->data().x()); }
-    _Reference x() { return _Reference::makeReference(derived()->data().x()); }
+    SingleQuantity x() const { return SingleQuantity::makeFromBaseUnitValue(derived()->data().x()); }
+    SingleReference x() { return SingleReference::makeReference(derived()->data().x()); }
 
-    _Scalar y() const { return _Scalar::makeFromBaseUnitValue(derived()->data().y()); }
-    _Reference y() { return _Reference::makeReference(derived()->data().y()); }
+    SingleQuantity y() const { return SingleQuantity::makeFromBaseUnitValue(derived()->data().y()); }
+    SingleReference y() { return SingleReference::makeReference(derived()->data().y()); }
 
-    _Scalar z() const { return _Scalar::makeFromBaseUnitValue(derived()->data().z()); }
-    _Reference z() { return _Reference::makeReference(derived()->data().z()); }
+    SingleQuantity z() const { return SingleQuantity::makeFromBaseUnitValue(derived()->data().z()); }
+    SingleReference z() { return SingleReference::makeReference(derived()->data().z()); }
 
-    _Scalar w() const { return _Scalar::makeFromBaseUnitValue(derived()->data().w()); }
-    _Reference w() { return _Reference::makeReference(derived()->data().w()); }
+    SingleQuantity w() const { return SingleQuantity::makeFromBaseUnitValue(derived()->data().w()); }
+    SingleReference w() { return SingleReference::makeReference(derived()->data().w()); }
 
     bool isApprox(const Derived& other,
                   const Quantity<double, UnitOf_t<Derived>>& tolerance =
-                      poids::makeBase<_Scalar>(1.0e-6)) const {
+                      poids::makeBase<SingleQuantity>(1.0e-6)) const {
       return derived()->data().isApprox(other.data(), tolerance.base());
     }
 
-    _Scalar norm() const {
-      return _Scalar::makeFromBaseUnitValue(derived()->data().norm());
+    SingleQuantity norm() const {
+      return SingleQuantity::makeFromBaseUnitValue(derived()->data().norm());
     }
 
     Derived normalized() const {
@@ -68,7 +67,7 @@ namespace poids::scalar {
     auto dot(
         const Quantity<Eigen::Matrix<double, Rows, 1, Options, Rows, 1>, UnitTypeLHS, IsBaseLHS>& other) const {
       using Result = Quantity<double,
-                              typename UnitOf_t<_Scalar>::template multiply_t<UnitTypeLHS>,
+                              typename UnitOf_t<SingleQuantity>::template multiply_t<UnitTypeLHS>,
                               false>;
 
       return Result::makeFromBaseUnitValue(derived()->data().dot(other.data()));
@@ -79,7 +78,7 @@ namespace poids::scalar {
       static_assert(Rows == 3, "Cross-product is only defined on vectors of length 3");
       using MatrixType = Eigen::Matrix<double, Rows, 1, Options, Rows, 1>;
       using Result = Quantity<typename MatrixType::cross_product_return_type<MatrixType>::type,
-                              typename UnitOf_t<_Scalar>::template multiply_t<UnitTypeLHS>,
+                              typename UnitOf_t<SingleQuantity>::template multiply_t<UnitTypeLHS>,
                               false>;
       return Result::makeFromBaseUnitValue(derived()->data().cross(other.data()));
     }

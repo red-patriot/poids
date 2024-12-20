@@ -10,9 +10,10 @@
 #include "poids/core/scalar_support.hpp"
 
 namespace poids::scalar {
+  /** Mixins for Eigen::Vector<double, N> quantities */
   template <typename Derived, int Rows, int Options>
   class ScalarMixin<Derived, typename Eigen::Matrix<double, Rows, 1, Options, Rows, 1>> {
-    // TODO: Support other Eigen scalars than double^
+    // MAYBE Support other Eigen scalars than double^
 
     using SingleQuantity = Quantity<double, UnitOf_t<Derived>, IsBaseUnit_v<Derived>>;
     using SingleReference = ReferenceQuantity<double, UnitOf_t<Derived>>;
@@ -45,24 +46,29 @@ namespace poids::scalar {
     SingleQuantity w() const { return SingleQuantity::makeFromBaseUnitValue(derived()->data().w()); }
     SingleReference w() { return SingleReference::makeReference(derived()->data().w()); }
 
+    /** Indicates if this and other are within the specified tolerance. */
     bool isApprox(const Derived& other,
                   const Quantity<double, UnitOf_t<Derived>>& tolerance =
                       poids::makeBase<SingleQuantity>(1.0e-6)) const {
       return derived()->data().isApprox(other.data(), tolerance.base());
     }
 
+    /** Calculates the euclidean norm of this Vector. */
     SingleQuantity norm() const {
       return SingleQuantity::makeFromBaseUnitValue(derived()->data().norm());
     }
 
+    /** Returns the unit Vector corresponding to this vector. */
     Derived normalized() const {
       return Derived::makeFromBaseUnitValue(derived()->data().normalized());
     }
 
+    /** Normalizes this vector in-place. */
     void normalize() {
       derived()->data().normalize();
     }
 
+    /** Calculates the dot product of this vector with other. */
     template <typename UnitTypeLHS, bool IsBaseLHS>
     auto dot(
         const Quantity<Eigen::Matrix<double, Rows, 1, Options, Rows, 1>, UnitTypeLHS, IsBaseLHS>& other) const {
@@ -73,6 +79,9 @@ namespace poids::scalar {
       return Result::makeFromBaseUnitValue(derived()->data().dot(other.data()));
     }
 
+    /** Calculates the cross product of this vector with another.
+     * \note Requires that both this and other have length 3
+     */
     template <typename UnitTypeLHS, bool IsBaseLHS>
     auto cross(const Quantity<Eigen::Matrix<double, Rows, 1, Options, Rows, 1>, UnitTypeLHS, IsBaseLHS>& other) const {
       static_assert(Rows == 3, "Cross-product is only defined on vectors of length 3");

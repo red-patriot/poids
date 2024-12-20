@@ -5,43 +5,6 @@
 #include "poids/kgms/units.hpp"
 
 namespace kgms {
-  namespace templates {
-    template <typename Scalar>
-    using Unitless = poids::Quantity<Scalar, kgms::units::UnitlessUnit>;
-    template <typename Scalar>
-    using Angle = Unitless<Scalar>;
-
-    template <typename Scalar>
-    using Mass = poids::Quantity<Scalar, kgms::units::MassUnit>;
-    template <typename Scalar>
-    using Length = poids::Quantity<Scalar, kgms::units::LengthUnit>;
-
-    template <typename Scalar>
-    using Time = poids::Quantity<Scalar, kgms::units::TimeUnit>;
-
-    template <typename Scalar>
-    using Area = poids::Quantity<Scalar, kgms::units::AreaUnit>;
-    template <typename Scalar>
-    using Volume = poids::Quantity<Scalar, kgms::units::VolumeUnit>;
-    template <typename Scalar>
-    using SecondMomentOfArea = poids::Quantity<Scalar, kgms::units::SecondMomentOfAreaUnit>;
-
-    template <typename Scalar>
-    using Frequency = poids::Quantity<Scalar, kgms::units::FrequencyUnit>;
-
-    template <typename Scalar>
-    using Velocity = poids::Quantity<Scalar, kgms::units::VelocityUnit>;
-    template <typename Scalar>
-    using Acceleration = poids::Quantity<Scalar, kgms::units::AccelerationUnit>;
-
-    template <typename Scalar>
-    using Force = poids::Quantity<Scalar, kgms::units::ForceUnit>;
-    template <typename Scalar>
-    using Energy = poids::Quantity<Scalar, kgms::units::EnergyUnit>;
-    template <typename Scalar>
-    using Power = poids::Quantity<Scalar, kgms::units::PowerUnit>;
-  }  // namespace templates
-
   /****************************************************************************/
 
   using Unitless = templates::Unitless<double>;

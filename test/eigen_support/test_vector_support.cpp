@@ -242,3 +242,47 @@ TEST(TestEigenSupport, Normalize) {
 
   EXPECT_TRUE(expected.isApprox(actual, 1e-6 * joule));
 }
+
+TEST(TestEigenSupport, DotSame) {
+  kgms::SecondMomentOfArea expected = -646.4706 * meter4;
+
+  kgms::AreaVector<6> a{Eigen::Vector<double, 6>{1.5, 6.78, 56.0, -16.5, 6.99, -10.0} * meter2};
+  kgms::AreaVector<6> b{Eigen::Vector<double, 6>{0.0, 3.58, -16.5, 16.5, 89.3, 9.87} * meter2};
+
+  kgms::SecondMomentOfArea actual = a.dot(b);
+
+  EXPECT_NEAR(expected.as(meter4), actual.as(meter4), 1e-6);
+}
+
+TEST(TestEigenSupport, DotDifferent) {
+  kgms::Force expected = 1222.754'932 * newton;
+
+  kgms::AccelerationVector<5> a{Eigen::Vector<double, 5>{8.2, 9.34, 0.654, 10.25, -15.648} * meter / square(second)};
+  kgms::MassVector<5> b{Eigen::Vector<double, 5>{-12.3, 100, 6.258, 18.3, -12.65} * kilogram};
+
+  kgms::Force actual = a.dot(b);
+
+  EXPECT_NEAR(expected.as(newton), actual.as(newton), 1e-6);
+}
+
+TEST(TestEigenSupport, CrossSame) {
+  kgms::AreaVector<3> expected{Vector3d{-267.935'600, -2605.344'400, -1534.918'720} * meter2};
+
+  kgms::LengthVector<3> a{Vector3d{2.5, 27.356, -46.87} * meter};
+  kgms::LengthVector<3> b{Vector3d{56.12, 0.12, -10.0} * meter};
+
+  kgms::AreaVector<3> actual{a.cross(b)};
+
+  EXPECT_TRUE(expected.isApprox(actual, micro(meter2)));
+}
+
+TEST(TestEigenSupport, CrossDifferent) {
+  kgms::AccelerationVector<3> expected{Vector3d{-99.3043, 295.383'876, -195.276'75} * meter / square(second)};
+
+  kgms::VelocityVector<3> a{Vector3d{-3.258, 9.35, 15.8} * meter / second};
+  kgms::FrequencyVector<3> b{Vector3d{18.237, 7.6, 2.222} * (kgms::Unitless{1.0} / second)};
+
+  kgms::AccelerationVector<3> actual{a.cross(b)};
+
+  EXPECT_TRUE(expected.isApprox(actual, micro(meter / square(second))));
+}

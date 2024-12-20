@@ -3,6 +3,7 @@
 
 #include <cstddef>
 #include <eigen3/Eigen/Core>
+#include <eigen3/Eigen/Geometry>
 
 #include "poids/core/quantity.hpp"
 #include "poids/core/reference.hpp"
@@ -61,6 +62,26 @@ namespace poids::scalar {
 
     void normalize() {
       derived()->data().normalize();
+    }
+
+    template <typename UnitTypeLHS, bool IsBaseLHS>
+    auto dot(
+        const Quantity<Eigen::Matrix<double, Rows, 1, Options, Rows, 1>, UnitTypeLHS, IsBaseLHS>& other) const {
+      using Result = Quantity<double,
+                              typename UnitOf_t<_Scalar>::template multiply_t<UnitTypeLHS>,
+                              false>;
+
+      return Result::makeFromBaseUnitValue(derived()->data().dot(other.data()));
+    }
+
+    template <typename UnitTypeLHS, bool IsBaseLHS>
+    auto cross(const Quantity<Eigen::Matrix<double, Rows, 1, Options, Rows, 1>, UnitTypeLHS, IsBaseLHS>& other) const {
+      static_assert(Rows == 3, "Cross-product is only defined on vectors of length 3");
+      using MatrixType = Eigen::Matrix<double, Rows, 1, Options, Rows, 1>;
+      using Result = Quantity<typename MatrixType::cross_product_return_type<MatrixType>::type,
+                              typename UnitOf_t<_Scalar>::template multiply_t<UnitTypeLHS>,
+                              false>;
+      return Result::makeFromBaseUnitValue(derived()->data().cross(other.data()));
     }
 
    private:

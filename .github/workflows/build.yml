@@ -50,7 +50,11 @@ jobs:
         CXX: ${{matrix.cpp_compiler}}
       run: |
         mkdir build && cd build
-        cmake -S .. -B . -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+        if [[ "${{matrix.os}}" == "ubuntu-latest" ]]; then
+          cmake -S .. -B . -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+        elif [[ "${{ matrix.os }}" == "windows-latest" ]]; then
+          cmake -S .. -B . -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_TOOLCHAIN_FILE=${VCPKG_INSTALLATION_ROOT}/scripts/buildsystems/vcpkg.cmake
+        fi
 
     - name: Build
       shell: bash

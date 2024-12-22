@@ -1,7 +1,7 @@
 #ifndef POIDS_KGMS_EIGEN_SUPPORT_HPP
 #define POIDS_KGMS_EIGEN_SUPPORT_HPP
 
-#include <eigen3/Eigen/Core>
+#include <Eigen/Core>
 
 #include "units.hpp"
 #include "types.hpp"

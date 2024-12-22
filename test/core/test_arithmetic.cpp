@@ -340,3 +340,61 @@ TEST(TestQuantityArithmetic, Sqrt) {
   EXPECT_TRUE((std::is_same_v<kgms::Area, decltype(actual)>));
   EXPECT_NEAR(expected.base(), actual.base(), 1e-6);
 }
+
+TEST(TestQuantityArithmetic, IncrementPre) {
+  auto expected = kgms::Force::makeFromBaseUnitValue(2.5);
+
+  auto actualInPlace = kgms::Force::makeFromBaseUnitValue(1.5);
+
+  auto actualReturned = ++actualInPlace;
+
+  EXPECT_TRUE((std::is_same_v<kgms::Force, decltype(actualInPlace)>));
+  EXPECT_NEAR(expected.base(), actualInPlace.base(), 1e-6);
+
+  EXPECT_TRUE((std::is_same_v<kgms::Force, decltype(actualReturned)>));
+  EXPECT_NEAR(expected.base(), actualReturned.base(), 1e-6);
+}
+
+TEST(TestQuantityArithmetic, IncrementPost) {
+  auto expectedInPlace = kgms::Time::makeFromBaseUnitValue(2.5);
+  auto expectedReturn = kgms::Time::makeFromBaseUnitValue(1.5);
+
+  auto actualInPlace = kgms::Time::makeFromBaseUnitValue(1.5);
+
+  auto actualReturned = actualInPlace++;
+
+  EXPECT_TRUE((std::is_same_v<kgms::Time, decltype(actualInPlace)>));
+  EXPECT_NEAR(expectedInPlace.base(), actualInPlace.base(), 1e-6);
+
+  EXPECT_TRUE((std::is_same_v<kgms::Time, decltype(actualReturned)>));
+  EXPECT_NEAR(expectedReturn.base(), actualReturned.base(), 1e-6);
+}
+
+TEST(TestQuantityArithmetic, DecrementPre) {
+  auto expected = kgms::Frequency::makeFromBaseUnitValue(-8.5);
+
+  auto actualInPlace = kgms::Frequency::makeFromBaseUnitValue(-7.5);
+
+  auto actualReturned = --actualInPlace;
+
+  EXPECT_TRUE((std::is_same_v<kgms::Frequency, decltype(actualInPlace)>));
+  EXPECT_NEAR(expected.base(), actualInPlace.base(), 1e-6);
+
+  EXPECT_TRUE((std::is_same_v<kgms::Frequency, decltype(actualReturned)>));
+  EXPECT_NEAR(expected.base(), actualReturned.base(), 1e-6);
+}
+
+TEST(TestQuantityArithmetic, DecrementPost) {
+  auto expectedInPlace = kgms::Length::makeFromBaseUnitValue(10.0);
+  auto expectedReturn = kgms::Length::makeFromBaseUnitValue(11.0);
+
+  auto actualInPlace = kgms::Length::makeFromBaseUnitValue(11.0);
+
+  auto actualReturned = actualInPlace--;
+
+  EXPECT_TRUE((std::is_same_v<kgms::Length, decltype(actualInPlace)>));
+  EXPECT_NEAR(expectedInPlace.base(), actualInPlace.base(), 1e-6);
+
+  EXPECT_TRUE((std::is_same_v<kgms::Length, decltype(actualReturned)>));
+  EXPECT_NEAR(expectedReturn.base(), actualReturned.base(), 1e-6);
+}

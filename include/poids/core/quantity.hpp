@@ -192,6 +192,28 @@ namespace poids {
       return Result::makeFromBaseUnitValue(lhs.data() / rhs);
     }
 
+    friend Type& operator++(Type& rhs) {
+      ++rhs.data();
+      return rhs;
+    }
+
+    friend Type operator++(Type& rhs, int) {
+      Type oldValue = rhs;
+      rhs.data()++;
+      return oldValue;
+    }
+
+    friend Type& operator--(Type& rhs) {
+      --rhs.data();
+      return rhs;
+    }
+
+    friend Type operator--(Type& rhs, int) {
+      Type oldValue = rhs;
+      rhs.data()--;
+      return oldValue;
+    }
+
     template <bool OtherBase>
     friend bool operator==(const Type& lhs, const Quantity<Scalar, Unit, OtherBase>& rhs) {
       return lhs.data() == rhs.data();

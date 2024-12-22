@@ -178,7 +178,7 @@ namespace poids {
 
     friend auto
     operator/(const Type& lhs, const Scalar& rhs) {
-      using Result = Quantity<Type::Scalar, Type::Unit, false>;
+      using Result = Quantity<typename Type::Scalar, typename Type::Unit, false>;
       return Result::makeFromBaseUnitValue(lhs.data() / rhs);
     }
 

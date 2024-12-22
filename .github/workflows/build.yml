@@ -1,0 +1,84 @@
+name: Build Release
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  BUILD_TYPE: Release
+
+permissions:
+  checks: write
+  pull-requests: write
+
+jobs:
+  build:
+    runs-on: ${{matrix.os}}
+    env:
+      BUILD_TYPE: Release
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        include:
+          - platform_name: windows
+            os: windows-latest
+            cpp_compiler: cl
+          - platform_name: linux
+            os: ubuntu-latest
+            cpp_compiler: g++
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install Dependencies
+      shell: bash
+      run: |
+        if [[ "${{matrix.os}}" == "ubuntu-latest" ]]; then
+          sudo apt update
+          sudo apt install libeigen3-dev
+        elif [[ "${{ matrix.os }}" == "windows-latest" ]]; then
+          vcpkg install eigen3
+        fi
+
+    - name: Configure CMake
+      shell: bash
+      working-directory: ${{github.workspace}}
+      env:
+        CXX: ${{matrix.cpp_compiler}}
+      run: |
+        mkdir build && cd build
+        if [[ "${{matrix.os}}" == "ubuntu-latest" ]]; then
+          cmake -S .. -B . -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+        elif [[ "${{ matrix.os }}" == "windows-latest" ]]; then
+          cmake -S .. -B . -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_TOOLCHAIN_FILE=${VCPKG_INSTALLATION_ROOT}/scripts/buildsystems/vcpkg.cmake
+        fi
+
+    - name: Build
+      shell: bash
+      working-directory: ${{github.workspace}}/build
+      env:
+        CXX: ${{matrix.cpp_compiler}}/build
+      run: cmake --build . --config ${{env.BUILD_TYPE}}
+
+    - name: Run Tests
+      shell: bash
+      working-directory: ${{github.workspace}}/build
+      run: ctest -C ${{env.BUILD_TYPE}} --output-junit test_results.xml
+
+    - name: Publish Ubuntu Test Results
+      if: matrix.os == 'ubuntu-latest'
+      uses: EnricoMi/publish-unit-test-result-action/linux@v2
+      with:
+        files: |
+          build/**/test_results.xml
+
+    - name: Publish Windows Test Results
+      if: matrix.os == 'windows-latest'
+      uses: EnricoMi/publish-unit-test-result-action/windows@v2
+      with:
+        files: |
+          build/**/test_results.xml
+

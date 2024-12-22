@@ -28,6 +28,9 @@ if (${Eigen3_FOUND})
         GTest::gtest 
         GTest::gtest_main
     )
+
+    include(GoogleTest)
+    gtest_discover_tests(poids_test_eigen_support)
 else()
     MESSAGE(WARNING "EIGEN3 was not found, you will not be able to use EIGEN support")
 endif()

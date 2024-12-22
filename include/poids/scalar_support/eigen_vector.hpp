@@ -2,8 +2,8 @@
 #define POIDS_SCALAR_SUPPORT_EIGEN_VECTOR_HPP
 
 #include <cstddef>
-#include <eigen3/Eigen/Core>
-#include <eigen3/Eigen/Geometry>
+#include <Eigen/Core>
+#include <Eigen/Geometry>
 
 #include "poids/core/quantity.hpp"
 #include "poids/core/reference.hpp"

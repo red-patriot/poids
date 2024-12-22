@@ -23,12 +23,12 @@ namespace kgms {
 
   POIDS_KGMS_DECLARE_UNIT_TYPE(Mass, std::ratio<1>, std::ratio<0>, std::ratio<0>);
   POIDS_KGMS_DECLARE_UNIT_TYPE(Length, std::ratio<0>, std::ratio<1>, std::ratio<0>);
-
   POIDS_KGMS_DECLARE_UNIT_TYPE(Time, std::ratio<0>, std::ratio<0>, std::ratio<1>);
 
   POIDS_KGMS_DECLARE_UNIT_TYPE(Area, std::ratio<0>, std::ratio<2>, std::ratio<0>);
   POIDS_KGMS_DECLARE_UNIT_TYPE(Volume, std::ratio<0>, std::ratio<3>, std::ratio<0>);
   POIDS_KGMS_DECLARE_UNIT_TYPE(SecondMomentOfArea, std::ratio<0>, std::ratio<4>, std::ratio<0>);
+  POIDS_KGMS_DECLARE_UNIT_TYPE(Density, std::ratio<1>, std::ratio<-3>, std::ratio<0>);
 
   POIDS_KGMS_DECLARE_UNIT_TYPE(Frequency, std::ratio<0>, std::ratio<0>, std::ratio<-1>);
 

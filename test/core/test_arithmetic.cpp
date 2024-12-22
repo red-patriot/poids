@@ -4,6 +4,28 @@
 
 #include "poids/kgms/types.hpp"
 
+TEST(TestQuantityArithmetic, UnaryMinus) {
+  kgms::Density expected = kgms::Density::makeFromBaseUnitValue(-10.8);
+
+  kgms::Density value = kgms::Density::makeFromBaseUnitValue(10.8);
+
+  auto actual = -value;
+
+  EXPECT_TRUE((std::is_same_v<kgms::Density, decltype(actual)>));
+  EXPECT_NEAR(expected.base(), actual.base(), 1e-6);
+}
+
+TEST(TestQuantityArithmetic, UnaryPlus) {
+  kgms::Volume expected = kgms::Volume::makeFromBaseUnitValue(46.5812);
+
+  kgms::Volume value = kgms::Volume::makeFromBaseUnitValue(46.5812);
+
+  auto actual = +value;
+
+  EXPECT_TRUE((std::is_same_v<kgms::Volume, decltype(actual)>));
+  EXPECT_NEAR(expected.base(), actual.base(), 1e-6);
+}
+
 TEST(TestQuantityArithmetic, Add) {
   kgms::Mass expected = kgms::Mass::makeFromBaseUnitValue(4.53);
 

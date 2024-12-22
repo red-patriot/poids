@@ -10,6 +10,16 @@ using poids::square;
 
 using namespace kgms::base;
 
+TEST(TestVectorArithmetic, UnaryMinus) {
+  kgms::VolumeVector<2> expected{Vector2d{-0.1, -0.2} * meter3};
+
+  kgms::VolumeVector<2> a{Vector2d{0.1, 0.2} * meter3};
+
+  kgms::VolumeVector<2> actual{-a};
+
+  EXPECT_TRUE(expected.isApprox(actual));
+}
+
 TEST(TestVectorArithmetic, AddVectorVector) {
   kgms::LengthVector<2> expected{Vector2d{4.0, 6.0} * kilo(meter)};
 

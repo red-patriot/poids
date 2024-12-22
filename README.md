@@ -1,5 +1,7 @@
 # POIDS
 
+[![Build Release](https://github.com/red-patriot/poids/actions/workflows/build.yml/badge.svg)](https://github.com/red-patriot/poids/actions/workflows/build.yml)
+
 Poids is a physical quantities and units library for C++17.
 
 ## Usage

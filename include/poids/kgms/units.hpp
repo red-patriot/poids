@@ -38,6 +38,7 @@ namespace kgms {
   POIDS_KGMS_DECLARE_UNIT_TYPE(Force, std::ratio<1>, std::ratio<1>, std::ratio<-2>);
   POIDS_KGMS_DECLARE_UNIT_TYPE(Energy, std::ratio<1>, std::ratio<2>, std::ratio<-2>);
   POIDS_KGMS_DECLARE_UNIT_TYPE(Power, std::ratio<1>, std::ratio<2>, std::ratio<-3>);
+  POIDS_KGMS_DECLARE_UNIT_TYPE(Pressure, std::ratio<1>, std::ratio<-1>, std::ratio<-2>);
 
 #undef POIDS_KGMS_DECLARE_QUANTITY_TEMPLATE
 #undef POIDS_KGMS_DECLARE_UNIT_TYPE

@@ -78,3 +78,21 @@ TEST(TestVectorArithmetic, DivideVectorQuantity) {
 
   EXPECT_TRUE(expected.isApprox(actual));
 }
+
+TEST(TestVectorArithmetic, PlusEqual) {
+  kgms::MassVector<4> expected{Vector4d{1.0, 2.5, 3.4, 4.8} * kilogram};
+
+  kgms::MassVector<4> actual{Vector4d{1.0, 1.5, 1.4, 5.8} * kilogram};
+  actual += (Vector4d{0.0, 1.0, 2.0, -1.0} * kilogram);
+
+  EXPECT_TRUE(expected.isApprox(actual, milli(gram)));
+}
+
+TEST(TestVectorArithmetic, MinusEqual) {
+  kgms::MassVector<4> expected{Vector4d{1.0, 0.5, -0.6, 6.8} * kilogram};
+
+  kgms::MassVector<4> actual{Vector4d{1.0, 1.5, 1.4, 5.8} * kilogram};
+  actual -= (Vector4d{0.0, 1.0, 2.0, -1.0} * kilogram);
+
+  EXPECT_TRUE(expected.isApprox(actual, milli(gram)));
+}

@@ -398,3 +398,21 @@ TEST(TestQuantityArithmetic, DecrementPost) {
   EXPECT_TRUE((std::is_same_v<kgms::Length, decltype(actualReturned)>));
   EXPECT_NEAR(expectedReturn.base(), actualReturned.base(), 1e-6);
 }
+
+TEST(TestQuantityArithmetic, PlusEqual) {
+  auto expected = kgms::Density::makeFromBaseUnitValue(14.5);
+
+  auto actual = kgms::Density::makeFromBaseUnitValue(12.0);
+  actual += kgms::Density::makeFromBaseUnitValue(2.5);
+
+  EXPECT_NEAR(expected.base(), actual.base(), 1e-6);
+}
+
+TEST(TestQuantityArithmetic, MinusEqual) {
+  auto expected = kgms::Power::makeFromBaseUnitValue(27.643);
+
+  auto actual = kgms::Power::makeFromBaseUnitValue(94.7);
+  actual -= kgms::Power::makeFromBaseUnitValue(67.057);
+
+  EXPECT_NEAR(expected.base(), actual.base(), 1e-6);
+}

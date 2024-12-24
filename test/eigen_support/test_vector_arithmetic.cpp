@@ -96,3 +96,21 @@ TEST(TestVectorArithmetic, MinusEqual) {
 
   EXPECT_TRUE(expected.isApprox(actual, milli(gram)));
 }
+
+TEST(TestVectorArithmetic, TimesEqual) {
+  kgms::TimeVector<2> expected{Vector2d{90.0, 6.0} * minute};
+
+  kgms::TimeVector<2> actual{Vector2d{3'600.0, 240.0} * second};
+  actual *= 1.5;
+
+  EXPECT_TRUE(expected.isApprox(actual, milli(second)));
+}
+
+TEST(TestVectorArithmetic, DivideEqual) {
+  kgms::TimeVector<2> expected{Vector2d{8.0, 9.0} * second};
+
+  kgms::TimeVector<2> actual{Vector2d{60.8, 68.4} * second};
+  actual /= 7.6;
+
+  EXPECT_TRUE(expected.isApprox(actual, milli(second)));
+}

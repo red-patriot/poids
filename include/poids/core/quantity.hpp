@@ -194,13 +194,27 @@ namespace poids {
 
     template <typename ScalarTypeLHS, bool IsBaseLHS>
     friend Type& operator+=(Type& lhs, const Quantity<ScalarTypeLHS, Unit, IsBaseLHS>& rhs) {
-      lhs.data() += rhs.data(); 
+      lhs.data() += rhs.data();
       return lhs;
     }
 
     template <typename ScalarTypeLHS, bool IsBaseLHS>
     friend Type& operator-=(Type& lhs, const Quantity<ScalarTypeLHS, Unit, IsBaseLHS>& rhs) {
       lhs.data() -= rhs.data();
+      return lhs;
+    }
+
+    template <typename ScalarTypeRHS>
+    friend auto operator*=(Type& lhs, const ScalarTypeRHS& rhs)
+        -> std::enable_if_t < !IsQuantity_v<ScalarTypeRHS>, Type&> {
+      lhs.data() *= rhs;
+      return lhs;
+    }
+
+    template <typename ScalarTypeRHS>
+    friend auto operator/=(Type& lhs, const ScalarTypeRHS& rhs)
+        -> std::enable_if_t < !IsQuantity_v<ScalarTypeRHS>, Type&> {
+          lhs.data() /= rhs;
       return lhs;
     }
 

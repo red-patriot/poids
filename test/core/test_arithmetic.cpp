@@ -416,3 +416,21 @@ TEST(TestQuantityArithmetic, MinusEqual) {
 
   EXPECT_NEAR(expected.base(), actual.base(), 1e-6);
 }
+
+TEST(TestQuantityArithmetic, TimesEqual) {
+  auto expected = kgms::Acceleration::makeFromBaseUnitValue(18.5);
+
+  auto actual = kgms::Acceleration::makeFromBaseUnitValue(9.25);
+  actual *= 2.0;
+
+  EXPECT_NEAR(expected.base(), actual.base(), 1e-6);
+}
+
+TEST(TestQuantityArithmetic, DivideEqual) {
+  auto expected = kgms::Acceleration::makeFromBaseUnitValue(12.0);
+
+  auto actual = kgms::Acceleration::makeFromBaseUnitValue(36.0);
+  actual /= 3.0;
+
+  EXPECT_NEAR(expected.base(), actual.base(), 1e-6);
+}

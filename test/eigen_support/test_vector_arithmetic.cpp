@@ -10,6 +10,16 @@ using poids::square;
 
 using namespace kgms::base;
 
+TEST(TestVectorArithmetic, UnaryMinus) {
+  kgms::VolumeVector<2> expected{Vector2d{-0.1, -0.2} * meter3};
+
+  kgms::VolumeVector<2> a{Vector2d{0.1, 0.2} * meter3};
+
+  kgms::VolumeVector<2> actual{-a};
+
+  EXPECT_TRUE(expected.isApprox(actual));
+}
+
 TEST(TestVectorArithmetic, AddVectorVector) {
   kgms::LengthVector<2> expected{Vector2d{4.0, 6.0} * kilo(meter)};
 
@@ -67,4 +77,40 @@ TEST(TestVectorArithmetic, DivideVectorQuantity) {
   kgms::VolumeVector<4> actual{a / b};
 
   EXPECT_TRUE(expected.isApprox(actual));
+}
+
+TEST(TestVectorArithmetic, PlusEqual) {
+  kgms::MassVector<4> expected{Vector4d{1.0, 2.5, 3.4, 4.8} * kilogram};
+
+  kgms::MassVector<4> actual{Vector4d{1.0, 1.5, 1.4, 5.8} * kilogram};
+  actual += (Vector4d{0.0, 1.0, 2.0, -1.0} * kilogram);
+
+  EXPECT_TRUE(expected.isApprox(actual, milli(gram)));
+}
+
+TEST(TestVectorArithmetic, MinusEqual) {
+  kgms::MassVector<4> expected{Vector4d{1.0, 0.5, -0.6, 6.8} * kilogram};
+
+  kgms::MassVector<4> actual{Vector4d{1.0, 1.5, 1.4, 5.8} * kilogram};
+  actual -= (Vector4d{0.0, 1.0, 2.0, -1.0} * kilogram);
+
+  EXPECT_TRUE(expected.isApprox(actual, milli(gram)));
+}
+
+TEST(TestVectorArithmetic, TimesEqual) {
+  kgms::TimeVector<2> expected{Vector2d{90.0, 6.0} * minute};
+
+  kgms::TimeVector<2> actual{Vector2d{3'600.0, 240.0} * second};
+  actual *= 1.5;
+
+  EXPECT_TRUE(expected.isApprox(actual, milli(second)));
+}
+
+TEST(TestVectorArithmetic, DivideEqual) {
+  kgms::TimeVector<2> expected{Vector2d{8.0, 9.0} * second};
+
+  kgms::TimeVector<2> actual{Vector2d{60.8, 68.4} * second};
+  actual /= 7.6;
+
+  EXPECT_TRUE(expected.isApprox(actual, milli(second)));
 }

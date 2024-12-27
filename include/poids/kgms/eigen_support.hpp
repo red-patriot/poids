@@ -11,7 +11,7 @@
 namespace kgms {
 #define POIDS_KGMS_DECLARE_VECTOR_UNIT(UnitType) \
   template <int N>                               \
-  using UnitType##Vector = kgms::templates::UnitType<Eigen::Vector<double, N>>
+  using UnitType##Vector = poids::Vector<UnitType, N>;
 
   POIDS_KGMS_DECLARE_VECTOR_UNIT(Unitless);
   template <int N>

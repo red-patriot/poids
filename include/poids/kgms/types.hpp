@@ -18,6 +18,7 @@ namespace kgms {
   using Area = templates::Area<double>;
   using Volume = templates::Volume<double>;
   using SecondMomentOfArea = templates::SecondMomentOfArea<double>;
+  using Density = templates::Density<double>;
 
   using Frequency = templates::Frequency<double>;
 

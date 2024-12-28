@@ -284,4 +284,30 @@ TEST(TestSIDimension, CombineMultiple) {
   EXPECT_TYPE_EQ(expected, actual);
 }
 
+TEST(TestSIDimension, Multiply) {
+  using expected = si::combine_units_t<si::MassUnit<1>,
+                                       si::LengthUnit<1>>;
+
+  using actual = si::LengthUnit<1>::multiply_t<si::MassUnit<1>>;
+
+  EXPECT_TYPE_EQ(expected, actual);
+}
+
+TEST(TestSIDimension, Divide) {
+  using expected = si::combine_units_t<si::TimeUnit<-2>,
+                                       si::CurrentUnit<1>>;
+
+  using actual = si::CurrentUnit<1>::divide_t<si::TimeUnit<2>>;
+
+  EXPECT_TYPE_EQ(expected, actual);
+}
+
+TEST(TestSIDimension, DivideMultiplyInverse) {
+  using expected = si::AmountUnit<1>;
+
+  using actual = si::TimeUnit<3>::multiply_t<si::AmountUnit<1>>::divide_t<si::TimeUnit<3>>;
+
+  EXPECT_TYPE_EQ(expected, actual);
+}
+
 #undef EXPECT_TYPE_EQ

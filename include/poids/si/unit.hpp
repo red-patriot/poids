@@ -5,6 +5,11 @@
 #include <ratio>
 
 namespace si {
+  namespace detail {
+    template <typename Ratio>
+    using simplify = std::ratio<Ratio::num, Ratio::den>;
+  }
+
   template <typename TimeRatio = std::ratio<0, 1>,
             typename LengthRatio = std::ratio<0, 1>,
             typename MassRatio = std::ratio<0, 1>,
@@ -22,7 +27,22 @@ namespace si {
     using luminosity = LuminosityRatio;
 
     template <typename Other>
-    using multiply_t = void;
+    using multiply_t = UnitType<detail::simplify<std::ratio_add<time, typename Other::time>>,
+                                detail::simplify<std::ratio_add<length, typename Other::length>>,
+                                detail::simplify<std::ratio_add<mass, typename Other::mass>>,
+                                detail::simplify<std::ratio_add<current, typename Other::current>>,
+                                detail::simplify<std::ratio_add<temperature, typename Other::temperature>>,
+                                detail::simplify<std::ratio_add<amount, typename Other::amount>>,
+                                detail::simplify<std::ratio_add<luminosity, typename Other::luminosity>>>;
+
+    template <typename Other>
+    using divide_t = UnitType<detail::simplify<std::ratio_subtract<time, typename Other::time>>,
+                              detail::simplify<std::ratio_subtract<length, typename Other::length>>,
+                              detail::simplify<std::ratio_subtract<mass, typename Other::mass>>,
+                              detail::simplify<std::ratio_subtract<current, typename Other::current>>,
+                              detail::simplify<std::ratio_subtract<temperature, typename Other::temperature>>,
+                              detail::simplify<std::ratio_subtract<amount, typename Other::amount>>,
+                              detail::simplify<std::ratio_subtract<luminosity, typename Other::luminosity>>>;
 
     using unitless_t = si::UnitType<std::ratio<0>, std::ratio<0>, std::ratio<0>, std::ratio<0>, std::ratio<0>, std::ratio<0>, std::ratio<0>>;
   };
@@ -43,9 +63,6 @@ namespace si {
   using LuminosityUnit = UnitType<std::ratio<0>, std::ratio<0>, std::ratio<0>, std::ratio<0>, std::ratio<0>, std::ratio<0>, std::ratio<N, D>>;
 
   namespace detail {
-    template <typename Ratio>
-    using simplify = std::ratio<Ratio::num, Ratio::den>;
-
     template <typename First, typename Second = void, typename... Others>
     struct combine {
       using type = typename combine<typename combine<First, Second>::type, Others...>::type;

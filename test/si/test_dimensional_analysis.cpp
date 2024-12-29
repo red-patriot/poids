@@ -310,4 +310,46 @@ TEST(TestSIDimension, DivideMultiplyInverse) {
   EXPECT_TYPE_EQ(expected, actual);
 }
 
+TEST(TestSIDimension, PowerPositivePower) {
+  using expected = si::TemperatureUnit<2, 3>;
+
+  using actual = si::TemperatureUnit<1, 3>::power_t<2>;
+
+  EXPECT_TYPE_EQ(expected, actual);
+}
+
+TEST(TestSIDimension, PowerNegativePower) {
+  using expected = si::TemperatureUnit<-4, 1>;
+
+  using actual = si::TemperatureUnit<2>::power_t<-2>;
+
+  EXPECT_TYPE_EQ(expected, actual);
+}
+
+TEST(TestSIDimension, PowerRoot) {
+  using expected = si::MassUnit<8, 3>;
+
+  using actual = si::MassUnit<8>::power_t<1, 3>;
+
+  EXPECT_TYPE_EQ(expected, actual);
+}
+
+TEST(TestSIDimension, PowerNegativeRoot) {
+  using expected = si::MassUnit<-7, 3>;
+
+  using actual = si::MassUnit<7>::power_t<-1, 3>;
+
+  EXPECT_TYPE_EQ(expected, actual);
+}
+
+TEST(TestSIDimension, IsValidUnit) {
+  EXPECT_TRUE(poids::IsValidUnit_v<si::TimeUnit<1>::unitless_t>);
+  EXPECT_TRUE(poids::IsValidUnit_v<si::LengthUnit<1>::unitless_t>);
+  EXPECT_TRUE(poids::IsValidUnit_v<si::MassUnit<1>::unitless_t>);
+  EXPECT_TRUE(poids::IsValidUnit_v<si::CurrentUnit<1>::unitless_t>);
+  EXPECT_TRUE(poids::IsValidUnit_v<si::TemperatureUnit<1>::unitless_t>);
+  EXPECT_TRUE(poids::IsValidUnit_v<si::AmountUnit<1>::unitless_t>);
+  EXPECT_TRUE(poids::IsValidUnit_v<si::LuminosityUnit<1>::unitless_t>);
+}
+
 #undef EXPECT_TYPE_EQ

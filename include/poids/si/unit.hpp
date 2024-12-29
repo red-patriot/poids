@@ -8,7 +8,7 @@ namespace si {
   namespace detail {
     template <typename Ratio>
     using simplify = std::ratio<Ratio::num, Ratio::den>;
-  }
+  }  // namespace detail
 
   template <typename TimeRatio = std::ratio<0, 1>,
             typename LengthRatio = std::ratio<0, 1>,
@@ -43,6 +43,15 @@ namespace si {
                               detail::simplify<std::ratio_subtract<temperature, typename Other::temperature>>,
                               detail::simplify<std::ratio_subtract<amount, typename Other::amount>>,
                               detail::simplify<std::ratio_subtract<luminosity, typename Other::luminosity>>>;
+
+    template <intmax_t N, unsigned D = 1>
+    using power_t = UnitType<detail::simplify<std::ratio_multiply<time, std::ratio<N, D>>>,
+                             detail::simplify<std::ratio_multiply<length, std::ratio<N, D>>>,
+                             detail::simplify<std::ratio_multiply<mass, std::ratio<N, D>>>,
+                             detail::simplify<std::ratio_multiply<current, std::ratio<N, D>>>,
+                             detail::simplify<std::ratio_multiply<temperature, std::ratio<N, D>>>,
+                             detail::simplify<std::ratio_multiply<amount, std::ratio<N, D>>>,
+                             detail::simplify<std::ratio_multiply<luminosity, std::ratio<N, D>>>>;
 
     using unitless_t = si::UnitType<std::ratio<0>, std::ratio<0>, std::ratio<0>, std::ratio<0>, std::ratio<0>, std::ratio<0>, std::ratio<0>>;
   };

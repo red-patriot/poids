@@ -24,6 +24,7 @@ set(KGMS_TESTS
 )
 
 set(SI_TESTS
+    "si/test_base_constants.cpp"
     "si/test_dimensional_analysis.cpp"
 )
 

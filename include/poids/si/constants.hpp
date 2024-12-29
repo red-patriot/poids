@@ -16,7 +16,7 @@ namespace si {
   using Luminosity = poids::Quantity<double, si::LuminosityUnit<1>>;
 
   namespace base {
-    inline constexpr auto radian = poids::makeBase<::si::Angle>(1.0); 
+    inline constexpr auto radian = poids::makeBase<::si::Angle>(1.0);
     inline constexpr auto second = poids::makeBase<::si::Time>(1.0);
     inline constexpr auto meter = poids::makeBase<::si::Length>(1.0);
     inline constexpr auto kilogram = poids::makeBase<::si::Mass>(1.0);
@@ -24,7 +24,13 @@ namespace si {
     inline constexpr auto kelvin = poids::makeBase<::si::Temperature>(1.0);
     inline constexpr auto mole = poids::makeBase<::si::Amount>(1.0);
     inline constexpr auto candela = poids::makeBase<::si::Luminosity>(1.0);
-  }
+  }  // namespace base
+
+  using Force = poids::Quantity<double,
+                                si::combine_units_t<si::MassUnit<1>, si::LengthUnit<1>,
+                                                    si::TimeUnit<-2>>>;
+  using Energy = poids::Quantity<double,
+                                 si::combine_units_t<typename Force::Unit, si::LengthUnit<1>>>;
 }  // namespace si
 
 #endif

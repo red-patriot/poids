@@ -56,6 +56,9 @@ namespace si {
     using unitless_t = si::UnitType<std::ratio<0>, std::ratio<0>, std::ratio<0>, std::ratio<0>, std::ratio<0>, std::ratio<0>, std::ratio<0>>;
   };
 
+  using UnitlessUnit = UnitType<>;
+  template <intmax_t N, intmax_t D = 1>
+  using AngleUnit = UnitType<>;
   template <intmax_t N, intmax_t D = 1>
   using TimeUnit = UnitType<std::ratio<N, D>>;
   template <intmax_t N, intmax_t D = 1>

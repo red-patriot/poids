@@ -18,7 +18,7 @@ using poids::square;
 
 // clang-format off
 
-DERIVED_UNIT_TEST(Steradian, si::Unitless{1.0})
+DERIVED_UNIT_TEST(SolidAngle, si::Unitless{1.0})
 DERIVED_UNIT_TEST(Frequency, si::Unitless{1.0} / second)
 DERIVED_UNIT_TEST(Area, meter * meter);
 DERIVED_UNIT_TEST(Volume, meter * meter * meter);

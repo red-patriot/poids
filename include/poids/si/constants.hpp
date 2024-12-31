@@ -16,21 +16,21 @@ namespace si {
   using Luminosity = poids::Quantity<double, si::LuminosityUnit<1>>;
 
   namespace base {
-    inline constexpr auto radian = poids::makeBase<::si::Angle>(1.0);
-    inline constexpr auto second = poids::makeBase<::si::Time>(1.0);
-    inline constexpr auto meter = poids::makeBase<::si::Length>(1.0);
-    inline constexpr auto kilogram = poids::makeBase<::si::Mass>(1.0);
-    inline constexpr auto ampere = poids::makeBase<::si::Current>(1.0);
-    inline constexpr auto kelvin = poids::makeBase<::si::Temperature>(1.0);
-    inline constexpr auto mole = poids::makeBase<::si::Amount>(1.0);
-    inline constexpr auto candela = poids::makeBase<::si::Luminosity>(1.0);
+    inline constexpr si::Angle::BaseType radian = poids::makeBase<::si::Angle>(1.0);
+    inline constexpr si::Time::BaseType second = poids::makeBase<::si::Time>(1.0);
+    inline constexpr si::Length::BaseType meter = poids::makeBase<::si::Length>(1.0);
+    inline constexpr si::Mass::BaseType kilogram = poids::makeBase<::si::Mass>(1.0);
+    inline constexpr si::Current::BaseType ampere = poids::makeBase<::si::Current>(1.0);
+    inline constexpr si::Temperature::BaseType kelvin = poids::makeBase<::si::Temperature>(1.0);
+    inline constexpr si::Amount::BaseType mole = poids::makeBase<::si::Amount>(1.0);
+    inline constexpr si::Luminosity::BaseType candela = poids::makeBase<::si::Luminosity>(1.0);
   }  // namespace base
 
 #define POIDS_SI_DECLARE_DERIVED_UNIT(name, unit_type) \
   using name = poids::Quantity<double,                 \
                                unit_type>
 
-  POIDS_SI_DECLARE_DERIVED_UNIT(Steradian,
+  POIDS_SI_DECLARE_DERIVED_UNIT(SolidAngle,
                                 poids::UnitOf_t<si::Angle>::multiply_t<poids::UnitOf_t<si::Angle>>);
   POIDS_SI_DECLARE_DERIVED_UNIT(Frequency,
                                 si::TimeUnit<-1>);
@@ -91,6 +91,30 @@ namespace si {
 
 #undef POIDS_SI_DECLARE_DERIVED_UNIT
 
+  namespace units {
+    // Inject all base units here to make it easier to use units
+    using namespace si::base;
+
+    inline constexpr si::SolidAngle::BaseType steradian = si::base::radian * si::base::radian;
+    inline constexpr si::Frequency::BaseType hertz = si::Unitless::BaseType{1.0} / si::base::second;
+    inline constexpr si::Area::BaseType meter2 = si::base::meter * si::base::meter;
+    inline constexpr si::Volume::BaseType meter3 = si::base::meter * si::base::meter * si::base::meter;
+    inline constexpr si::Force::BaseType newton = si::base::kilogram * si::base::meter / poids::square(si::base::second);
+    inline constexpr si::Energy::BaseType joule = newton * si::base::meter;
+    inline constexpr si::Power::BaseType watt = joule / second;
+    inline constexpr si::Pressure::BaseType pascal = newton / meter2;
+    inline constexpr si::ElectricCharge::BaseType coulomb = si::base::second * si::base::ampere;
+    inline constexpr si::Voltage::BaseType volt = joule / coulomb;
+    inline constexpr si::Capacitance::BaseType farad = coulomb / volt;
+    inline constexpr si::Resistance::BaseType ohm = volt / si::base::ampere;
+    inline constexpr si::Conductance::BaseType siemen = si::base::ampere / volt;
+    inline constexpr si::MagneticFlux::BaseType weber = si::base::kilogram * meter2 / (poids::square(second) * si::base::ampere);
+    inline constexpr si::Inductance::BaseType henry = weber / si::base::ampere;
+    inline constexpr si::MagneticFieldStrength::BaseType tesla = weber / meter2;
+    inline constexpr si::LuminousFlux::BaseType lumen = si::base::candela / steradian;
+    inline constexpr si::Illuminance::BaseType lux = si::base::candela * steradian / meter2;
+    inline constexpr si::CatalyticActivity::BaseType katal = si::base::mole / si::base::second;
+  }  // namespace units
 }  // namespace si
 
 #endif

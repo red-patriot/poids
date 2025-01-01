@@ -99,6 +99,7 @@ namespace si {
     inline constexpr si::Frequency::BaseType hertz = si::Unitless::BaseType{1.0} / si::base::second;
     inline constexpr si::Area::BaseType meter2 = si::base::meter * si::base::meter;
     inline constexpr si::Volume::BaseType meter3 = si::base::meter * si::base::meter * si::base::meter;
+    inline constexpr si::Mass::BaseType gram = si::base::kilogram / si::Unitless::BaseType{1000};
     inline constexpr si::Force::BaseType newton = si::base::kilogram * si::base::meter / poids::square(si::base::second);
     inline constexpr si::Energy::BaseType joule = newton * si::base::meter;
     inline constexpr si::Power::BaseType watt = joule / second;
@@ -115,6 +116,34 @@ namespace si {
     inline constexpr si::Illuminance::BaseType lux = si::base::candela * steradian / meter2;
     inline constexpr si::CatalyticActivity::BaseType katal = si::base::mole / si::base::second;
   }  // namespace units
+
+  namespace detail {
+    template <typename Ratio>
+    struct Prefix {
+      template <typename Scalar, typename Unit>
+      constexpr poids::BaseQuantity<Scalar, Unit>
+      operator()(const poids::BaseQuantity<Scalar, Unit>& base) const {
+        return poids::makeBase<Scalar, Unit>(base.value() / Ratio::den * Ratio::num);
+      }
+    };
+  }  // namespace detail
+
+  namespace prefix {
+    /** Implements the metric prefix "nano", e.g. 1nm = nano(meter) */
+    inline constexpr detail::Prefix<std::nano> nano{};
+    /** Implements the metric prefix "micro", e.g. 1um = micro(meter) */
+    inline constexpr detail::Prefix<std::micro> micro{};
+    /** Implements the metric prefix "milli", e.g. 1mm = milli(meter) */
+    inline constexpr detail::Prefix<std::milli> milli{};
+    /** Implements the metric prefix "centi", e.g. 1cm = centi(meter) */
+    inline constexpr detail::Prefix<std::centi> centi{};
+    /** Implements the metric prefix "kilo", e.g. 1km = kilo(meter) */
+    inline constexpr detail::Prefix<std::kilo> kilo{};
+    /** Implements the metric prefix "mega", e.g. 1Mm = mega(meter) */
+    inline constexpr detail::Prefix<std::mega> mega{};
+    /** Implements the metric prefix "giga", e.g. 1Gm = giga(meter) */
+    inline constexpr detail::Prefix<std::giga> giga{};
+  }  // namespace prefix
 }  // namespace si
 
 #endif

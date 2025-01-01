@@ -139,6 +139,15 @@ TEST(TestSIDerivedConstant, Meter3) {
   EXPECT_EQ(expected, actual);
 }
 
+TEST(TestSIDerivedConstant, Gram) {
+  using namespace si::base;
+  auto expected = si::Mass::makeFromBaseUnitValue(1e-3);
+
+  si::Mass actual = si::units::gram;
+
+  EXPECT_EQ(expected, actual);
+}
+
 TEST(TestSIDerivedConstant, Newton) {
   using namespace si::base;
   auto expected = si::Force::makeFromBaseUnitValue(1.0);

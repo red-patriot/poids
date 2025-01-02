@@ -9,6 +9,9 @@ namespace poids {
   class ReferenceQuantity {
     struct InternalTag { };
 
+    static_assert(!std::is_reference_v<ScalarType>, "Quantity requires a non-reference ScalarType");
+    static_assert(IsValidUnit_v<UnitType>, "The given UnitType is not a valid unit");
+
    public:
     /** The scalar type of this Quantity */
     using Scalar = ScalarOf_t<ReferenceQuantity<ScalarType, UnitType>>;

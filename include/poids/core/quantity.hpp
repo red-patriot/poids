@@ -40,6 +40,9 @@ namespace poids {
                    public scalar::ScalarMixin<Quantity<ScalarType, UnitType, IsBase>, ScalarType> {
     struct InternalTag { };
 
+    static_assert(!std::is_reference_v<ScalarType>, "Quantity requires a non-reference ScalarType");
+    static_assert(IsValidUnit_v<UnitType>, "The given UnitType is not a valid unit");
+
    public:
     /** The scalar type of this Quantity */
     using Scalar = ScalarOf_t<Quantity<ScalarType, UnitType>>;
@@ -206,15 +209,15 @@ namespace poids {
 
     template <typename ScalarTypeRHS>
     friend auto operator*=(Type& lhs, const ScalarTypeRHS& rhs)
-        -> std::enable_if_t < !IsQuantity_v<ScalarTypeRHS>, Type&> {
+        -> std::enable_if_t<!IsQuantity_v<ScalarTypeRHS>, Type&> {
       lhs.data() *= rhs;
       return lhs;
     }
 
     template <typename ScalarTypeRHS>
     friend auto operator/=(Type& lhs, const ScalarTypeRHS& rhs)
-        -> std::enable_if_t < !IsQuantity_v<ScalarTypeRHS>, Type&> {
-          lhs.data() /= rhs;
+        -> std::enable_if_t<!IsQuantity_v<ScalarTypeRHS>, Type&> {
+      lhs.data() /= rhs;
       return lhs;
     }
 

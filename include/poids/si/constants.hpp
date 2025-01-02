@@ -5,15 +5,28 @@
 #include "poids/si/unit.hpp"
 
 namespace si {
-  using Unitless = poids::Quantity<double, si::UnitType<>>;
-  using Angle = poids::Quantity<double, si::UnitType<>>;
-  using Time = poids::Quantity<double, si::TimeUnit<1>>;
-  using Length = poids::Quantity<double, si::LengthUnit<1>>;
-  using Mass = poids::Quantity<double, si::MassUnit<1>>;
-  using Current = poids::Quantity<double, si::CurrentUnit<1>>;
-  using Temperature = poids::Quantity<double, si::TemperatureUnit<1>>;
-  using Amount = poids::Quantity<double, si::AmountUnit<1>>;
-  using Luminosity = poids::Quantity<double, si::LuminosityUnit<1>>;
+#define POIDS_SI_DECLARE_BASE_UNIT(name)                       \
+  template <typename ScalarType>                               \
+  using name##Of = poids::Quantity<ScalarType, name##Unit<1>>; \
+  using name = name##Of<double>
+
+#define POIDS_SI_DECLARE_BASE_UNIT_CUSTOM_TYPE(name, unit_type) \
+  template <typename ScalarType>                                \
+  using name##Of = poids::Quantity<ScalarType, unit_type>;      \
+  using name = name##Of<double>
+
+  POIDS_SI_DECLARE_BASE_UNIT_CUSTOM_TYPE(Unitless, si::UnitType<>);
+  POIDS_SI_DECLARE_BASE_UNIT_CUSTOM_TYPE(Angle, si::UnitType<>);
+  POIDS_SI_DECLARE_BASE_UNIT(Time);
+  POIDS_SI_DECLARE_BASE_UNIT(Length);
+  POIDS_SI_DECLARE_BASE_UNIT(Mass);
+  POIDS_SI_DECLARE_BASE_UNIT(Current);
+  POIDS_SI_DECLARE_BASE_UNIT(Temperature);
+  POIDS_SI_DECLARE_BASE_UNIT(Amount);
+  POIDS_SI_DECLARE_BASE_UNIT(Luminosity);
+
+#undef POIDS_SI_DECLARE_BASE_UNIT_CUSTOM_TYPE
+#undef POIDS_SI_DECLARE_BASE_UNIT
 
   namespace base {
     inline constexpr si::Angle::BaseType radian = poids::makeBase<::si::Angle>(1.0);
@@ -26,9 +39,10 @@ namespace si {
     inline constexpr si::Luminosity::BaseType candela = poids::makeBase<::si::Luminosity>(1.0);
   }  // namespace base
 
-#define POIDS_SI_DECLARE_DERIVED_UNIT(name, unit_type) \
-  using name = poids::Quantity<double,                 \
-                               unit_type>
+#define POIDS_SI_DECLARE_DERIVED_UNIT(name, unit_type)     \
+  template <typename ScalarType>                           \
+  using name##Of = poids::Quantity<ScalarType, unit_type>; \
+  using name = name##Of<double>
 
   POIDS_SI_DECLARE_DERIVED_UNIT(SolidAngle,
                                 poids::UnitOf_t<si::Angle>::multiply_t<poids::UnitOf_t<si::Angle>>);

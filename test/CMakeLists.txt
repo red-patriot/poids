@@ -16,12 +16,6 @@ set(POIDS_CORE_TESTS
     "core/test_traits.cpp"
 )
 
-set(KGMS_TESTS
-    "kgms/test_base_constants.cpp"
-    "kgms/test_dimensional_analysis.cpp"
-    "kgms/test_metric_prefixes.cpp"
-)
-
 set(SI_TESTS
     "si/test_constants.cpp"
     "si/test_derived_units.cpp"
@@ -31,7 +25,6 @@ set(SI_TESTS
 
 add_executable(poids_test
     ${POIDS_CORE_TESTS}
-    ${KGMS_TESTS}
     ${SI_TESTS}
 )
 

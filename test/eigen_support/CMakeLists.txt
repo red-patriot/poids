@@ -2,7 +2,7 @@ find_package(Eigen3)
 
 if (${Eigen3_FOUND})
     add_executable(poids_test_eigen_support
-        "test_kgms_eigen_types.cpp"
+        "test_si_eigen_types.cpp"
         "test_vector_arithmetic.cpp"
         "test_vector_support.cpp"
     )

@@ -9,7 +9,7 @@ Poids is a physical quantities and units library for C++17.
 ### Getting Started
 
 Basic functionality from poids can be accessed with a single header. This header
-provides units in mass, length, and time. The library provides convenient types 
+provides all SI (e.g. metric) units. The library provides convenient types 
 to create physical quantites with units, which looks similar to how the 
 quantities would be written out by hand. The library checks and enforces units 
 at compile-time.
@@ -17,15 +17,16 @@ at compile-time.
 ``` C++
 #include <iostream>
 
-#include "poids/kgms.hpp"
+#include "poids/si.hpp"
 
-using namespace kgms::base; // For base units
+using namespace si::base;   // Provides base units - meter, second, etc.
+using namespace si::prefix; // Provides prefixes - milli, kilo, etc.
 
 int main() {
-    kgms::Velocity speed = 3 * meter / second;
-    kgms::Time duration = 4 * second;
+    si::Velocity speed = 3 * meter / second;
+    si::Time duration = 4 * second;
 
-    kgms::Length distance = speed * duration;   // Units are checked at compile-time
+    si::Length distance = speed * duration;   // Units are checked at compile-time
 
     std::cout << "Travelled " << distance.as(milli(meter)) << " mm"; // Travelled 12000.000 mm 
 
@@ -57,9 +58,9 @@ explicitly make a base quantity, use `poids::makeBase`.
 
 ```C++
 
-kgms::Length value = /* ... */;
-kgms::Length notABase = kgms::base::meter * 7;
-auto aBase = poids::makeBase<kgms::Length>(7.0); // explicitly create a base
+si::Length value = /* ... */;
+si::Length notABase = si::base::meter * 7;
+auto aBase = poids::makeBase<si::Length>(7.0); // explicitly create a base
 
 double rawValue1 = value.as(notABase); //! ERROR, does not compile
 double rawValue2 = value.as(aBase); 
@@ -101,10 +102,8 @@ or whether it is a base unit.
 
 ### Custom Unit Systems
 
-Out of the box, poids provides the KGMS (kilogram, meter, second) unit system,
-named so after the base values of the system. However, it is very easy to create
-a different system. In order to define a new system, create a new type with the
-following layout types:
+Out of the box, poids provides the International System of Units (SI) system. However, it is very easy to create a different system. In order to define a new
+system, create a new type with the following layout types:
 
 ```C++
 template<typename...>

@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
 #include "poids/core/traits.hpp"
-#include "poids/kgms/unit.hpp"
+#include "poids/si/unit.hpp"
 
 template <size_t I>
 struct ValidUnit {
@@ -34,7 +34,7 @@ struct ValidWithoutUnitless {
 TEST(TestTraits, DetectValidUnit) {
   EXPECT_TRUE(poids::IsValidUnit_v<ValidUnit<1>>);
   EXPECT_TRUE(poids::IsValidUnit_v<ValidWithoutUnitless<1>>);
-  EXPECT_TRUE((poids::IsValidUnit_v<kgms::UnitType<std::ratio<1>, std::ratio<1>, std::ratio<1>>>));
+  EXPECT_TRUE((poids::IsValidUnit_v<si::UnitType<std::ratio<1>, std::ratio<1>, std::ratio<1>>>));
 }
 
 template <size_t I>

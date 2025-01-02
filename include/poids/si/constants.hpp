@@ -113,6 +113,7 @@ namespace si {
     inline constexpr si::Frequency::BaseType hertz = si::Unitless::BaseType{1.0} / si::base::second;
     inline constexpr si::Area::BaseType meter2 = si::base::meter * si::base::meter;
     inline constexpr si::Volume::BaseType meter3 = si::base::meter * si::base::meter * si::base::meter;
+    inline constexpr si::SecondMomentOfArea::BaseType meter4 = si::base::meter * si::base::meter * si::base::meter * si::base::meter;
     inline constexpr si::Mass::BaseType gram = si::base::kilogram / si::Unitless::BaseType{1000};
     inline constexpr si::Force::BaseType newton = si::base::kilogram * si::base::meter / poids::square(si::base::second);
     inline constexpr si::Energy::BaseType joule = newton * si::base::meter;

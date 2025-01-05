@@ -6,7 +6,7 @@
 #include "poids/scalar_support/eigen_vector.hpp"
 
 #define SI_EIGEN_VECTOR_TYPE_TEST(unit_type, N)                                                       \
-  TEST(TestKGMSEigenSupport, unit_type##Vector) {                                                     \
+  TEST(TestSIEigenSupport, unit_type##Vector) {                                                       \
     EXPECT_TRUE((std::is_same_v<Eigen::Vector<double, N>, poids::Vector<si::unit_type, N>::Scalar>)); \
     EXPECT_TRUE((std::is_same_v<si::unit_type::Unit, poids::Vector<si::unit_type, N>::Unit>));        \
   }
